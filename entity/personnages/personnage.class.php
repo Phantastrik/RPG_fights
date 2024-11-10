@@ -20,6 +20,7 @@ class Personnage implements Levelable, Caster
     protected $niveau = null;
     protected $className = null;
     protected $abilities = [];
+    protected $activeEffects = [];
     protected $exp = 0;
     protected $baseExp = 0;
 
@@ -152,19 +153,35 @@ class Personnage implements Levelable, Caster
 
     public function applyEffect(Effect $e){
         $mod = $e->getModifier();
-        $this->pvMax    += $mod["pvMax_modifier"];
-        $this->pv       += $mod["pv_modifier"];
-        $this->pmMax    += $mod["pmMax_modifier"];
-        $this->pm       += $mod["pm_modifier"];
-        $this->attaque  += $mod["attaque_modifier"];
-        $this->defense  += $mod["defense_modifier"];
-        $this->sagesse  += $mod["sagesse_modifier"];
-        $this->vitesse  += $mod["vitesse_modifier"];
-        $this->niveau   += $mod["niveau_modifier"];
-        $this->exp      += $mod["exp_modifier"];
-        $this->baseExp  += $mod["baseExp_modifier"];
+        array_push($this->activeEffects, $e);
         return $this;
     }
+
+    public function getModifiedStats(){
+        $res= [
+            "pvMax"    => $this->pvMax,
+            "pv"       => $this->pv,
+            "pmMax"    => $this->pmMax,
+            "pm"       => $this->pm,
+            "attaque"  => $this->attaque,
+            "defense"  => $this->defense,
+            "sagesse"  => $this->sagesse,
+            "vitesse"  => $this->vitesse,
+        ];
+        foreach($this->activeEffects as $e){
+            $res["pvMax"]      = $res["pvMax"]      + $e->getModifier()["pvMax_modifier"];
+            $res["pv"]         = $res["pv"]         + $e->getModifier()["pv_modifier"];
+            $res["pmMax"]      = $res["pmMax"]      + $e->getModifier()["pmMax_modifier"];
+            $res["pm"]         = $res["pm"]         + $e->getModifier()["pm_modifier"];
+            $res["attaque"]    = $res["attaque"]    + $e->getModifier()["attaque_modifier"];
+            $res["defense"]    = $res["defense"]    + $e->getModifier()["defense_modifier"];
+            $res["sagesse"]    = $res["sagesse"]    + $e->getModifier()["sagesse_modifier"];
+            $res["vitesse"]    = $res["vitesse"]    + $e->getModifier()["vitesse_modifier"];
+        }
+        return $res;
+    }
+
+  
 
 
     // ---IMPLEMENTS Levelable
@@ -305,4 +322,19 @@ HTML
         return $res;
     }
 
+    public function getModifiedStatsHTML(){
+        $stats = $this->getModifiedStats();
+        $res = '';
+
+        foreach($stats as $key => $val){
+            $col = $val < 0 ? 'danger' : 'success';
+            $res.= <<<HTML
+        <div class="row">
+            <span class="badge text-bg-secondary col">$key : $val</span>
+        </div>
+HTML
+;
+        }
+        return $res;
+    }
 }

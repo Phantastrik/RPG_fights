@@ -7,6 +7,9 @@ require_once 'entity/personnages/rogue.class.php';
 require_once 'entity/personnages/monster.class.php';
 require_once 'entity/game/fight.class.php';
 require_once 'entity/game/run.class.php';
+require_once 'entity/game/stage.class.php';
+require_once 'entity/game/eventStage.class.php';
+require_once 'entity/game/fight.class.php';
 require_once 'entity/listener/fightListener.class.php';
 require_once 'webpage.class.php';
 
@@ -21,7 +24,7 @@ $player->addAbility(new PhysicAttackAbility("swoosh"));
 $run = new Run($player,15);
 
 $before_run = $run->toHTML();
-$after_run = $run->execute()->toHtml(); 
+$after_run = $run->execute()->toHTML(); 
 $w->appendContent(<<<HTML
     <div class="row">
         <div class = "col-6">

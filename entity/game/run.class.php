@@ -2,14 +2,22 @@
 
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../personnages/personnage.class.php');
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/observable.interface.php');
 require_once('stage.class.php');
 
-class Run implements Executable {
+class Run implements Executable, Observable {
 
     private $seed;
     private $stages = [];
     private $maxStagesNumber;
     private $player;
+    private $stateNotification = [
+        "seed" => 0,
+        "maxStageNumber" => 0,
+        "player" => null,
+        "stages" => null
+    ];
+    private $observers = [];
 
 
     public function __construct(Personnage $player,$maxStagesNumber = 10, $seed = null)
@@ -46,6 +54,18 @@ class Run implements Executable {
             }
         }
         return $this;
+    }
+
+    // IMPLEMENTS Observable
+    public function subscribe($obs){
+        array_push($this->observers, $obs);
+        return $this;
+    }
+    // IMPLEMENTS Observable 
+    public function notify(){
+        foreach($this->observers as $obs){
+            $obs->update($this->stateNotification);
+        }
     }
 
 }

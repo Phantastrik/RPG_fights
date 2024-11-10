@@ -1,11 +1,22 @@
 <?php
 
-class Effect
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interfaces\arrayExportable.interface.php');
+
+class Effect implements ArrayExportable
 {
     private $name;
     private $duration;
+    private static $baseValues = [
+        "pvMax_modifier" => 10,
+        "pv_modifier" => 100,
+        "pmMax_modifier" => 10,
+        "pm_modifier" => 100,
+        "attaque_modifier"  => 10,
+        "defense_modifier" => 10,
+        "sagesse_modifier" => 10,
+        "vitesse_modifier" => 10  
+    ]; 
     private $modifier = [
-        "name_modifier" => 0,
         "pvMax_modifier" => 0,
         "pv_modifier" => 0,
         "pmMax_modifier" => 0,
@@ -13,12 +24,7 @@ class Effect
         "attaque_modifier"  => 0,
         "defense_modifier" => 0,
         "sagesse_modifier" => 0,
-        "vitesse_modifier" => 0,
-        "niveau_modifier" => 0,
-        "className_modifier" => 0,
-        "abilities_modifier" => 0,
-        "exp_modifier" => 0,
-        "baseExp_modifier" => 0  
+        "vitesse_modifier" => 0  
     ];  // Effet appliqué (par exemple, +10 en attaque)
 
     public function __construct($name, $duration)
@@ -30,9 +36,14 @@ class Effect
     public static function createRandomEffect($spread=0.3){
         $res =  new Effect("Random Effect",1);
         $key = array_rand($res->getModifier());
-        $rand = ((mt_rand() / mt_getrandmax() * $spread) - $spread);
-        $val = (round($res->getModifier()[$key] * (1 + +$rand)));
+        $rand = (mt_rand() / mt_getrandmax() * $spread) - $spread;
+        // var_dump($rand);
+        // $res->getModifier()[$key]
+        $val = round(self::$baseValues[$key] * (1 + $rand));
+        
         $res->setModifierKey($key,$val);
+       // echo($key.'/'.$val.'<br>');
+        //var_dump($res);
         return $res;
     }
 
@@ -67,17 +78,25 @@ class Effect
             </div>                              
 HTML
 ;
-            foreach($this->modifier as $key => $val){
-                $mod_color = $val < 0 ? "danger" : "success";
-                if($val != 0){
-                    $res.= <<<HTML
-                    <div class="row">
-                        <span class="badge text-bg-{$mod_color} col">{$key} : {$val}</span>
-                    </div>
-        HTML
-        ;
-                }
-
+        foreach($this->modifier as $key => $val){
+            $mod_color = $val < 0 ? "danger" : "success";
+            if($val != 0){
+                $res.= <<<HTML
+                <div class="row">
+                    <span class="badge text-bg-{$mod_color} col">{$key} : {$val}</span>
+                </div>
+HTML
+;
             }
+        }
+        return $res;
+    }
+
+    public function arrayExport(){
+        return array(
+            "name" => $this->name,
+            "duration" => $this->duration,
+            "modifier" => $this->modifier
+        );
     }
 }

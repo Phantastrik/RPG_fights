@@ -1,6 +1,5 @@
 <?php
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
-require_once 'eventStage.class.php';
 
 class Stage implements Executable {
 
@@ -16,7 +15,7 @@ class Stage implements Executable {
         return $this;
     }
     public static function generateStage(Personnage $fighterA,$stageNumber){
-        if($stageNumber %3 == 0){
+        if($stageNumber %3 == 2){
             $res = new EventStage($stageNumber,$fighterA); 
         }else{
             $res = Fight::createFromStageNumber($fighterA,$stageNumber); 
