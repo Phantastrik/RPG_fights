@@ -149,6 +149,24 @@ class Personnage implements Levelable, Caster
         array_push($this->abilities,$ab);
         return $this;
     }
+
+    public function applyEffect(Effect $e){
+        $mod = $e->getModifier();
+        $this->pvMax    += $mod["pvMax_modifier"];
+        $this->pv       += $mod["pv_modifier"];
+        $this->pmMax    += $mod["pmMax_modifier"];
+        $this->pm       += $mod["pm_modifier"];
+        $this->attaque  += $mod["attaque_modifier"];
+        $this->defense  += $mod["defense_modifier"];
+        $this->sagesse  += $mod["sagesse_modifier"];
+        $this->vitesse  += $mod["vitesse_modifier"];
+        $this->niveau   += $mod["niveau_modifier"];
+        $this->exp      += $mod["exp_modifier"];
+        $this->baseExp  += $mod["baseExp_modifier"];
+        return $this;
+    }
+
+
     // ---IMPLEMENTS Levelable
     public function levelUp()
     {

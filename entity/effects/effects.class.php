@@ -56,4 +56,28 @@ class Effect
     {
         return $this->name;
     }
+
+    public function toHTML(){
+        $res = <<<HTML
+             <div class="row">
+                <h5 class="col">
+                    <span class="badge text-bg-secondary">{$this->name}</span>
+                    <span class="badge text-bg-secondary">dur:{$this->duration}</span>
+                </h5>
+            </div>                              
+HTML
+;
+            foreach($this->modifier as $key => $val){
+                $mod_color = $val < 0 ? "danger" : "success";
+                if($val != 0){
+                    $res.= <<<HTML
+                    <div class="row">
+                        <span class="badge text-bg-{$mod_color} col">{$key} : {$val}</span>
+                    </div>
+        HTML
+        ;
+                }
+
+            }
+    }
 }
