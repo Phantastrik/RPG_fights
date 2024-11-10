@@ -51,12 +51,12 @@ class FightRound implements Observable, Executable{
             1 => null
         );
         // on determine le premier attaquant
-        if($this->fight->getFighterA()->getVitesse() > $this->fight->getFighterB()->getVitesse()){
-            $fightOrder[0] = $this->fight->getFighterA();
+        if($this->fight->getPlayer()->getVitesse() > $this->fight->getPlayer()->getVitesse()){
+            $fightOrder[0] = $this->fight->getPlayer();
             $fightOrder[1] = $this->fight->getFighterB();
         }else{
             $fightOrder[0] = $this->fight->getFighterB();
-            $fightOrder[1] = $this->fight->getFighterA();
+            $fightOrder[1] = $this->fight->getPlayer();
         } 
         $this->notification["fighter0"]["name"] = $fightOrder[0]->getName(); 
         $this->notification["fighter1"]["name"] = $fightOrder[1]->getName();

@@ -4,9 +4,11 @@ require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPAR
 class Stage implements Executable {
 
     protected $stageNumber = 0;
+    protected $player;
 
-    public function __construct($stageNumber){
+    public function __construct(Personnage $player, $stageNumber){
         $this->stageNumber = $stageNumber;
+        $this->player = $player;
     }
 
     public function execute(){

@@ -15,7 +15,6 @@ require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPAR
 
 Class Fight extends Stage implements Observer, Executable, Observable{
 
-    private Personnage $fighterA;
     private Personnage $fighterB;
     private int $roundNumber;
     private bool $done = false;
@@ -24,9 +23,9 @@ Class Fight extends Stage implements Observer, Executable, Observable{
     private $observers = [];
     private $notification = null;
 
-    public function __construct(int $stageNumber, Personnage $fighterA, Personnage $fighterB){
-        parent::__construct($stageNumber);
-        $this->fighterA = $fighterA;
+    public function __construct(int $stageNumber, Personnage $player, Personnage $fighterB){
+        parent::__construct($player, $stageNumber);
+        $this->player = $player;
         $this->fighterB = $fighterB;
         $this->roundNumber = 1;
     }
@@ -51,8 +50,8 @@ Class Fight extends Stage implements Observer, Executable, Observable{
         return $this->BWon;
     }
 
-    public function getFighterA(){
-        return $this->fighterA;
+    public function getPlayer(){
+        return $this->player;
     }
     public function getFighterB(){
         return $this->fighterB;
@@ -66,13 +65,13 @@ Class Fight extends Stage implements Observer, Executable, Observable{
     }
     public function rewardWinner(){
         if($this->AWon){
-            $this->fighterA->gainExp(
+            $this->player->gainExp(
                 round($this->fighterB->calculateExpToNextLevel()/3)
             );
         }elseif($this->BWon){
             // var_dump("fighter B gain XP");
             $this->fighterB->gainExp(
-                round($this->fighterA->calculateExpToNextLevel()/3)
+                round($this->player->calculateExpToNextLevel()/3)
             );
         }else{
 
@@ -89,10 +88,10 @@ Class Fight extends Stage implements Observer, Executable, Observable{
         if($data["done"]){
             // on verifie si un des combattants est mort;
             $this->AWon = $this->fighterB->isDead();
-            $this->BWon = $this->fighterA->isDead();
+            $this->BWon = $this->player->isDead();
             $this->done = $this->AWon || $this->BWon;
             if($this->AWon){
-                $this->notification["winner"] = $this->fighterA;
+                $this->notification["winner"] = $this->player;
             }else{
                 if($this->BWon){
                     $this->notification["winner"] = $this->fighterB;
@@ -131,7 +130,7 @@ Class Fight extends Stage implements Observer, Executable, Observable{
 
     public function toHTML(){
         $fightResult = $this->done ? 
-            ($this->AWon ? $this->fighterA->toTinyHTML() : $this->fighterB->toTinyHTML()) :
+            ($this->AWon ? $this->player->toTinyHTML() : $this->fighterB->toTinyHTML()) :
             '<span class="fs-2 text-center">NOT PLAYED</span>'
         ;
         $res = <<<HTML
@@ -141,7 +140,7 @@ Class Fight extends Stage implements Observer, Executable, Observable{
                 <span class="fs-2 text-center">Stage {$this->stageNumber}</span>
             </div>
             <div class="col">
-                {$this->fighterA->toTinyHTML()}
+                {$this->player->toTinyHTML()}
             </div>
             <div class="col">
                 <span class="fs-2 text-center">VS</span>

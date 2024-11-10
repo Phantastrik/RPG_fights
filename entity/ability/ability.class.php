@@ -71,7 +71,7 @@ class Ability
     // 
     public function applySpread($damage){
         $rand = ((mt_rand() / mt_getrandmax() * $this->spread) - $this->spread);
-        return round($damage * (1 + +$rand)); 
+        return round($damage * (1 + $rand)); 
     }
 
     public function __toString(){
