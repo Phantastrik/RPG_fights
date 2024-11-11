@@ -1,0 +1,542 @@
+{
+    "player": {
+        "name": "Roguo",
+        "pvMax": 100,
+        "pv": 100,
+        "pmMax": 100,
+        "pm": 100,
+        "attaque": 10,
+        "defense": 10,
+        "sagesse": 10,
+        "vitesse": 10,
+        "niveau": 1,
+        "className": "rogue",
+        "exp": 0,
+        "baseExp": 100,
+        "abilities": [
+            {
+                "name": "Stab",
+                "pm_cost": 0,
+                "basic_damage": 10,
+                "attaque_use": 1,
+                "defense_use": 0,
+                "sagesse_use": 0,
+                "vitesse_use": 0.5,
+                "spread": 0.2,
+                "flavor": "Attaque"
+            },
+            {
+                "name": "swoosh",
+                "pm_cost": 0,
+                "basic_damage": 10,
+                "attaque_use": 0.8,
+                "defense_use": 0.2,
+                "sagesse_use": 0,
+                "vitesse_use": 0.5,
+                "spread": 0.2,
+                "flavor": "Attaque physique"
+            }
+        ],
+        "activeEffects": [],
+        "isDead": false
+    },
+    "seed": 837253,
+    "stages": [
+        {
+            "stageNumber": 1,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Gobelin",
+                "pvMax": 91,
+                "pv": 91,
+                "pmMax": 91,
+                "pm": 91,
+                "attaque": 9,
+                "defense": 9,
+                "sagesse": 9,
+                "vitesse": 9,
+                "niveau": 1,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 2,
+            "done": false,
+            "type": "event",
+            "name": "Evenement",
+            "text": "Il se passe quelque chose l\u00e0, non ?",
+            "effects": [
+                {
+                    "name": "Random Effect",
+                    "duration": 1,
+                    "modifier": {
+                        "pvMax_modifier": 0,
+                        "pv_modifier": 97,
+                        "pmMax_modifier": 0,
+                        "pm_modifier": 0,
+                        "attaque_modifier": 0,
+                        "defense_modifier": 0,
+                        "sagesse_modifier": 0,
+                        "vitesse_modifier": 0
+                    }
+                }
+            ]
+        },
+        {
+            "stageNumber": 3,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Papillon",
+                "pvMax": 97,
+                "pv": 97,
+                "pmMax": 97,
+                "pm": 97,
+                "attaque": 11,
+                "defense": 11,
+                "sagesse": 11,
+                "vitesse": 11,
+                "niveau": 2,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 4,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Troll",
+                "pvMax": 101,
+                "pv": 101,
+                "pmMax": 101,
+                "pm": 101,
+                "attaque": 11,
+                "defense": 11,
+                "sagesse": 11,
+                "vitesse": 11,
+                "niveau": 2,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 5,
+            "done": false,
+            "type": "event",
+            "name": "Evenement",
+            "text": "Il se passe quelque chose l\u00e0, non ?",
+            "effects": [
+                {
+                    "name": "Random Effect",
+                    "duration": 1,
+                    "modifier": {
+                        "pvMax_modifier": 10,
+                        "pv_modifier": 0,
+                        "pmMax_modifier": 0,
+                        "pm_modifier": 0,
+                        "attaque_modifier": 0,
+                        "defense_modifier": 0,
+                        "sagesse_modifier": 0,
+                        "vitesse_modifier": 0
+                    }
+                }
+            ]
+        },
+        {
+            "stageNumber": 6,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Demon",
+                "pvMax": 112,
+                "pv": 112,
+                "pmMax": 112,
+                "pm": 112,
+                "attaque": 14,
+                "defense": 14,
+                "sagesse": 14,
+                "vitesse": 14,
+                "niveau": 3,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 7,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Slime",
+                "pvMax": 101,
+                "pv": 101,
+                "pmMax": 101,
+                "pm": 101,
+                "attaque": 13,
+                "defense": 13,
+                "sagesse": 13,
+                "vitesse": 13,
+                "niveau": 3,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 8,
+            "done": false,
+            "type": "event",
+            "name": "Evenement",
+            "text": "Il se passe quelque chose l\u00e0, non ?",
+            "effects": [
+                {
+                    "name": "Random Effect",
+                    "duration": 1,
+                    "modifier": {
+                        "pvMax_modifier": 0,
+                        "pv_modifier": 0,
+                        "pmMax_modifier": 6,
+                        "pm_modifier": 0,
+                        "attaque_modifier": 0,
+                        "defense_modifier": 0,
+                        "sagesse_modifier": 0,
+                        "vitesse_modifier": 0
+                    }
+                }
+            ]
+        },
+        {
+            "stageNumber": 9,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Gobelin",
+                "pvMax": 109,
+                "pv": 109,
+                "pmMax": 109,
+                "pm": 109,
+                "attaque": 17,
+                "defense": 17,
+                "sagesse": 17,
+                "vitesse": 17,
+                "niveau": 4,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 10,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Papillon",
+                "pvMax": 133,
+                "pv": 133,
+                "pmMax": 133,
+                "pm": 133,
+                "attaque": 19,
+                "defense": 19,
+                "sagesse": 19,
+                "vitesse": 19,
+                "niveau": 4,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 11,
+            "done": false,
+            "type": "event",
+            "name": "Evenement",
+            "text": "Il se passe quelque chose l\u00e0, non ?",
+            "effects": [
+                {
+                    "name": "Random Effect",
+                    "duration": 1,
+                    "modifier": {
+                        "pvMax_modifier": 0,
+                        "pv_modifier": 0,
+                        "pmMax_modifier": 0,
+                        "pm_modifier": 10,
+                        "attaque_modifier": 0,
+                        "defense_modifier": 0,
+                        "sagesse_modifier": 0,
+                        "vitesse_modifier": 0
+                    }
+                }
+            ]
+        },
+        {
+            "stageNumber": 12,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Papillon",
+                "pvMax": 124,
+                "pv": 124,
+                "pmMax": 124,
+                "pm": 124,
+                "attaque": 23,
+                "defense": 23,
+                "sagesse": 23,
+                "vitesse": 23,
+                "niveau": 5,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 13,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Gobelin",
+                "pvMax": 118,
+                "pv": 118,
+                "pmMax": 118,
+                "pm": 118,
+                "attaque": 22,
+                "defense": 22,
+                "sagesse": 22,
+                "vitesse": 22,
+                "niveau": 5,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        },
+        {
+            "stageNumber": 14,
+            "done": false,
+            "type": "event",
+            "name": "Evenement",
+            "text": "Il se passe quelque chose l\u00e0, non ?",
+            "effects": [
+                {
+                    "name": "Random Effect",
+                    "duration": 1,
+                    "modifier": {
+                        "pvMax_modifier": 0,
+                        "pv_modifier": 0,
+                        "pmMax_modifier": 9,
+                        "pm_modifier": 0,
+                        "attaque_modifier": 0,
+                        "defense_modifier": 0,
+                        "sagesse_modifier": 0,
+                        "vitesse_modifier": 0
+                    }
+                }
+            ]
+        },
+        {
+            "stageNumber": 15,
+            "done": false,
+            "type": "fight",
+            "enemy": {
+                "name": "Gobelin",
+                "pvMax": 133,
+                "pv": 133,
+                "pmMax": 133,
+                "pm": 133,
+                "attaque": 28,
+                "defense": 28,
+                "sagesse": 28,
+                "vitesse": 28,
+                "niveau": 6,
+                "className": "Monster",
+                "exp": 0,
+                "baseExp": 100,
+                "abilities": [
+                    {
+                        "name": "Poc",
+                        "pm_cost": 0,
+                        "basic_damage": 10,
+                        "attaque_use": 0.8,
+                        "defense_use": 0.2,
+                        "sagesse_use": 0,
+                        "vitesse_use": 0.5,
+                        "spread": 0.2,
+                        "flavor": "Attaque physique"
+                    }
+                ],
+                "activeEffects": [],
+                "isDead": false,
+                "statSpreadValue": 0.2
+            },
+            "playerWon": false,
+            "fightRound": []
+        }
+    ],
+    "maxStageNumber": 15
+}

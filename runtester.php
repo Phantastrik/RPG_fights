@@ -5,7 +5,6 @@ require_once 'entity/personnages/warrior.class.php';
 require_once 'entity/personnages/mage.class.php';
 require_once 'entity/personnages/rogue.class.php';
 require_once 'entity/personnages/monster.class.php';
-require_once 'entity/game/fight.class.php';
 require_once 'entity/game/run.class.php';
 require_once 'entity/game/stage.class.php';
 require_once 'entity/game/eventStage.class.php';
@@ -26,7 +25,7 @@ $run = new Run($player,15);
 $listener = new RunListener();
 $run->subscribe($listener);
 $run->notify();
-$run->playStage();
+//$run->playStage();
 
 
 /*

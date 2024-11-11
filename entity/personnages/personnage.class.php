@@ -359,6 +359,7 @@ HTML
             "sagesse" => $this->sagesse,
             "vitesse" => $this->vitesse,
             "niveau" => $this->niveau,
+            "isDead" => $this->isDead(),
             "className" => $this->className,
             "exp" => $this->exp,
             "baseExp" => $this->baseExp,

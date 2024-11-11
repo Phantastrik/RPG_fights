@@ -17,7 +17,7 @@ class Run implements Executable, Observable, ArrayExportable {
     private $observers = [];
 
 
-    public function __construct(Personnage $player,$maxStagesNumber = 10, $seed = null)
+    public function __construct(Personnage $player,$maxStagesNumber, $seed = null)
     {
         $this->maxStagesNumber = $maxStagesNumber;
         $this->seed = $seed ?? random_int(1, 1000000);  // Génère une seed si aucune n'est donnée
@@ -27,7 +27,7 @@ class Run implements Executable, Observable, ArrayExportable {
     }
 
     public function generateStages(){
-        for($i=0;$i<$this->maxStagesNumber;$i++){
+       for($i=1;$i<=$this->maxStagesNumber;$i++){
             array_push($this->stages,Stage::generateStage($this->player,$i));
         }
         return $this;
@@ -42,14 +42,14 @@ class Run implements Executable, Observable, ArrayExportable {
     }
 
     public function playStage(){
-        $undone_stages = array_filter($this->stages, function($stg){
-            return !($stg->isDone());
-        });
-        if(count($undone_stages) == 0){
-            // $this->done = true;
-        }else{
-            $undone_stages[0]->execute();
+        $played = false;
+        foreach($this->stages as $s){
+            if(!$played && !$s->isDone()){
+                $s->execute();
+                $played = true;
+            }
         }
+
         $this->notify();
         return $this;
     }

@@ -1,5 +1,15 @@
 <?php
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../webpage.class.php');
+
+if(isset($_SESSION['player'])){
+    unset($_SESSION['player']);
+}
+if(isset($_SESSION['run'])){
+    unset($_SESSION['run']);
+}
+
+
+
 $w = new Webpage("RPG Fight");
 
 $w->appendContent(<<<HTML
@@ -7,6 +17,7 @@ $w->appendContent(<<<HTML
     <div class="container">
         <canvas id="gameCanvas" width="800" height="400" ></canvas>
         <br><button onclick="startGame()">Démarrer la Partie</button>
+        <button onclick="nextRound()">Round Suivant</button>
     </div>
     
 HTML

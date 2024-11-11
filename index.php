@@ -5,6 +5,7 @@ require_once 'entity/personnages/warrior.class.php';
 require_once 'entity/personnages/mage.class.php';
 require_once 'entity/personnages/rogue.class.php';
 require_once 'entity/personnages/monster.class.php';
+require_once 'entity/game/stage.class.php';
 require_once 'entity/game/fight.class.php';
 require_once 'entity/listener/fightListener.class.php';
 require_once 'webpage.class.php';
@@ -35,7 +36,7 @@ $stateBefore = <<<HTML
 HTML
 ;
 $listener = new FightListener();
-$listener->setFightResulOnly(true);
+$listener->setFightResulOnly(false);
 
 $monster = new Monster(null,1);
 $i = 0;

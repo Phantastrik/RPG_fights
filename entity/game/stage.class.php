@@ -43,7 +43,8 @@ HTML
     // IMPLEMENT ArrayExportable
     public function arrayExport(){
         $res = array(
-          "stageNumber" => $this->stageNumber,
+         "stageNumber" => $this->stageNumber,
+         // "stageNumber" => "cul",
           "done" => $this->done
         );
         return $res;
