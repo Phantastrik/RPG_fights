@@ -1,10 +1,11 @@
 <?php
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
-
-class Stage implements Executable {
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/arrayExportable.interface.php');
+class Stage implements Executable, ArrayExportable {
 
     protected $stageNumber = 0;
     protected $player;
+    protected bool $done = false;
 
     public function __construct(Personnage $player, $stageNumber){
         $this->stageNumber = $stageNumber;
@@ -29,7 +30,23 @@ class Stage implements Executable {
     <div class="list-group-item">Stage n°{$this->stageNumber}</div>
 HTML
 ;   
-    return $res;
+        return $res;
+    }
+    public function getStageNumber(){
+        return $this->stageNumber;
+    }
+
+    public function isDone(){
+        return $this->done;
+    }
+
+    // IMPLEMENT ArrayExportable
+    public function arrayExport(){
+        $res = array(
+          "stageNumber" => $this->stageNumber,
+          "done" => $this->done
+        );
+        return $res;
     }
     
 }

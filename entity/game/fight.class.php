@@ -4,6 +4,7 @@ require_once('fightRound.class.php');
 require_once('stage.class.php');
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interfaces\observer.interface.php');
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interfaces\observable.interface.php');
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interfaces\arrayExportable.interface.php');
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
 // Fight composé de tours 
 /*
@@ -13,15 +14,17 @@ require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPAR
 */
 
 
-Class Fight extends Stage implements Observer, Executable, Observable{
+Class Fight extends Stage implements Observer, Executable, Observable, ArrayExportable{
 
     private Personnage $fighterB;
     private int $roundNumber;
-    private bool $done = false;
     private bool $AWon = false;
     private bool $BWon = false;
     private $observers = [];
     private $notification = null;
+    private $exportData = [
+        "fightRound" => array()
+    ];
 
     public function __construct(int $stageNumber, Personnage $player, Personnage $fighterB){
         parent::__construct($player, $stageNumber);
@@ -40,9 +43,7 @@ Class Fight extends Stage implements Observer, Executable, Observable{
     public function getRoundNumber(){
         return $this->roundNumber;
     }
-    public function isDone(){
-        return $this->done;
-    }
+
     public function isAWon(){
         return $this->AWon;
     }
@@ -61,6 +62,7 @@ Class Fight extends Stage implements Observer, Executable, Observable{
     public function playRound(){
         $round = new FightRound($this);
         $round->execute();
+        array_push($this->exportData["fightRound"],$round->arrayExport() );
         return $this;
     }
     public function rewardWinner(){
@@ -156,6 +158,16 @@ Class Fight extends Stage implements Observer, Executable, Observable{
     </div>
 HTML
 ;   
+        return $res;
+    }
+
+    public function arrayExport(){
+        $res = parent::arrayExport();
+        $res["type"] = "fight";
+        $res["done"] = $this->done;
+        $res["enemy"] = $this->fighterB->arrayExport();
+        $res["playerWon"] = $this->AWon;
+        $res["fightRound"] = $this->exportData["fightRound"];
         return $res;
     }
 

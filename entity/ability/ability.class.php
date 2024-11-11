@@ -1,6 +1,9 @@
 <?php
 
-class Ability
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/arrayExportable.interface.php');
+
+
+class Ability implements ArrayExportable
 {
 
     protected static $namelist = ['Pif','Bam','Frizz', 'Zoub'];
@@ -109,6 +112,20 @@ TEXT
         </li>
 HTML
         ;
+    }
+
+    public function arrayExport(){
+        return array(
+            "name" => $this->name,
+            "pm_cost" => $this->pm_cost,
+            "basic_damage" => $this->basic_damage,
+            "attaque_use"  => $this->attaque_use,
+            "defense_use" => $this->defense_use,
+            "sagesse_use" => $this->sagesse_use,
+            "vitesse_use" => $this->vitesse_use,
+            "spread" => $this->spread,
+            "flavor" => $this->flavor
+        );
     }
 
 }

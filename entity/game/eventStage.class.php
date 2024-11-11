@@ -2,20 +2,19 @@
 
 require_once __DIR__ . '/stage.class.php';
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\effects\effects.class.php');
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interface\arrayExportable.interface.php');
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interfaces\arrayExportable.interface.php');
 
 
 class EventStage extends Stage implements ArrayExportable{
     protected $name;
     protected $text;
     protected $effects = [];
-    protected $player;
 
     public function __construct(int $stageNumber, Personnage $player){
+        parent::__construct($player,$stageNumber);
         $this->name = "Evenement";
         $this->text = "Il se passe quelque chose là, non ?";
         array_push($this->effects,Effect::createRandomEffect($stageNumber/10));
-        $this->player = $player;
     }
 
     // redefinition de execute
@@ -23,6 +22,7 @@ class EventStage extends Stage implements ArrayExportable{
         foreach($this->effects as $effect){
             $this->player->applyEffect($effect);
         }
+        $this->done = true;
     }
 
     public function toHTML(){
@@ -59,16 +59,15 @@ HTML
         return $res;
     }    
     public function arrayExport(){
-        
+        $res = parent::arrayExport();
         $effects_array = array();
         foreach($this->effects as $eff){
             array_push($effects_array,$eff->arrayExport());
         }
-        array(
-            "name" => $this->name,
-            "text" => $this->text,
-            "effects" => $effects_array
-        );
-
+        $res["type"] = "event";
+        $res["name"] = $this->name;
+        $res["text"] = $this->text;
+        $res["effects"] = $effects_array;
+        return $res;
     }
 }

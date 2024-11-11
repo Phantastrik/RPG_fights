@@ -53,4 +53,11 @@ TEXT
         return $res;
     }
 
+    public function arrayExport()
+    {
+        $res = parent::arrayExport();
+        $res["statSpreadValue"] = $this->statSpreadValue;
+        return $res;
+    }
+
 }

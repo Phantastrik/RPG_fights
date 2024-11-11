@@ -11,6 +11,7 @@ require_once 'entity/game/stage.class.php';
 require_once 'entity/game/eventStage.class.php';
 require_once 'entity/game/fight.class.php';
 require_once 'entity/listener/fightListener.class.php';
+require_once 'entity/listener/runListener.class.php';
 require_once 'webpage.class.php';
 
 $w = new WebPage();
@@ -22,7 +23,13 @@ $player = new Rogue("Roguo");
 $player->addAbility(new PhysicAttackAbility("swoosh"));
 
 $run = new Run($player,15);
+$listener = new RunListener();
+$run->subscribe($listener);
+$run->notify();
+$run->playStage();
 
+
+/*
 $before_run = $run->toHTML();
 $after_run = $run->execute()->toHTML(); 
 $w->appendContent(<<<HTML
@@ -36,6 +43,7 @@ $w->appendContent(<<<HTML
     </div>
 HTML
 );
+*/
 
 $w->appendContent(<<<HTML
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

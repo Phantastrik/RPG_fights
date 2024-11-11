@@ -2,9 +2,10 @@
 
 require_once('fight.class.php');
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/observable.interface.php');
+require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/arrayExportable.interface.php');
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
 
-class FightRound implements Observable, Executable{
+class FightRound implements Observable, Executable, ArrayExportable{
 
     private $fight = null;
     private $observers = [];
@@ -24,6 +25,20 @@ class FightRound implements Observable, Executable{
             "damageReceived" => 0,
         )
     );
+    private $exportData = [
+        "done" => false,
+        "payerFirst" => false,
+        "player" => array(
+            "usedAbility" => null,
+            "damageDealt" => 0,
+            "damageReceived" => 0,
+        ),
+        "enemy" => array(
+            "usedAbility" => null,
+            "damageDealt" => 0,
+            "damageReceived" => 0,
+        )
+    ];
 
     public function __construct($fight){
         $this->fight = $fight;
@@ -52,9 +67,13 @@ class FightRound implements Observable, Executable{
         );
         // on determine le premier attaquant
         if($this->fight->getPlayer()->getVitesse() > $this->fight->getPlayer()->getVitesse()){
+            $playerFirst = true;
+            $this->exportData["playerFirst"] = $playerFirst;
+
             $fightOrder[0] = $this->fight->getPlayer();
             $fightOrder[1] = $this->fight->getFighterB();
         }else{
+            $playerFirst = false;
             $fightOrder[0] = $this->fight->getFighterB();
             $fightOrder[1] = $this->fight->getPlayer();
         } 
@@ -63,38 +82,46 @@ class FightRound implements Observable, Executable{
 
         // l'attaquant choisi une ability
         $ab = $fightOrder[0]->getAnAbility();
+        $this->exportData[$playerFirst ? "player" : "enemy"]["usedAbility"] = $ab->arrayExport();
+
         $this->notification["fighter0"]["usedAbility"] = $ab->getName(); 
         // on récupère les degats du cast
         $dmg_dealt = $fightOrder[0]->cast($ab);
         $this->notification["fighter0"]["damageDealt"] = $dmg_dealt;
+        $this->exportData[$playerFirst ? "player" : "enemy"]["damagedDealt"] = $dmg_dealt;
         
         // on applique les dégats au defenseur
         $pvLoss = $fightOrder[1]->getPv();
         $fightOrder[1]->receiveDamage($dmg_dealt);
         $pvLoss -= $fightOrder[1]->getPv();
         $this->notification["fighter1"]["damageReceived"] = $pvLoss;
-
+        $this->exportData[$playerFirst ? "enemy" : "player"]["damageReceived"] = $pvLoss;
+        
         if( !$fightOrder[1]->isDead()){
             // si il est pas mort
             // l'attaquant choisi une ability
             $ab = $fightOrder[1]->getAnAbility();
+            $this->exportData[$playerFirst ? "enemy" : "player"]["usedAbility"] = $ab->arrayExport();
             $this->notification["fighter1"]["usedAbility"] = $ab->getName(); 
             // on récupère les degats du cast
             $dmg_dealt = $fightOrder[1]->cast($ab);
             $this->notification["fighter1"]["damageDealt"] = $dmg_dealt;
-            
+            $this->exportData[$playerFirst ?  "enemy" : "player"]["damagedDealt"] = $dmg_dealt;
             // on applique les dégats au defenseur
             $pvLoss = $fightOrder[0]->getPv();
             $fightOrder[0]->receiveDamage($dmg_dealt);
             $pvLoss -= $fightOrder[0]->getPv();
             $this->notification["fighter0"]["damageReceived"] = $pvLoss;
+            $this->exportData[$playerFirst ? "player" : "enemy"]["damageReceived"] = $pvLoss;
         }
         // le tour est terminé
         $this->done =true;
+        $this->exportData["done"] = $this->done;
         $this->notify();
         return $this;
-
-        
+    }
+    public function arrayExport(){
+        return $this->exportData;
     }
 
 }

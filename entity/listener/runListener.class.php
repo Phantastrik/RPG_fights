@@ -9,6 +9,8 @@ class RunListener implements Observer{
 
     public function update($data){
         array_push($this->notificationLog,$data);
+        echo(json_encode($data));
+        echo('<hr>');
     }
     public function toHTML(){
         $i = 0;

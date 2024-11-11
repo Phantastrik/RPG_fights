@@ -2,9 +2,10 @@
 
 require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../ability/physic_attack_ability.class.php');
 require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/levelable.interface.php');
+require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/arrayExportable.interface.php');
 require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/caster.interface.php');
 
-class Personnage implements Levelable, Caster
+class Personnage implements Levelable, Caster, ArrayExportable
 {
 
     protected static $namelist = ['Andre','Roto','Zoma', 'pilmout'];
@@ -214,7 +215,6 @@ class Personnage implements Levelable, Caster
             + $this->vitesse * $ability->getVitesseUse();
 
         }
-        // var_dump($damage);
         $damage = $ability->applySpread($damage);
         return $damage;
     }
@@ -335,6 +335,36 @@ HTML
 HTML
 ;
         }
+        return $res;
+    }
+
+    // Implements arrayExportable
+    public function arrayExport(){
+        $abs = array();
+        foreach($this->abilities as $a){
+            array_push($abs,$a->arrayExport());
+        }
+        $eff = array();
+        foreach($this->activeEffects as $e){
+            array_push($eff,$e->arrayExport());
+        }
+        $res = array(
+            "name" => $this->name,
+            "pvMax" => $this->pvMax,
+            "pv" => $this->pv,
+            "pmMax" => $this->pmMax,
+            "pm" => $this->pm,
+            "attaque"  => $this->attaque,
+            "defense" => $this->defense,
+            "sagesse" => $this->sagesse,
+            "vitesse" => $this->vitesse,
+            "niveau" => $this->niveau,
+            "className" => $this->className,
+            "exp" => $this->exp,
+            "baseExp" => $this->baseExp,
+            "abilities" => $abs,
+            "activeEffects" => $eff
+        );
         return $res;
     }
 }
