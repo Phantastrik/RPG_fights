@@ -19,7 +19,7 @@ class Monster extends Personnage
         array_push($this->abilities,new PhysicAttackAbility("Poc"));
 
         // clacul des stats
-        $this->statSpreadValue = 0.2;
+        $this->statSpreadValue = 0.3;
         $this->spreadStats();
        
 

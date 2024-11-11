@@ -41,7 +41,7 @@ let playerBundle = {
         };
         mb.x = this.x;
         mb.y = this.y + 120 + hb.h + 3,
-        mb.h = 10;
+            mb.h = 10;
         mb.l = 100;
         mb.lval = Math.floor(runState.player.pm / runState.player.pmMax * mb.l);
         drawManaBar(mb);
@@ -107,7 +107,7 @@ function drawInitialScene() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     playerBundle.draw();
     drawStagesSideBar();
-    drawPlayerStats(10,10);
+    drawPlayerStats(10, 10);
 
     // ctx.fillStyle = "blue" ; // Bleu pour le joueur, rouge pour l'ennemi
     // ctx.fillRect(0, 0, 50, 50);
@@ -134,7 +134,7 @@ function drawManaBar(mb) {
     // main
     ctx.fillStyle = "white";
     ctx.fillRect(mb.x - 1, mb.y - 1, mb.l + 2, mb.h + 2);
-    ctx.fillStyle = "rgb(100,100,255)"; 
+    ctx.fillStyle = "rgb(100,100,255)";
     ctx.fillRect(mb.x, mb.y, mb.lval, mb.h);
 
 }
@@ -208,9 +208,9 @@ function drawPlayerStats(x, y) {
     const player = runState.player;
 
     // Style et configuration de la police
-    ctx.font = "12px Arial";
+    ctx.font = "12px verdana";
     ctx.fillStyle = "black";
-    
+
     // Définir les statiques du joueur dans un tableau pour affichage
     const stats = [
         `Nom: ${player.name}`,
@@ -231,16 +231,23 @@ function drawPlayerStats(x, y) {
     const boxHeight = stats.length * lineHeight + padding * 2;
 
     // Dessiner le fond de la boîte des stats
-    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";  // Fond semi-transparent
+    ctx.fillStyle = "rgba(255, 255, 255, 0)";  // Fond semi-transparent
     ctx.fillRect(x, y, boxWidth, boxHeight);
 
     // Dessiner les statistiques
     ctx.fillStyle = "black";  // Texte en noir
     stats.forEach((text, index) => {
         pad = 5;
-        ctx.fillStyle = "rgba(130,190,30,0.4)"
-        ctx.fillRect(x +padding, y+padding+pad+ (index) *lineHeight,100,20);
+        // shadow
+        ctx.fillStyle = "rgba(0,0,0,0.5)"
+        ctx.fillRect(x + padding + 2, y + padding + pad + (index) * lineHeight +2, 100, 20);
         ctx.fillStyle = "black"
-        ctx.fillText(text, x + padding + pad , y + padding + (index +1 ) * lineHeight - pad);
+        ctx.fillText(text, x + padding + pad, y + padding + (index + 1) * lineHeight - pad);
+        // main
+        ctx.fillStyle = "rgba(130,200,200,1)"
+        ctx.fillRect(x + padding, y + padding + pad + (index) * lineHeight, 100, 20);
+        ctx.fillStyle = "black"
+        ctx.fillText(text, x + padding + pad + 2, y + padding + (index + 1) * lineHeight - pad +2 );
+       
     });
 }

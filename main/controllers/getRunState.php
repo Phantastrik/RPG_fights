@@ -8,7 +8,7 @@ session_start();
 
 // Initialiser une Run en session, si ce n’est pas déjà fait
 if (!isset($_SESSION['player'])) {
-    $_SESSION['player'] = new Mage("Teddy");
+    $_SESSION['player'] = new Warrior("Wawazor");
 }
 // Initialiser une Run en session, si ce n’est pas déjà fait
 if (!isset($_SESSION['run'])) {
