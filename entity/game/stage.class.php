@@ -1,6 +1,7 @@
 <?php
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/arrayExportable.interface.php');
+require_once __DIR__.'/../../config/autoload.php';
+
+
 class Stage implements Executable, ArrayExportable {
 
     protected $stageNumber = 0;

@@ -1,17 +1,6 @@
 <?php
 
-require_once 'entity/personnages/personnage.class.php';
-require_once 'entity/personnages/warrior.class.php';
-require_once 'entity/personnages/mage.class.php';
-require_once 'entity/personnages/rogue.class.php';
-require_once 'entity/personnages/monster.class.php';
-require_once 'entity/game/run.class.php';
-require_once 'entity/game/stage.class.php';
-require_once 'entity/game/eventStage.class.php';
-require_once 'entity/game/fight.class.php';
-require_once 'entity/listener/fightListener.class.php';
-require_once 'entity/listener/runListener.class.php';
-require_once 'webpage.class.php';
+require_once __DIR__.'/config/autoload.php';
 
 $w = new WebPage();
 

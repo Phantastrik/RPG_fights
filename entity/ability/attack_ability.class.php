@@ -1,5 +1,5 @@
 <?php
-require_once "ability.class.php";
+require_once __DIR__.'/../../config/autoload.php';
 
 class AttackAbility extends Ability
 {

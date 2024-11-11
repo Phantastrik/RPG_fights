@@ -1,9 +1,5 @@
 <?php
-
-require_once('fight.class.php');
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/observable.interface.php');
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/arrayExportable.interface.php');
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../interfaces/executable.interface.php');
+require_once __DIR__.'/../../config/autoload.php';
 
 class FightRound implements Observable, Executable, ArrayExportable{
 

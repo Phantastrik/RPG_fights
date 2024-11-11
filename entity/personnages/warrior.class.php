@@ -1,6 +1,5 @@
 <?php
-require_once 'personnage.class.php';
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../ability/physic_attack_ability.class.php');
+require_once __DIR__.'/../../config/autoload.php';
 
 
 class Warrior extends Personnage

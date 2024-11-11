@@ -1,5 +1,5 @@
 <?php
-require_once "attack_ability.class.php";
+require_once __DIR__.'/../../config/autoload.php';
 
 class MagicAttackAbility extends AttackAbility
 {

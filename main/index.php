@@ -37,6 +37,11 @@ $w->appendContent(<<<HTML
 HTML
 );
 $w->appendContent(<<<HTML
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/screens/startScreen.js"></script>
+<script src="../js/screens/stageScreen.js"></script>
+<script src="../js/screens/endScreen.js"></script>
 <script src="../js/game.js"></script>
 HTML
 );

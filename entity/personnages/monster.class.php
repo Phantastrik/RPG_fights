@@ -1,5 +1,5 @@
 <?php
-require_once 'personnage.class.php';
+require_once __DIR__.'/../../config/autoload.php';
 
 class Monster extends Personnage
 {

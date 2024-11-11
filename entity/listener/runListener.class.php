@@ -1,7 +1,7 @@
 <?php
 
 
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'..\interfaces\observer.interface.php');
+require_once __DIR__.'/../../config/autoload.php';
 
 class RunListener implements Observer{
 
