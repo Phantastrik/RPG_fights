@@ -143,3 +143,50 @@ function drawPlayerStats(x, y) {
        
     });
 }
+
+
+// Variables pour le chargement de l'image et l'animation
+let spriteSheet;
+let currentFrame = 0;
+let frameWidth = 128;  // Largeur d'une seule frame dans le sprite sheet
+let frameHeight = 128;  // Hauteur d'une seule frame
+let frameCount = 6;  // Nombre total de frames dans la sprite sheet
+let animationSpeed = 100;  // Vitesse d'animation en millisecondes
+let lastUpdateTime = 0;
+
+// Fonction pour dessiner l'animation d'un personnage
+function drawCharacter(name, x, y) {
+    // Charger la sprite sheet si elle n'est pas déjà chargée
+    if (!spriteSheet) {
+        spriteSheet = new Image();
+        spriteSheet.src = `../assets/player/rogue_sprite.png`;  // Charger le fichier basé sur le nom
+    }
+
+    // Définir la vitesse d'animation pour alterner les frames
+    let now = Date.now();
+    if (now - lastUpdateTime > animationSpeed) {
+        currentFrame = (currentFrame + 1) % frameCount;  // Passer à la frame suivante
+        lastUpdateTime = now;
+    }
+
+    // Calculer la position de la frame actuelle dans la sprite sheet
+    let sourceX = currentFrame * frameWidth;
+    let sourceY = 0;  // Supposons une seule ligne d'animation
+
+    // Dessiner la frame actuelle sur le canvas
+    ctx.clearRect(x, y, frameWidth, frameHeight);  // Effacer l'emplacement précédent
+    ctx.drawImage(
+        spriteSheet,
+        sourceX, sourceY, frameWidth, frameHeight,  // Découpe de la frame
+        x, y, frameWidth, frameHeight               // Position de la frame sur le canvas
+    );
+}
+
+// Fonction d'animation
+function animate() {
+    // Appeler `drawCharacter` avec la position souhaitée
+    drawCharacter("characterName", 100, 100);
+
+    requestAnimationFrame(animate);  // Boucle d'animation
+}
+

@@ -15,6 +15,8 @@ function showStartScreen() {
 
     // Dessiner le personnage sélectionné
     drawCharacterSelection();
+    // Démarrer l'animation en appelant `animate()`
+animate();
 
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleCharacterSelection);
