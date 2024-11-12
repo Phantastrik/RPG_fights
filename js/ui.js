@@ -2,6 +2,8 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 ctx.width = CANVAS_DIMENSIONS.width;
 ctx.height = CANVAS_DIMENSIONS.height;
+ctx.font = "10px verdana";
+ctx.textAlign = "left"
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -82,11 +84,9 @@ function drawStagesSideBar() {
         // -------texte--------
         shadowPad = 1;
         //shadow
-        ctx.font = "10px verdana";
         ctx.fillStyle = SSB.stageTextColor;
         ctx.fillText(stage.text, stage.x + SSB.textLPad, stage.y + (stage.h / 2) + 5, stage.w);
         // dessin
-        ctx.font = "10px verdana";
         ctx.fillStyle = SSB.stageTextColor;
         ctx.fillText(stage.text, stage.x + SSB.textLPad, stage.y + (stage.h / 2) + 5, stage.w);
 
@@ -99,8 +99,7 @@ function drawStagesSideBar() {
 function drawPlayerStats(x, y) {
     const player = runState.player;
 
-    // Style et configuration de la police
-    ctx.font = "12px verdana";
+    // Style et configuration de la police;
     ctx.fillStyle = "black";
 
     // Définir les statiques du joueur dans un tableau pour affichage
@@ -148,10 +147,10 @@ function drawPlayerStats(x, y) {
 // Variables pour le chargement de l'image et l'animation
 let spriteSheet;
 let currentFrame = 0;
-let frameWidth = 128;  // Largeur d'une seule frame dans le sprite sheet
-let frameHeight = 128;  // Hauteur d'une seule frame
-let frameCount = 6;  // Nombre total de frames dans la sprite sheet
-let animationSpeed = 100;  // Vitesse d'animation en millisecondes
+let frameWidth = 256    ;  // Largeur d'une seule frame dans le sprite sheet
+let frameHeight = 256;  // Hauteur d'une seule frame
+let frameCount = 20;  // Nombre total de frames dans la sprite sheet
+let animationSpeed = 150;  // Vitesse d'animation en millisecondes
 let lastUpdateTime = 0;
 
 // Fonction pour dessiner l'animation d'un personnage
@@ -169,10 +168,21 @@ function drawCharacter(name, x, y) {
         lastUpdateTime = now;
     }
 
-    // Calculer la position de la frame actuelle dans la sprite sheet
-    let sourceX = currentFrame * frameWidth;
-    let sourceY = 0;  // Supposons une seule ligne d'animation
-
+    
+    spriteSource = {
+        walk : {x:0,y:0,frames:8},
+        run : {x:0,y:256,frames:7},
+        attaques : [ 
+            {x:0,y:768,frames:7},
+            {x:0,y:1024,frames:9},
+            {x:0,y:1280,frames:16}
+        ]
+    };
+    let state = spriteSource.run;
+   frameCount = state.frames;
+  // Calculer la position de la frame actuelle dans la sprite sheet
+  let sourceX = currentFrame * frameWidth + state.x;
+  let sourceY = 0 + state.y;  // Supposons une seule ligne d'animation
     // Dessiner la frame actuelle sur le canvas
     ctx.clearRect(x, y, frameWidth, frameHeight);  // Effacer l'emplacement précédent
     ctx.drawImage(
