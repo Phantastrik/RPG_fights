@@ -36,7 +36,7 @@ $w->appendContent(<<<HTML
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 HTML
 );
-/*$w->appendContent(<<<HTML
+$w->appendContent(<<<HTML
 <script src="../js/config.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/ui.js"></script>
@@ -45,11 +45,11 @@ HTML
 <script src="../js/screens/endScreen.js"></script>
 <script src="../js/game.js"></script>
 HTML
-);*/
-$w->appendContent(<<<HTML
+);
+/*$w->appendContent(<<<HTML
 <script src="../js/old.game.js"></script>
 HTML
-);
+);*/
 echo($w->toHTML());
 
 // <script src="game.js"></script>
