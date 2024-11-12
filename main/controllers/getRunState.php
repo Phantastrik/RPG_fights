@@ -8,7 +8,7 @@ session_start();
 
 // Initialiser une Run en session, si ce n’est pas déjà fait
 if (!isset($_SESSION['player'])) {
-    $_SESSION['player'] = new Warrior("Wawazor");
+    $_SESSION['player'] = Warrior::createFromPreset();
 }
 // Initialiser une Run en session, si ce n’est pas déjà fait
 if (!isset($_SESSION['run'])) {

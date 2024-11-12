@@ -70,7 +70,16 @@ class Ability implements ArrayExportable
     public function getSpread(){
         return $this->spread;
     }
-
+    public function setStats($stats){
+        $this->pm_cost      = $stats["pm_cost"];
+        $this->basic_damage = $stats["basic_damage"];
+        $this->attaque_use  = $stats["attaque_use"];
+        $this->defense_use  = $stats["defense_use"];
+        $this->sagesse_use  = $stats["sagesse_use"];
+        $this->vitesse_use = $stats["vitesse_use"];
+        $this->spread = $stats["spread"];
+        return $this;
+    }
     // 
     public function applySpread($damage){
         $rand = ((mt_rand() / mt_getrandmax() * $this->spread) - $this->spread);

@@ -9,7 +9,11 @@ class Warrior extends Personnage
         parent::__construct($name);
         $this->className = "warrior";
         
-        array_push($this->abilities,new PhysicAttackAbility("Klong"));
+        // array_push($this->abilities,new PhysicAttackAbility("Klong"));
+    }
+
+    public static function createFromPreset() :Warrior{
+        return Presets::getPreset_PLAYER()["warrior"];
     }
 
     public function levelUp()

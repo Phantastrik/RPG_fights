@@ -32,6 +32,9 @@ class Effect implements ArrayExportable
         $this->name = $name;
         $this->duration = $duration;
     }
+    public static function createFromPreset() : self{
+        return Presets::getPreset_EFFECT()[array_rand(Presets::getPreset_EFFECT())];
+    }
 
     public static function createRandomEffect($spread=0.3){
         $res =  new Effect("Random Effect",1);

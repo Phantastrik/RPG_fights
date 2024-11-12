@@ -7,7 +7,12 @@ class Mage extends Personnage
     public function __construct($name){
         parent::__construct($name);
         $this->className = "mage";
-        array_push($this->abilities,new MagicAttackAbility("Bang",15));
+        // array_push($this->abilities,new MagicAttackAbility("Bang",15));
+    }
+
+    
+    public static function createFromPreset() :Mage{
+        return Presets::getPreset_PLAYER()["mage"];
     }
 
     public function levelUp()

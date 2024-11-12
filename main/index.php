@@ -1,5 +1,5 @@
 <?php
-require_once(realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).'../webpage.class.php');
+require_once __DIR__.'/../config/autoload.php';
 
 if(isset($_SESSION['player'])){
     unset($_SESSION['player']);
@@ -36,13 +36,18 @@ $w->appendContent(<<<HTML
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 HTML
 );
-$w->appendContent(<<<HTML
+/*$w->appendContent(<<<HTML
+<script src="../js/config.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/ui.js"></script>
 <script src="../js/screens/startScreen.js"></script>
 <script src="../js/screens/stageScreen.js"></script>
 <script src="../js/screens/endScreen.js"></script>
 <script src="../js/game.js"></script>
+HTML
+);*/
+$w->appendContent(<<<HTML
+<script src="../js/old.game.js"></script>
 HTML
 );
 echo($w->toHTML());

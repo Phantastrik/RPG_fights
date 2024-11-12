@@ -7,7 +7,7 @@ class MagicAttackAbility extends AttackAbility
     protected static $namelist = ['Woosh','Bang','Storm', 'Badaboom'];
 	
 
-    public function __construct($name,$pm_cost){
+    public function __construct($name,$pm_cost =0){
         parent::__construct(
             is_null($name) ? 
                 self::$namelist[rand(0,count(self::$namelist)-1)] : 
@@ -20,7 +20,9 @@ class MagicAttackAbility extends AttackAbility
         $this->vitesse_use = 0.25;
         $this->flavor = "Attaque magique";
     }
-  
+    public static function createFromPreset() : self{
+        return Presets::getPreset_ABILITIES()["magic"][array_rand(Presets::getPreset_ABILITIES()["magic"])];
+    }
 
     public function __toString(){
         $res = <<<TEXT

@@ -18,6 +18,9 @@ class PhysicAttackAbility extends AttackAbility
         $this->sagesse_use = 0;
         $this->flavor = "Attaque physique";
     }
+    public static function createFromPreset() : self{
+        return Presets::getPreset_ABILITIES()["physic"][array_rand(Presets::getPreset_ABILITIES()["physic"])];
+    }
   
 
     public function __toString(){

@@ -8,7 +8,12 @@ class Rogue extends Personnage
         parent::__construct($name);
         $this->className = "rogue";
         
-        array_push($this->abilities,new AttackAbility("Stab"));
+        // array_push($this->abilities,new AttackAbility("Stab"));
+    }
+
+    
+    public static function createFromPreset() :Rogue{
+        return Presets::getPreset_PLAYER()["rogue"];
     }
 
     public function levelUp()

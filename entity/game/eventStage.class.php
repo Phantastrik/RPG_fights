@@ -9,9 +9,10 @@ class EventStage extends Stage implements ArrayExportable{
 
     public function __construct(int $stageNumber, Personnage $player){
         parent::__construct($player,$stageNumber);
-        $this->name = "Evenement";
-        $this->text = "Il se passe quelque chose là, non ?";
-        array_push($this->effects,Effect::createRandomEffect($stageNumber/10));
+        $effect = Effect::createFromPreset();
+        $this->name = $effect->getName();
+        $this->text = "Evenement";
+        array_push($this->effects,$effect);
     }
 
     // redefinition de execute
