@@ -3,7 +3,52 @@ const ctx = canvas.getContext("2d");
 ctx.width = CANVAS_DIMENSIONS.width;
 ctx.height = CANVAS_DIMENSIONS.height;
 ctx.font = "10px verdana";
-ctx.textAlign = "left"
+ctx.textAlign = "left";
+// Variables pour le chargement de l'image et l'animation
+let spriteSheet;
+let currentFrame = 0; // Nombre total de frames dans la sprite sheet
+let animationSpeed = 100;  // Vitesse d'animation en millisecondes
+let lastUpdateTime = 0;
+let playerAnimationId = null;
+let spriteSource = {
+    warrior: {
+        frameWidth: 256,
+        frameHeight: 256,
+        src: `../assets/player/warrior_sprite.png`,
+        walk: { x: 0, y: 0, frameCount: 8,},
+        run: { x: 0, y: 256, frameCount: 7 },
+        attaques: [
+            { x: 0, y: 512, frameCount: 6 },
+            { x: 0, y: 768, frameCount: 5 },
+            { x: 0, y: 1024, frameCount: 4 },
+            { x: 0, y: 1280, frameCount: 4 }
+        ]
+    },
+    rogue: {
+        frameWidth: 256,
+        frameHeight: 256,
+        src: `../assets/player/rogue_sprite.png`,
+        walk: { x: 0, y: 256, frameCount: 9 },
+        run: { x: 0, y: 512, frameCount: 8 },
+        attaques: [
+            { x: 0, y: 768, frameCount: 4 },
+            { x: 0, y: 1024, frameCount: 5 },
+            { x: 0, y: 1280, frameCount: 4 },
+        ]
+    },
+    mage: {
+        frameWidth: 256,
+        frameHeight: 256,
+        src: `../assets/player/mage_sprite.png`,
+        walk: { x: 0, y: 256, frameCount: 7},
+        run: { x: 0, y: 512, frameCount: 8},
+        attaques: [
+            { x: 0, y: 768, frameCount: 7 },
+            { x: 0, y: 1024, frameCount: 9 },
+            { x: 0, y: 1280, frameCount: 16 }
+        ]
+    }
+};
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -61,7 +106,7 @@ function drawStagesSideBar() {
         );
         i++;
     });
-    console.log(SSB);
+    //console.log(SSB);
     // ---------encadré a droite
     shadowPad = 2;
     // shadow 
@@ -131,72 +176,72 @@ function drawPlayerStats(x, y) {
         pad = 5;
         // shadow
         ctx.fillStyle = "rgba(0,0,0,0.5)"
-        ctx.fillRect(x + padding + 2, y + padding + pad + (index) * lineHeight +2, 100, 20);
+        ctx.fillRect(x + padding + 2, y + padding + pad + (index) * lineHeight + 2, 100, 20);
         ctx.fillStyle = "black"
         ctx.fillText(text, x + padding + pad, y + padding + (index + 1) * lineHeight - pad);
         // main
         ctx.fillStyle = "rgba(130,200,200,1)"
         ctx.fillRect(x + padding, y + padding + pad + (index) * lineHeight, 100, 20);
         ctx.fillStyle = "black"
-        ctx.fillText(text, x + padding + pad + 2, y + padding + (index + 1) * lineHeight - pad +2 );
-       
+        ctx.fillText(text, x + padding + pad + 2, y + padding + (index + 1) * lineHeight - pad + 2);
+
     });
 }
 
 
-// Variables pour le chargement de l'image et l'animation
-let spriteSheet;
-let currentFrame = 0;
-let frameWidth = 256    ;  // Largeur d'une seule frame dans le sprite sheet
-let frameHeight = 256;  // Hauteur d'une seule frame
-let frameCount = 20;  // Nombre total de frames dans la sprite sheet
-let animationSpeed = 150;  // Vitesse d'animation en millisecondes
-let lastUpdateTime = 0;
+
 
 // Fonction pour dessiner l'animation d'un personnage
-function drawCharacter(name, x, y) {
+function drawCharacter(charData, state, x, y,stateVariant) {
     // Charger la sprite sheet si elle n'est pas déjà chargée
-    if (!spriteSheet) {
-        spriteSheet = new Image();
-        spriteSheet.src = `../assets/player/rogue_sprite.png`;  // Charger le fichier basé sur le nom
+    let stateAnimation = charData[state];
+    
+   // console.log(stateAnimation);
+    if(stateVariant !== undefined){
+       // console.log(stateAnimation);
+        stateAnimation = charData[state][stateVariant];
     }
-
+    // console.log(state);
+    // console.log(stateAnimation);
+    // console.log(stateAnimation.y);
+    // Charger une nouvelle sprite sheet si l'état a changé
+    if (!spriteSheet || spriteSheet.src !== charData.src) {
+        spriteSheet = new Image();
+        spriteSheet.src = charData.src;
+    }
+   // console.log(stateAnimation);
     // Définir la vitesse d'animation pour alterner les frames
     let now = Date.now();
     if (now - lastUpdateTime > animationSpeed) {
-        currentFrame = (currentFrame + 1) % frameCount;  // Passer à la frame suivante
+        currentFrame = (currentFrame + 1) % stateAnimation.frameCount;  // Passer à la frame suivante
         lastUpdateTime = now;
     }
-
-    
-    spriteSource = {
-        walk : {x:0,y:0,frames:8},
-        run : {x:0,y:256,frames:7},
-        attaques : [ 
-            {x:0,y:768,frames:7},
-            {x:0,y:1024,frames:9},
-            {x:0,y:1280,frames:16}
-        ]
-    };
-    let state = spriteSource.run;
-   frameCount = state.frames;
-  // Calculer la position de la frame actuelle dans la sprite sheet
-  let sourceX = currentFrame * frameWidth + state.x;
-  let sourceY = 0 + state.y;  // Supposons une seule ligne d'animation
+    // frameCount = charData[state].frameCount;
+    // Calculer la position de la frame actuelle dans la sprite sheet
+    sourceX = (currentFrame *  charData.frameWidth) + stateAnimation.x;
+    sourceY = 0 + stateAnimation.y;
     // Dessiner la frame actuelle sur le canvas
-    ctx.clearRect(x, y, frameWidth, frameHeight);  // Effacer l'emplacement précédent
+    ctx.clearRect(x, y, charData.frameWidth, charData.frameHeight);  // Effacer l'emplacement précédent
     ctx.drawImage(
         spriteSheet,
-        sourceX, sourceY, frameWidth, frameHeight,  // Découpe de la frame
-        x, y, frameWidth, frameHeight               // Position de la frame sur le canvas
+        sourceX, sourceY, charData.frameWidth, charData.frameHeight,  // Découpe de la frame
+        x, y, charData.frameWidth, charData.frameHeight               // Position de la frame sur le canvas
     );
 }
 
 // Fonction d'animation
-function animate() {
+function animate(charData, state, x, y,stateVariant) {
     // Appeler `drawCharacter` avec la position souhaitée
-    drawCharacter("characterName", 100, 100);
+    drawCharacter(spriteSource[charData], state, x, y,stateVariant);
 
-    requestAnimationFrame(animate);  // Boucle d'animation
+    playerAnimationId = requestAnimationFrame(() => animate(charData, state, x, y,stateVariant));  // Boucle d'animation
 }
 
+// Fonction pour démarrer l'animation avec un nouveau personnage ou un nouvel état
+function startAnimation(charData, state, x, y,stateVariant) {
+    // Annule l'animation précédente s'il y en a une
+    if (playerAnimationId !== null) {
+        cancelAnimationFrame(playerAnimationId);
+    }
+    animate(charData, state, x, y,stateVariant);  // Lance la première frame de l'animation
+}
