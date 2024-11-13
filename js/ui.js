@@ -193,9 +193,10 @@ function drawPlayerStats(x, y) {
 
 // Fonction pour dessiner l'animation d'un personnage
 function drawCharacter(charData, state, x, y,stateVariant) {
+    // console.log(state);
     // Charger la sprite sheet si elle n'est pas déjà chargée
     let stateAnimation = charData[state];
-    
+    // console.log(stateAnimation);
    // console.log(stateAnimation);
     if(stateVariant !== undefined){
        // console.log(stateAnimation);
@@ -232,6 +233,7 @@ function drawCharacter(charData, state, x, y,stateVariant) {
 // Fonction d'animation
 function animate(charData, state, x, y,stateVariant) {
     // Appeler `drawCharacter` avec la position souhaitée
+    // console.log(charData);
     drawCharacter(spriteSource[charData], state, x, y,stateVariant);
 
     playerAnimationId = requestAnimationFrame(() => animate(charData, state, x, y,stateVariant));  // Boucle d'animation
@@ -244,4 +246,21 @@ function startAnimation(charData, state, x, y,stateVariant) {
         cancelAnimationFrame(playerAnimationId);
     }
     animate(charData, state, x, y,stateVariant);  // Lance la première frame de l'animation
+}
+
+function headerGUI(text){
+    let pad = 10;
+    // Shadow     
+     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";  // Fond semi-transparent
+     ctx.fillRect(2+pad, 2+pad, ctx.width-2*pad, 75);
+     // main
+     ctx.fillStyle = "rgba(255, 200, 180, 1)";  // Fond semi-transparent
+     ctx.fillRect(0+pad, 0+pad, ctx.width-2*pad, 75);
+
+     ctx.fillStyle = "black";
+     ctx.font = 'bold 30px Bestigia';
+     ctx.textAlign = "center"; 
+     ctx.fillText(text, ctx.width/2, 50);
+
+
 }

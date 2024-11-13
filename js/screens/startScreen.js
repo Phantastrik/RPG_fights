@@ -32,8 +32,8 @@ function drawCharacterSelection() {
     // Démarrer l'animation en appelant `animate()`
     // console.log(characters[selectedIndex]);
     // console.log(spriteSource[characters[selectedIndex]]);
-    startAnimation(characters[selectedIndex],"walk",100,100);
-
+    startAnimation(characters[selectedIndex],"walk",-50, 100);
+    headerGUI("CHOOSE PLAYER");
     ctx.fillText(characters[selectedIndex], canvas.width / 2, canvas.height / 2);
 }
 
