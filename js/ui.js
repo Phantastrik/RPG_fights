@@ -15,7 +15,7 @@ let spriteSource = {
         frameWidth: 256,
         frameHeight: 256,
         src: `../assets/player/warrior_sprite.png`,
-        walk: { x: 0, y: 0, frameCount: 8,},
+        walk: { x: 0, y: 0, frameCount: 8, },
         run: { x: 0, y: 256, frameCount: 7 },
         attaques: [
             { x: 0, y: 512, frameCount: 6 },
@@ -40,8 +40,8 @@ let spriteSource = {
         frameWidth: 256,
         frameHeight: 256,
         src: `../assets/player/mage_sprite.png`,
-        walk: { x: 0, y: 256, frameCount: 7},
-        run: { x: 0, y: 512, frameCount: 8},
+        walk: { x: 0, y: 256, frameCount: 7 },
+        run: { x: 0, y: 512, frameCount: 8 },
         attaques: [
             { x: 0, y: 768, frameCount: 7 },
             { x: 0, y: 1024, frameCount: 9 },
@@ -85,8 +85,8 @@ function drawStagesSideBar() {
         y: SSBpad,
         w: Math.floor(ctx.width / 4) - (2 * SSBpad),
         h: ctx.height - (2 * SSBpad),
-        backgroundColor: "rgba(255,255,240,0.3)",
-        stageTextColor: "white",
+        backgroundColor: UI_COLORS.primary,
+        stageTextColor: UI_COLORS.text.light,
         textLPad: 10,
         stages: []
     }
@@ -101,7 +101,7 @@ function drawStagesSideBar() {
                 text: (stage.stageNumber + " " + (stage.type == "event" ? (stage.type + " " + stage.name) : stage.type)),
                 w: (SSB.w - (pad * 2)),
                 h: hei,
-                stageBackgroundColor: (stage.done ? "#bfb9ac" : "#ad8a5f"),
+                stageBackgroundColor: (stage.done ? UI_COLORS.primary : UI_COLORS.secondary),
             }
         );
         i++;
@@ -145,7 +145,7 @@ function drawPlayerStats(x, y) {
     const player = runState.player;
 
     // Style et configuration de la police;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = UI_COLORS.text.dark;
 
     // Définir les statiques du joueur dans un tableau pour affichage
     const stats = [
@@ -192,14 +192,14 @@ function drawPlayerStats(x, y) {
 
 
 // Fonction pour dessiner l'animation d'un personnage
-function drawCharacter(charData, state, x, y,stateVariant) {
+function drawCharacter(charData, state, x, y, stateVariant) {
     // console.log(state);
     // Charger la sprite sheet si elle n'est pas déjà chargée
     let stateAnimation = charData[state];
     // console.log(stateAnimation);
-   // console.log(stateAnimation);
-    if(stateVariant !== undefined){
-       // console.log(stateAnimation);
+    // console.log(stateAnimation);
+    if (stateVariant !== undefined) {
+        // console.log(stateAnimation);
         stateAnimation = charData[state][stateVariant];
     }
     // console.log(state);
@@ -210,7 +210,7 @@ function drawCharacter(charData, state, x, y,stateVariant) {
         spriteSheet = new Image();
         spriteSheet.src = charData.src;
     }
-   // console.log(stateAnimation);
+    // console.log(stateAnimation);
     // Définir la vitesse d'animation pour alterner les frames
     let now = Date.now();
     if (now - lastUpdateTime > animationSpeed) {
@@ -219,7 +219,7 @@ function drawCharacter(charData, state, x, y,stateVariant) {
     }
     // frameCount = charData[state].frameCount;
     // Calculer la position de la frame actuelle dans la sprite sheet
-    sourceX = (currentFrame *  charData.frameWidth) + stateAnimation.x;
+    sourceX = (currentFrame * charData.frameWidth) + stateAnimation.x;
     sourceY = 0 + stateAnimation.y;
     // Dessiner la frame actuelle sur le canvas
     ctx.clearRect(x, y, charData.frameWidth, charData.frameHeight);  // Effacer l'emplacement précédent
@@ -231,36 +231,98 @@ function drawCharacter(charData, state, x, y,stateVariant) {
 }
 
 // Fonction d'animation
-function animate(charData, state, x, y,stateVariant) {
+function animate(charData, state, x, y, stateVariant) {
     // Appeler `drawCharacter` avec la position souhaitée
     // console.log(charData);
-    drawCharacter(spriteSource[charData], state, x, y,stateVariant);
+    drawCharacter(spriteSource[charData], state, x, y, stateVariant);
 
-    playerAnimationId = requestAnimationFrame(() => animate(charData, state, x, y,stateVariant));  // Boucle d'animation
+    playerAnimationId = requestAnimationFrame(() => animate(charData, state, x, y, stateVariant));  // Boucle d'animation
 }
 
 // Fonction pour démarrer l'animation avec un nouveau personnage ou un nouvel état
-function startAnimation(charData, state, x, y,stateVariant) {
+function startAnimation(charData, state, x, y, stateVariant) {
     // Annule l'animation précédente s'il y en a une
     if (playerAnimationId !== null) {
         cancelAnimationFrame(playerAnimationId);
     }
-    animate(charData, state, x, y,stateVariant);  // Lance la première frame de l'animation
+    animate(charData, state, x, y, stateVariant);  // Lance la première frame de l'animation
 }
 
-function headerGUI(text){
+function headerGUI(text) {
     let pad = 10;
     // Shadow     
-     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";  // Fond semi-transparent
-     ctx.fillRect(2+pad, 2+pad, ctx.width-2*pad, 75);
-     // main
-     ctx.fillStyle = "rgba(255, 200, 180, 1)";  // Fond semi-transparent
-     ctx.fillRect(0+pad, 0+pad, ctx.width-2*pad, 75);
+    ctx.fillStyle = UI_COLORS.shadow;  // Fond semi-transparent
+    ctx.fillRect(2 + pad, 2 + pad, ctx.width - 2 * pad, 75);
+    // main
+    ctx.fillStyle = UI_COLORS.primary;  // Fond semi-transparent
+    ctx.fillRect(0 + pad, 0 + pad, ctx.width - 2 * pad, 75);
 
-     ctx.fillStyle = "black";
-     ctx.font = 'bold 30px Bestigia';
-     ctx.textAlign = "center"; 
-     ctx.fillText(text, ctx.width/2, 50);
+    // text
+    ctx.fillStyle = "black";
+    ctx.font = 'bold 30px Bestigia';
+    ctx.textAlign = "center";
+    ctx.fillText(text, ctx.width / 2, 50);
+
+}
+
+function drawCharacterSelectionSelected(text, x, y) {
+    // -- BOX --
+    size = {
+        w: 200,
+        h: 60
+    }
+    // Shadow
+    ctx.fillStyle = UI_COLORS.shadow;  // Fond noir semi-transparent
+    ctx.fillRect(x - (size.w / 2) + 2, y - (size.h / 2) + 2, size.w, size.h);
+    // main
+    ctx.fillStyle = UI_COLORS.secondary;
+    ctx.fillRect(x - (size.w / 2), y - (size.h / 2), size.w, size.h);
+    // --- TEXT -- 
+
+    ctx.textAlign = "center";
+    ctx.font = "30 px";
+    // shadow
+    ctx.fillStyle = UI_COLORS.shadow
+    ctx.fillText(text, x + 2, y + 12);
+    // main
+    ctx.fillStyle = UI_COLORS.text.light
+    ctx.fillText(text, x, y + 10);
+}
+function drawAbility(ability, x, y) {
+    flavors = {
+        "Attaque physique": {
+            color: UI_COLORS.abilities.physicAttack,
+            textColor : UI_COLORS.text.dark,
+        },
+        "Attaque magique": {
+            color: UI_COLORS.abilities.magicAttack,
+            textColor : UI_COLORS.text.dark
+        }
+    };
+    // -- BOX --
+    size = {
+        w: 50,
+        h: 30
+    }
+    // Shadow
+    ctx.fillStyle = UI_COLORS.shadow;  // Fond noir semi-transparent
+    ctx.fillRect(x - (size.w / 2) + 2, y - (size.h / 2) + 2, size.w, size.h);
+    // main
+    ctx.fillStyle = flavors[ability.flavor].color;
+    ctx.fillRect(x - (size.w / 2), y - (size.h / 2), size.w, size.h);
+    // --- TEXT -- 
+
+    ctx.textAlign = "center";
+    ctx.font = "15 px";
+    // shadow
+    ctx.fillStyle = UI_COLORS.shadow
+    ctx.fillText(ability.name, x + 2, y + 12);
+    // main
+    ctx.fillStyle = flavors[ability.flavor].textColor
+    ctx.fillText(ability.name, x, y + 10);
+
+    console.log(ctx.fillStyle);
 
 
+    //// Work IN Progress
 }

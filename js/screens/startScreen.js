@@ -1,21 +1,20 @@
 // Variables globales pour la sélection de personnage
-let characters = ["warrior", "rogue", "mage"];
+let characters = [];
 let selectedIndex = 0;
 
 // Fonction pour afficher l'écran de démarrage
-function showStartScreen() {
+function showStartScreen(playerPreset) {
     // Effacer le canvas
+    Object.keys(playerPreset).forEach(key => {
+        characters.push(key);
+    });
+  //  console.log(playerPreset[1]);
     clearCanvas();
-
-    // Afficher les instructions
-    // ctx.font = "20px Arial";
-    // ctx.fillStyle = "black";
-    // ctx.fillText("Sélectionnez un personnage :", 100, 100);
-    // ctx.fillText("Utilisez Q et D pour changer, Entrée pour valider.", 100, 130);
 
     // Dessiner le personnage sélectionné
     drawCharacterSelection();
-   
+
+
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleCharacterSelection);
 }
@@ -24,17 +23,13 @@ function showStartScreen() {
 function drawCharacterSelection() {
     // Effacer la zone de sélection
     clearCanvas();
-
     // Calculer la position et afficher le personnage sélectionné
-  // ctx.font = "30px Arial";
-  //  ctx.fillStyle = "blue";
-   // ctx.textAlign = "center";
-    // Démarrer l'animation en appelant `animate()`
-    // console.log(characters[selectedIndex]);
-    // console.log(spriteSource[characters[selectedIndex]]);
     startAnimation(characters[selectedIndex],"walk",-50, 100);
     headerGUI("CHOOSE PLAYER");
-    ctx.fillText(characters[selectedIndex], canvas.width / 2, canvas.height / 2);
+  
+    drawCharacterSelectionSelected(characters[selectedIndex],ctx.width/2,ctx.height/2);
+    drawAbility(playerPreset[characters[selectedIndex]].abilities[0],100,100);
+
 }
 
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages

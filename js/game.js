@@ -1,7 +1,11 @@
 let runState;
+let playerPreset;
 
 function startGame() {
-    showStartScreen();
+    fetchPlayerPreset().then(response => {
+        playerPreset = response;
+        showStartScreen(playerPreset);
+    });
 }
 
 function initRun(characterClass) {

@@ -12,3 +12,6 @@ function deleteSession() {
 function fetchNextRound() {
     return fetch(API_ROUTES.fetchNextRound).then(response => response.json());
 }
+function fetchPlayerPreset() {
+    return fetch(API_ROUTES.fetchPlayerPresets).then(response => response.json());
+}
