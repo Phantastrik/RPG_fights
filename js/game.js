@@ -2,10 +2,12 @@ let runState;
 let playerPreset;
 
 function startGame() {
-    fetchPlayerPreset().then(response => {
-        playerPreset = response;
-        showStartScreen(playerPreset);
-    });
+    deleteSession().then(
+        fetchPlayerPreset().then(response => {
+            playerPreset = response;
+            showStartScreen(playerPreset);
+        })
+    );
 }
 
 function initRun(characterClass) {
@@ -16,10 +18,10 @@ function initRun(characterClass) {
     });
 }
 
-function nextRound() {
-    fetchNextRound().then(state => {
+function nextRound(choosedAbility) {
+    fetchNextRound(choosedAbility).then(state => {
         runState = state;
-        showStageScreen(runState);
+        // showStageScreen(runState);
     });
 }
 

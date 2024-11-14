@@ -114,6 +114,10 @@ class Personnage implements Levelable, Caster, ArrayExportable
         $res = $this->abilities[rand(0,count($this->abilities)-1)];
         return $res;
     }
+
+    public function getAbilities(){
+        return $this->abilities;
+    }
     //
     public function usePm(int $cost) :bool{
         $res = true;

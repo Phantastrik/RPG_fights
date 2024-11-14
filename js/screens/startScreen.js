@@ -29,7 +29,9 @@ function handleCharacterSelection(event) {
         startStartScreenAnimation();
     } else if (event.key === "Enter") {
         // Valider le choix
+        cancelAnimationFrame(startScreenAnimationId);
         selectCharacter();
+        initRun();
     }
 }
 
@@ -37,7 +39,7 @@ function handleCharacterSelection(event) {
 function selectCharacter() {
     document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
      // Passer à l'écran suivant ou initialiser la partie avec le personnage sélectionné
-    initRun(characters[selectedIndex]);
+    //initRun(characters[selectedIndex]);
 }
 
 // Animation / dessin de l'ecran de démarrage

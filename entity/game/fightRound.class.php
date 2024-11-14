@@ -6,6 +6,7 @@ class FightRound implements Observable, Executable, ArrayExportable{
     private $fight = null;
     private $observers = [];
     private $done = false;
+    private $choosedAbility = null;
     private $notification = array(
         "done"  => false,
         "fighter0" => array(
@@ -55,6 +56,12 @@ class FightRound implements Observable, Executable, ArrayExportable{
             $obs->update($this->notification);
         }
     }
+    public function setChoosedAbility($ab){
+        $this->choosedAbility = $ab;
+        $this->exportData["choosedAbility"] = $this->choosedAbility;
+        return $this;
+    }
+
     // ---IMPLEMENTS Executable
     public function execute(){
         $fightOrder = array(
@@ -77,7 +84,11 @@ class FightRound implements Observable, Executable, ArrayExportable{
         $this->notification["fighter1"]["name"] = $fightOrder[1]->getName();
 
         // l'attaquant choisi une ability
-        $ab = $fightOrder[0]->getAnAbility();
+        if($playerFirst && $this->choosedAbility != null){
+            $ab = $fightOrder[0]->getAbilities()[$this->choosedAbility];    
+        }else{
+            $ab = $fightOrder[0]->getAnAbility();
+        }
         $this->exportData[$playerFirst ? "player" : "enemy"]["usedAbility"] = $ab->arrayExport();
 
         $this->notification["fighter0"]["usedAbility"] = $ab->getName(); 
@@ -96,7 +107,11 @@ class FightRound implements Observable, Executable, ArrayExportable{
         if( !$fightOrder[1]->isDead()){
             // si il est pas mort
             // l'attaquant choisi une ability
-            $ab = $fightOrder[1]->getAnAbility();
+            if(!$playerFirst && $this->choosedAbility != null){
+                $ab = $fightOrder[1]->getAbilities()[$this->choosedAbility];    
+            }else{
+                $ab = $fightOrder[1]->getAnAbility();
+            }
             $this->exportData[$playerFirst ? "enemy" : "player"]["usedAbility"] = $ab->arrayExport();
             $this->notification["fighter1"]["usedAbility"] = $ab->getName(); 
             // on récupère les degats du cast

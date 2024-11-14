@@ -53,8 +53,11 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     }
 
     // 
-    public function playRound(){
+    public function playRound($choosedAbility = null){
         $round = new FightRound($this);
+        if ($choosedAbility != null) {
+            $round->setChoosedAbility($choosedAbility);
+        }
         $round->execute();
         array_push($this->exportData["fightRound"],$round->arrayExport() );
         return $this;

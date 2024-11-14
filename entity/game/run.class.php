@@ -48,6 +48,25 @@ class Run implements Executable, Observable, ArrayExportable {
         $this->notify();
         return $this;
     }
+    public function playRound($choosedAbility = null){
+        
+        $played = false;
+        foreach($this->stages as $s){
+            var_dump($s->isDone());
+            if(!$played && !$s->isDone()){
+               
+                if(gettype($s) == "Fight"){
+                    $s->playRound($choosedAbility);
+                }else{  
+                    $s->execute();
+                } 
+                $played = true;
+            }
+        }
+
+        $this->notify();
+        return $this;
+    }
 
     // IMPLEMENTS Executable
     public function execute(){
