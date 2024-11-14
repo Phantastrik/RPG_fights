@@ -10,82 +10,7 @@ let frameSheet;
 let currentFrame = 0; // Nombre total de frames dans la sprite sheet
 let animationSpeed = 100;  // Vitesse d'animation en millisecondes
 let lastUpdateTime = 0;
-let spriteSource = {
-    warrior: {
-        frameWidth: 256,
-        frameHeight: 256,
-        displayWidth: 256,
-        displayHeight: 256,
-        xcrop: 75,
-        ycrop: 75,
-        src: `../assets/player/warrior_sprite.png`,
-        walk: { x: 0, y: 0, frameCount: 8, },
-        run: { x: 0, y: 256, frameCount: 7 },
-        attaques: [
-            { x: 0, y: 512, frameCount: 6 },
-            { x: 0, y: 768, frameCount: 5 },
-            { x: 0, y: 1024, frameCount: 4 },
-            { x: 0, y: 1280, frameCount: 4 }
-        ]
-    },
-    rogue: {
-        frameWidth: 256,
-        frameHeight: 256,
-        displayWidth: 256,
-        displayHeight: 256,
-        xcrop: 75,
-        ycrop: 75,
-        src: `../assets/player/rogue_sprite.png`,
-        walk: { x: 0, y: 256, frameCount: 9 },
-        run: { x: 0, y: 512, frameCount: 8 },
-        attaques: [
-            { x: 0, y: 768, frameCount: 4 },
-            { x: 0, y: 1024, frameCount: 5 },
-            { x: 0, y: 1280, frameCount: 4 },
-        ]
-    },
-    mage: {
-        frameWidth: 256,
-        frameHeight: 256,
-        displayWidth: 256,
-        displayHeight: 256,
-        xcrop: 75,
-        ycrop: 75,
-        src: `../assets/player/mage_sprite.png`,
-        walk: { x: 0, y: 256, frameCount: 7 },
-        run: { x: 0, y: 512, frameCount: 8 },
-        attaques: [
-            { x: 0, y: 768, frameCount: 7 },
-            { x: 0, y: 1024, frameCount: 9 },
-            { x: 0, y: 1280, frameCount: 16 }
-        ]
-    }
-};
-let frameSheet_data = {
-    src: `../assets/UI/frames.png`,
-    frameWidth: 32,
-    frameHeight: 32,
-    cellSize: 32,
-    elements: {
-        panel: {
-            top_left: { x: 0, y: 5 },
-            top: { x: 1, y: 5 },
-            top_right: { x: 2, y: 5 },
-            middle_left: { x: 0, y: 6 },
-            middle: { x: 1, y: 6 },
-            middle_right: { x: 2, y: 6 },
-            bottom_left: { x: 0, y: 7 },
-            bottom: { x: 1, y: 7 },
-            bottom_right: { x: 2, y: 7 }
-        }
-    },
-    getSource: function (element) {
-        return {
-            x: element.x * this.cellSize,
-            y: element.y * this.cellSize,
-        }
-    }
-}
+
 
 /** ========== Utilitaires ========== **/
 function clearCanvas() {
@@ -158,57 +83,35 @@ function drawPlayerStats(x, y) {
 
 /** ========== Interface de Sélection de Personnage ========== **/
 function headerGUI(text) {
-    /* drawBox(10, 10, ctx.width - 20, 75, UI_COLORS.primary);
-     drawShadowedText(text, ctx.width / 2, 50, 2,
-         UI_COLORS.shadow,
-         UI_COLORS.text.dark,
-         UI_FONTS.getFont("big", "primary"));
- */
-    // GUI image
-    if (!frameSheet || frameSheet.src !== frameSheet_data.src) {
-        frameSheet = new Image();
-        frameSheet.src = frameSheet_data.src;
-    }
-    header_size = ctx.width / 2;
-    header_start = (ctx.width - header_size)/2;
-    let padding = header_size % frameSheet_data.cellSize;
-    let nb_cell = Math.floor(header_size/ frameSheet_data.cellSize);
-    
-    left_source = frameSheet_data.getSource(frameSheet_data.elements.panel.bottom_left);
-    middle_source = frameSheet_data.getSource(frameSheet_data.elements.panel.bottom);
-    right_source = frameSheet_data.getSource(frameSheet_data.elements.panel.bottom_right);
-
-    ctx.drawImage(frameSheet, left_source.x, left_source.y,
-        frameSheet_data.cellSize, frameSheet_data.cellSize,
-        padding+header_start, 0,
-        frameSheet_data.cellSize, frameSheet_data.cellSize * 2);
-    // coin  droit
-    ctx.drawImage(frameSheet, right_source.x, right_source.y,
-        frameSheet_data.cellSize, frameSheet_data.cellSize,
-        header_start + (nb_cell *  frameSheet_data.cellSize -padding ), 0,
-        frameSheet_data.cellSize, frameSheet_data.cellSize * 2);
-
-    for (let index = 1; index < nb_cell - 1; index++) {
-        // dessin millieu
-        ctx.drawImage(frameSheet, middle_source.x, middle_source.y,
-            frameSheet_data.cellSize, frameSheet_data.cellSize,
-            header_start + padding + (frameSheet_data.cellSize * index), 0,
-            frameSheet_data.cellSize, frameSheet_data.cellSize * 2);
-    }
+    // panneau de fond
+    pos = grid.pos(-1,-1);
+    drawPanel(pos.x,pos.y,27,3);
     // texte 
+    pos = grid.pos(16,4);
     ctx.testAlign = "center";
-    drawShadowedText(text, ctx.width / 2, 30, 2,
+    drawShadowedText(text, pos.x, pos.y, 2,
         UI_COLORS.shadow,
         UI_COLORS.text.light,
         UI_FONTS.getFont("big", "primary"));
 }
 
 function drawCharacterSelectionSelected(text, x, y) {
-    drawBox(x - 100, y - 30, 200, 60, UI_COLORS.secondary);
-    drawShadowedText(text, x, y + 10, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
+    //drawBox(x - 100, y - 30, 200, 60, UI_COLORS.secondary);
+    // panneau de fond
+    pos = grid.pos(x,y);
+    //console.log(pos);
+    drawPanel(pos.x,pos.y,5,2,"secondary");
+    ctx.textAlign = "center";
+    pos = grid.pos(x+3,y+3);
+    drawShadowedText(text, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
 }
 // box avec image
-function drawPanel(x,y,width,height){
+function drawPanel(x,y,width,height,color = "primary"){
+    // chargement de lm'image si nécessaire
+    if (!frameSheet || frameSheet.src !== frameSheet_data.src[color]) {
+        frameSheet = new Image();
+        frameSheet.src = frameSheet_data.src[color];
+    }
     for (let i = 0; i < width; i++) {
         
         for (let j=0; j<height; j++) {
@@ -323,7 +226,6 @@ function drawAbility(ability, x, y) {
         "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark }
     };
 
-
     drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h, flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,
@@ -336,20 +238,23 @@ function drawAbility(ability, x, y) {
         UI_FONTS.getFont("tiny", "secondary"));
 }
 function drawCharacterAbilities(character_to_draw, x, y) {
-    drawBox(x - abilities_sizing.w / 2,
-        y - abilities_sizing.h / 2,
+    pos = grid.pos(x,y);
+    
+    drawBox(pos.x - abilities_sizing.w / 2,
+        pos.y - abilities_sizing.h / 2,
         abilities_sizing.w,
         abilities_sizing.h,
         UI_COLORS.primary);
-    drawShadowedText("Abilities", x, y,
+    ctx.textAlign = "center";
+    drawShadowedText("Abilities", pos.x, pos.y,
         UI_CONFIG.shadowPad,
         UI_COLORS.shadow,
         UI_COLORS.text.light,
         UI_FONTS.getFont("medium", "primary"));
-    ctx.textAlign = "center";
+    
     let i = 1;
     character_to_draw.abilities.forEach(element => {
-        drawAbility(element, x, y + (i * (abilities_sizing.h + 2)));
+        drawAbility(element, pos.x, pos.y + (i * (abilities_sizing.h + 2)));
         i++;
     });
 }

@@ -15,7 +15,7 @@ $w = new Webpage("RPG Fight");
 $w->appendContent(<<<HTML
     <h1>RPG Fight Game</h1>
     <div class="container">
-        <canvas id="gameCanvas" width="800" height="400" ></canvas>
+        <canvas id="gameCanvas" width="800" height="416" ></canvas>
         <br><button onclick="startGame()">Démarrer la Partie</button>
         <button onclick="nextRound()">Round Suivant</button>
     </div>
