@@ -22,11 +22,11 @@ function handleCharacterSelection(event) {
     if (event.key === "q" || event.key === "Q") {
         // Aller à gauche dans la sélection
         selectedIndex = (selectedIndex - 1 + characters.length) % characters.length;
-        drawCharacterSelection();
+        startStartScreenAnimation();
     } else if (event.key === "d" || event.key === "D") {
         // Aller à droite dans la sélection
         selectedIndex = (selectedIndex + 1) % characters.length;
-        drawCharacterSelection();
+        startStartScreenAnimation();
     } else if (event.key === "Enter") {
         // Valider le choix
         selectCharacter();
@@ -45,11 +45,18 @@ function animateStartScreen() {
     // Effacer la zone de sélection
     clearCanvas();
     // player sprite
-    drawCharacter(spriteSource[characters[selectedIndex]],"walk",200, 100);
+    drawCharacter(spriteSource[characters[selectedIndex]],ctx.width/10,2*(ctx.height)/5,"walk");
     // choosed player box
-    drawCharacterSelectionSelected(characters[selectedIndex],ctx.width/2,ctx.height/2);
+    drawCharacterSelectionSelected(characters[selectedIndex],ctx.width/2,ctx.height/3);
     // player description
-    drawAbility(playerPreset[characters[selectedIndex]].abilities[0],100,100);
+    /*
+    i = 0
+    playerPreset[characters[selectedIndex]].abilities.forEach(element => {
+        drawAbility(element,(ctx.width/5)*2,ctx.height/5*(3+i/2)+(2*i));
+        i++;
+    }); */
+    drawCharacterAbilities(playerPreset[characters[selectedIndex]],ctx.width/2,(ctx.height/6)*3);
+    
     // bandeau header de l'ecran
     headerGUI("CHOOSE PLAYER");
 

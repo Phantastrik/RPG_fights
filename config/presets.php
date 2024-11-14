@@ -151,10 +151,13 @@ class Presets
 
         self::$preset_player_warrior = new Warrior(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
         self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["shieldBash"]);
+        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["tacle"]);
         self::$preset_player_rogue = new Rogue(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
         self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["stab"]);
+        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["tacle"]);
         self::$preset_player_mage = new Mage(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
         self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["fizz"]);
+        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["woosh"]);
 
         self::$preset_PLAYER = array(
             "warrior" => self::$preset_player_warrior,
