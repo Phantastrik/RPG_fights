@@ -37,6 +37,8 @@ $w->appendContent(<<<HTML
 HTML
 );
 $w->appendContent(<<<HTML
+
+<script src="../js/style.js"></script>
 <script src="../js/config.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/ui.js"></script>

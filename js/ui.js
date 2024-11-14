@@ -9,7 +9,6 @@ let spriteSheet;
 let currentFrame = 0; // Nombre total de frames dans la sprite sheet
 let animationSpeed = 100;  // Vitesse d'animation en millisecondes
 let lastUpdateTime = 0;
-let playerAnimationId = null;
 let spriteSource = {
     warrior: {
         frameWidth: 256,
@@ -50,11 +49,12 @@ let spriteSource = {
     }
 };
 
+// remise a blanc de l'ecran
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-/// Fonction de dessin 
+/// Player - stats - health bar
 function drawHealthBar(hb) {
     // shadow
     ctx.strokeStyle = "black";
@@ -66,6 +66,7 @@ function drawHealthBar(hb) {
     ctx.fillRect(hb.x, hb.y, hb.lval, hb.h);
 
 }
+// Player - stats - mana bar
 function drawManaBar(mb) {
     // shadow
     ctx.strokeStyle = "black";
@@ -77,7 +78,7 @@ function drawManaBar(mb) {
     ctx.fillRect(mb.x, mb.y, mb.lval, mb.h);
 
 }
-// dessin de la liste des stages
+// stageScreen - UI - stages
 function drawStagesSideBar() {
     SSBpad = 10;
     SSB = {
@@ -140,7 +141,7 @@ function drawStagesSideBar() {
 
 }
 
-
+// Player - stats - all
 function drawPlayerStats(x, y) {
     const player = runState.player;
 
@@ -191,26 +192,18 @@ function drawPlayerStats(x, y) {
 
 
 
-// Fonction pour dessiner l'animation d'un personnage
+// Charactr - draw from spritesheet 
 function drawCharacter(charData, state, x, y, stateVariant) {
-    // console.log(state);
-    // Charger la sprite sheet si elle n'est pas déjà chargée
     let stateAnimation = charData[state];
-    // console.log(stateAnimation);
-    // console.log(stateAnimation);
+    // Charger la sprite sheet si elle n'est pas déjà chargée
     if (stateVariant !== undefined) {
-        // console.log(stateAnimation);
         stateAnimation = charData[state][stateVariant];
     }
-    // console.log(state);
-    // console.log(stateAnimation);
-    // console.log(stateAnimation.y);
     // Charger une nouvelle sprite sheet si l'état a changé
     if (!spriteSheet || spriteSheet.src !== charData.src) {
         spriteSheet = new Image();
         spriteSheet.src = charData.src;
     }
-    // console.log(stateAnimation);
     // Définir la vitesse d'animation pour alterner les frames
     let now = Date.now();
     if (now - lastUpdateTime > animationSpeed) {
@@ -230,41 +223,27 @@ function drawCharacter(charData, state, x, y, stateVariant) {
     );
 }
 
-// Fonction d'animation
-function animate(charData, state, x, y, stateVariant) {
-    // Appeler `drawCharacter` avec la position souhaitée
-    // console.log(charData);
-    drawCharacter(spriteSource[charData], state, x, y, stateVariant);
-
-    playerAnimationId = requestAnimationFrame(() => animate(charData, state, x, y, stateVariant));  // Boucle d'animation
-}
-
-// Fonction pour démarrer l'animation avec un nouveau personnage ou un nouvel état
-function startAnimation(charData, state, x, y, stateVariant) {
-    // Annule l'animation précédente s'il y en a une
-    if (playerAnimationId !== null) {
-        cancelAnimationFrame(playerAnimationId);
-    }
-    animate(charData, state, x, y, stateVariant);  // Lance la première frame de l'animation
-}
-
+// StartScreen - GUI - Header
 function headerGUI(text) {
     let pad = 10;
     // Shadow     
     ctx.fillStyle = UI_COLORS.shadow;  // Fond semi-transparent
-    ctx.fillRect(2 + pad, 2 + pad, ctx.width - 2 * pad, 75);
+    ctx.fillRect(UI_CONFIG.shadowPad + pad,
+                 UI_CONFIG.shadowPad + pad,
+                 ctx.width - 2 * pad, 75);
     // main
     ctx.fillStyle = UI_COLORS.primary;  // Fond semi-transparent
     ctx.fillRect(0 + pad, 0 + pad, ctx.width - 2 * pad, 75);
 
     // text
-    ctx.fillStyle = "black";
-    ctx.font = 'bold 30px Bestigia';
+    ctx.fillStyle = UI_COLORS.text.dark
+    ctx.font = UI_FONTS.getFont("big","primary");
     ctx.textAlign = "center";
     ctx.fillText(text, ctx.width / 2, 50);
 
 }
 
+// StartScreen - GUI - character selector
 function drawCharacterSelectionSelected(text, x, y) {
     // -- BOX --
     size = {
@@ -273,21 +252,29 @@ function drawCharacterSelectionSelected(text, x, y) {
     }
     // Shadow
     ctx.fillStyle = UI_COLORS.shadow;  // Fond noir semi-transparent
-    ctx.fillRect(x - (size.w / 2) + 2, y - (size.h / 2) + 2, size.w, size.h);
+    ctx.fillRect(x - (size.w / 2) + UI_CONFIG.shadowPad,
+                 y - (size.h / 2) + UI_CONFIG.shadowPad,
+                 size.w, size.h);
     // main
     ctx.fillStyle = UI_COLORS.secondary;
-    ctx.fillRect(x - (size.w / 2), y - (size.h / 2), size.w, size.h);
+    ctx.fillRect(x - (size.w / 2),
+                 y - (size.h / 2),
+                 size.w, size.h);
     // --- TEXT -- 
 
     ctx.textAlign = "center";
-    ctx.font = "30 px";
+    ctx.font = UI_FONTS.getFont("big","primary");
     // shadow
     ctx.fillStyle = UI_COLORS.shadow
-    ctx.fillText(text, x + 2, y + 12);
+    ctx.fillText(text,
+                x + UI_CONFIG.shadowpad,
+                y + UI_CONFIG.shadowPad + 10 );
     // main
     ctx.fillStyle = UI_COLORS.text.light
     ctx.fillText(text, x, y + 10);
 }
+
+// Player - ability
 function drawAbility(ability, x, y) {
     flavors = {
         "Attaque physique": {
@@ -306,17 +293,20 @@ function drawAbility(ability, x, y) {
     }
     // Shadow
     ctx.fillStyle = UI_COLORS.shadow;  // Fond noir semi-transparent
-    ctx.fillRect(x - (size.w / 2) + 2, y - (size.h / 2) + 2, size.w, size.h);
+    ctx.fillRect(x - (size.w / 2) + UI_CONFIG.shadowpad,
+                 y - (size.h / 2) + UI_CONFIG.shadowPad, size.w, size.h);
     // main
     ctx.fillStyle = flavors[ability.flavor].color;
     ctx.fillRect(x - (size.w / 2), y - (size.h / 2), size.w, size.h);
     // --- TEXT -- 
 
     ctx.textAlign = "center";
-    ctx.font = "15 px";
+    ctx.font = UI_FONTS.getFont("medium","primary");
     // shadow
     ctx.fillStyle = UI_COLORS.shadow
-    ctx.fillText(ability.name, x + 2, y + 12);
+    ctx.fillText(ability.name,
+                x + UI_CONFIG.shadowPad,
+                y + 10 + UI_CONFIG.shadowPad);
     // main
     ctx.fillStyle = flavors[ability.flavor].textColor
     ctx.fillText(ability.name, x, y + 10);

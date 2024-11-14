@@ -1,6 +1,7 @@
 // Variables globales pour la sélection de personnage
 let characters = [];
 let selectedIndex = 0;
+let startScreenAnimationId = null; //id pour l'animation
 
 // Fonction pour afficher l'écran de démarrage
 function showStartScreen(playerPreset) {
@@ -8,28 +9,12 @@ function showStartScreen(playerPreset) {
     Object.keys(playerPreset).forEach(key => {
         characters.push(key);
     });
-  //  console.log(playerPreset[1]);
+    //  console.log(playerPreset[1]);
     clearCanvas();
-
     // Dessiner le personnage sélectionné
-    drawCharacterSelection();
-
-
+    startStartScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleCharacterSelection);
-}
-
-// Fonction pour dessiner le personnage actuellement sélectionné
-function drawCharacterSelection() {
-    // Effacer la zone de sélection
-    clearCanvas();
-    // Calculer la position et afficher le personnage sélectionné
-    startAnimation(characters[selectedIndex],"walk",-50, 100);
-    headerGUI("CHOOSE PLAYER");
-  
-    drawCharacterSelectionSelected(characters[selectedIndex],ctx.width/2,ctx.height/2);
-    drawAbility(playerPreset[characters[selectedIndex]].abilities[0],100,100);
-
 }
 
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages
@@ -51,7 +36,31 @@ function handleCharacterSelection(event) {
 // Fonction pour valider la sélection et passer à l'écran suivant
 function selectCharacter() {
     document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
-    // console.log("Personnage sélectionné :", characters[selectedIndex]);
-    // Passer à l'écran suivant ou initialiser la partie avec le personnage sélectionné
+     // Passer à l'écran suivant ou initialiser la partie avec le personnage sélectionné
     initRun(characters[selectedIndex]);
+}
+
+// Animation / dessin de l'ecran de démarrage
+function animateStartScreen() {
+    // Effacer la zone de sélection
+    clearCanvas();
+    // player sprite
+    drawCharacter(spriteSource[characters[selectedIndex]],"walk",200, 100);
+    // choosed player box
+    drawCharacterSelectionSelected(characters[selectedIndex],ctx.width/2,ctx.height/2);
+    // player description
+    drawAbility(playerPreset[characters[selectedIndex]].abilities[0],100,100);
+    // bandeau header de l'ecran
+    headerGUI("CHOOSE PLAYER");
+
+    startScreenAnimationId = requestAnimationFrame(() => animateStartScreen());  // Boucle d'animation
+}
+
+// Fonction pour démarrer l'animation avec un nouvel état
+function startStartScreenAnimation() {
+    // Annule l'animation précédente s'il y en a une
+    if (startScreenAnimationId !== null) {
+        cancelAnimationFrame(startScreenAnimationId);
+    }
+    animateStartScreen();  // Lance la première frame de l'animation
 }
