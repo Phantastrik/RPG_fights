@@ -61,6 +61,7 @@ function animateStartScreen() {
     
     // bandeau header de l'ecran
     headerGUI("CHOOSE PLAYER");
+     drawPanel(400,100,7,2);
 
     startScreenAnimationId = requestAnimationFrame(() => animateStartScreen());  // Boucle d'animation
 }
