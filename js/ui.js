@@ -157,31 +157,13 @@ function drawPanel(x, y, width, height, color = "primary") {
 
 /** ========== Affichage des Stages ========== **/
 function drawStagesSideBar() {
-    /*const SSBpad = 10;
-    const SSB = {
-        x: Math.floor(ctx.width / 4) * 3 + SSBpad,
-        y: SSBpad,
-        w: Math.floor(ctx.width / 4) - (2 * SSBpad),
-        h: ctx.height - (2 * SSBpad),
-        stages: []
-    };*/
+
     // fond 
     pos = grid.pos(20, -1);
-    console.log(grid.y_subdivision);
-
-   // drawBox(pos.x,pos.y,dim.x,dim.y,UI_COLORS.light);
     drawPanel(pos.x,pos.y,6,grid.y_subdivision+2,"secondary");
+    // etages
     runState.stages.forEach((stage, i) => {
         const pad = 10;
-       /* SSB.stages.push({
-            x: SSB.x + pad,
-            y: SSB.y + pad + (height + pad) * i,
-            text: `${stage.stageNumber} ${stage.type === "event" ? stage.type + " " + stage.name : stage.type}`,
-            width: SSB.w - (pad * 2),
-            height,
-            color: stage.done ? UI_COLORS.primary : UI_COLORS.secondary
-        }); */
-        console.log(i);
         pos = grid.pos(20,2*i);
         dim = grid.pos(5,1);
         // drawBox(pos.x+pad, pos.y+pad*(i+1), dim.x, dim.y, UI_COLORS.primary);
@@ -192,15 +174,11 @@ function drawStagesSideBar() {
 
     });
 
-    // drawBox(SSB.x, SSB.y, SSB.w, SSB.h, UI_COLORS.primary);
-  /*  SSB.stages.forEach(stage => {
-        drawBox(stage.x, stage.y, stage.width, stage.height, stage.color);
-        drawShadowedText(stage.text, stage.x + 10, stage.y + stage.height / 2 + 5, 1, UI_COLORS.shadow, UI_COLORS.text.light);
-    });*/
 }
 
 /** ========== Affichage des Personnages ========== **/
 function drawCharacter(charData, x, y, state, stateVariant) {
+    
     const stateAnimation = stateVariant !== undefined ? charData[state][stateVariant] : charData[state];
 
     if (!spriteSheet || spriteSheet.src !== charData.src) {
@@ -228,7 +206,35 @@ function drawCharacter(charData, x, y, state, stateVariant) {
         charData.displayWidth - charData.xcrop,
         charData.displayHeight - charData.ycrop);
 }
+function drawMonster(name, x, y, state, stateVariant) {
 
+    const stateAnimation = stateVariant !== undefined ? monster_spritesheet_data[name][state][stateVariant] : monster_spritesheet_data[name][state];
+    console.log(stateAnimation); 
+    if (monster_spritesheet_data[name].img === null || monster_spritesheet_data[name].img.src !== monster_spritesheet_data[name].src) {
+        monster_spritesheet_data[name].img = new Image();
+        monster_spritesheet_data[name].img.src = monster_spritesheet_data[name].src;
+    }
+
+    const now = Date.now();
+    if (now - lastUpdateTime > animationSpeed) {
+        currentFrame = (currentFrame + 1) % stateAnimation.frameCount;
+        lastUpdateTime = now;
+    }
+
+    const sourceX = currentFrame * monster_spritesheet_data[name].frameWidth + stateAnimation.x;
+    const sourceY = stateAnimation.y;
+
+    ctx.clearRect(x, y, monster_spritesheet_data[name].frameWidth - monster_spritesheet_data[name].xcrop,
+        monster_spritesheet_data[name].frameHeight - monster_spritesheet_data[name].ycrop);
+    ctx.drawImage(monster_spritesheet_data[name].img,
+        sourceX + monster_spritesheet_data[name].xcrop,
+        sourceY + monster_spritesheet_data[name].ycrop,
+        monster_spritesheet_data[name].frameWidth - monster_spritesheet_data[name].xcrop,
+        monster_spritesheet_data[name].frameHeight - monster_spritesheet_data[name].ycrop,
+        x, y,
+        (monster_spritesheet_data[name].displayWidth - monster_spritesheet_data[name].xcrop),
+        monster_spritesheet_data[name].displayHeight - monster_spritesheet_data[name].ycrop);
+}
 
 /** ========== Affichage des Abilities ========== **/
 const abilities_sizing = {

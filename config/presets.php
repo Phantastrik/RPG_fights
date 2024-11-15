@@ -42,11 +42,11 @@ class Presets
         );
         // Monster Names
         self::$preset_MONSTER_NAMES = array(
-            "Gobelin",
-            "Papillon",
-            "Kobold",
-            "Wazo",
-            "Rhino",
+            "gobelin",
+            "papillon",
+            "kobold",
+            "wazo",
+            "rhino",
             "Vilnius",
             "Zumba",
             "Cafeu",

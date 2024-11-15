@@ -147,4 +147,23 @@ const frameSheet_data = {
             y: element.y * this.cellSize,
         }
     }
-}
+};
+const monster_spritesheet_data = {
+    gobelin : {
+        img : null,
+        src : `../assets/monster/gobelin_sprite.png`,
+        frameWidth: 96,
+        frameHeight: 96,
+        displayWidth: 128,
+        displayHeight: 128,
+        xcrop: 0,
+        ycrop: 0,
+        walk: { x: 0, y: 96, frameCount: 7 },
+        run: { x: 0, y: 192, frameCount: 6 },
+        attaques: [
+            { x: 0, y: 288, frameCount: 4 },
+            { x: 0, y: 384, frameCount: 4 },
+            { x: 0, y: 480, frameCount: 4 }
+        ]
+    }
+};

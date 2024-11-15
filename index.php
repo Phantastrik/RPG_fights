@@ -35,8 +35,8 @@ $stateBefore = <<<HTML
     </div>    
 HTML
 ;
-$listener = new FightListener();
-$listener->setFightResulOnly(false);
+$listener = new RunListener();
+
 
 $monster = new Monster(null,1);
 $i = 0;

@@ -31,7 +31,7 @@ function handleCharacterSelection(event) {
         // Valider le choix
         cancelAnimationFrame(startScreenAnimationId);
         selectCharacter();
-        initRun();
+        initRun(characters[selectedIndex]);
     }
 }
 
@@ -51,12 +51,6 @@ function animateStartScreen() {
     // choosed player box
     drawCharacterSelectionSelected(characters[selectedIndex],10,4);
     // player description
-    /*
-    i = 0
-    playerPreset[characters[selectedIndex]].abilities.forEach(element => {
-        drawAbility(element,(ctx.width/5)*2,ctx.height/5*(3+i/2)+(2*i));
-        i++;
-    }); */
     drawCharacterAbilities(playerPreset[characters[selectedIndex]],12.5,7);
     
     // bandeau header de l'ecran
