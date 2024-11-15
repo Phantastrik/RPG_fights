@@ -10,7 +10,7 @@ const UI_COLORS = {
     light: '#FFFFFF',
     text: {
         light: '#ffffff',
-        medium : '#444444',
+        medium: '#444444',
         dark: '#000000'
     },
     abilities: {
@@ -29,7 +29,7 @@ const UI_COLORS = {
 }
 const UI_FONTS = {
     size: {
-        tiny : "10px",
+        tiny: "10px",
         small: "15px",
         medium: "20px",
         big: "30px"
@@ -45,13 +45,22 @@ const UI_FONTS = {
 
 // grille d'accroche
 const grid = {
-    x_subdivision : 25,
-    y_subdivision : 12,
-    x_center : CANVAS_DIMENSIONS.width/2,
-    y_center : CANVAS_DIMENSIONS.height/2,
+    x_subdivision: 25,
+    y_subdivision: 13,
+    x_center: CANVAS_DIMENSIONS.width / 2,
+    y_center: CANVAS_DIMENSIONS.height / 2,
+    cell_width : null,
+    cell_height : null,
     // return the real pixel position
-    pos : function(gridx,gridy){
-        return {x : gridx*this.x_subdivision, y: gridy*this.y_subdivision};
+    pos: function (gridx, gridy) {
+        if(this.cell_width === null){
+            this.cell_width = CANVAS_DIMENSIONS.width/this.x_subdivision;
+        }
+        if(this.cell_height === null){
+            this.cell_height = CANVAS_DIMENSIONS.height/this.y_subdivision;
+        }
+        // console.log(this); 
+        return { x: gridx * this.cell_width, y: gridy * this.cell_height };
     }
 };
 
@@ -108,9 +117,13 @@ let spriteSource = {
     }
 };
 const frameSheet_data = {
-    src: {
-        primary : `../assets/UI/frames_primary.png`,
-        secondary : `../assets/UI/frames_secondary.png` 
+    primary: {
+        src: `../assets/UI/frames_primary.png`,
+        img: null,
+    },
+    secondary: {
+        src: `../assets/UI/frames_secondary.png`,
+        img: null
     },
     frameWidth: 32,
     frameHeight: 32,

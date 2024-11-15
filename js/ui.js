@@ -6,7 +6,6 @@ ctx.font = "10px verdana";
 ctx.textAlign = "left";
 // Variables pour le chargement de l'image et l'animation
 let spriteSheet;
-let frameSheet;
 let currentFrame = 0; // Nombre total de frames dans la sprite sheet
 let animationSpeed = 100;  // Vitesse d'animation en millisecondes
 let lastUpdateTime = 0;
@@ -84,12 +83,13 @@ function drawPlayerStats(x, y) {
 /** ========== Interface de Sélection de Personnage ========== **/
 function headerGUI(text) {
     // panneau de fond
-    pos = grid.pos(-1,-1);
-    drawPanel(pos.x,pos.y,27,3);
+    pos = grid.pos(-1, -1);
+    drawPanel(pos.x, pos.y, 27, 3);
     // texte 
-    pos = grid.pos(16,4);
+    pos = grid.pos(16, 1);
+   
     ctx.testAlign = "center";
-    drawShadowedText(text, pos.x, pos.y, 2,
+    drawShadowedText(text, grid.x_center, pos.y, 2,
         UI_COLORS.shadow,
         UI_COLORS.text.light,
         UI_FONTS.getFont("big", "primary"));
@@ -98,90 +98,105 @@ function headerGUI(text) {
 function drawCharacterSelectionSelected(text, x, y) {
     //drawBox(x - 100, y - 30, 200, 60, UI_COLORS.secondary);
     // panneau de fond
-    pos = grid.pos(x,y);
+    pos = grid.pos(x, y);
+    
     //console.log(pos);
-    drawPanel(pos.x,pos.y,5,2,"secondary");
+    drawPanel(pos.x, pos.y, 5, 2, "secondary");
     ctx.textAlign = "center";
-    pos = grid.pos(x+3,y+3);
+    pos = grid.pos(x+2.5, y+1.3);
     drawShadowedText(text, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
 }
 // box avec image
-function drawPanel(x,y,width,height,color = "primary"){
+function drawPanel(x, y, width, height, color = "primary") {
     // chargement de lm'image si nécessaire
-    if (!frameSheet || frameSheet.src !== frameSheet_data.src[color]) {
-        frameSheet = new Image();
-        frameSheet.src = frameSheet_data.src[color];
+    if (!frameSheet_data[color].img || frameSheet_data[color].img.src !== frameSheet_data[color].src) {
+        frameSheet_data[color].img = new Image();
+        frameSheet_data[color].img.src = frameSheet_data[color].src;
     }
     for (let i = 0; i < width; i++) {
-        
-        for (let j=0; j<height; j++) {
-            
+
+        for (let j = 0; j < height; j++) {
+
             let key1 = "";
-            if(j==0){
+            if (j == 0) {
                 key1 = "top";
-            }else{
-                if(j===(height-1)){
-                    key1 = "bottom"; 
-                }else{
+            } else {
+                if (j === (height - 1)) {
+                    key1 = "bottom";
+                } else {
                     key1 = "middle";
                 }
             }
             let key2 = "";
-            if(i==0){
+            if (i == 0) {
                 key2 = "_left";
-            }else{
-                if(i===(width-1)){
-                    key2 = "_right"; 
+            } else {
+                if (i === (width - 1)) {
+                    key2 = "_right";
                 }
             }
             // console.log(width-1);
-            let key = key1 + key2;           
+            let key = key1 + key2;
             let pane = frameSheet_data.elements.panel[key];
-            let posx = x + i*frameSheet_data.cellSize;
-            let posy = y + j*frameSheet_data.cellSize; 
+            let posx = x + i * frameSheet_data.cellSize;
+            let posy = y + j * frameSheet_data.cellSize;
 
-            ctx.drawImage(frameSheet,
-                pane.x*frameSheet_data.cellSize,
-                pane.y*frameSheet_data.cellSize,
+            ctx.drawImage(frameSheet_data[color].img,
+                pane.x * frameSheet_data.cellSize,
+                pane.y * frameSheet_data.cellSize,
                 frameSheet_data.cellSize, frameSheet_data.cellSize,
                 posx, posy,
                 frameSheet_data.cellSize, frameSheet_data.cellSize);
 
         }
 
-        
+
     }
 }
 
 
 /** ========== Affichage des Stages ========== **/
 function drawStagesSideBar() {
-    const SSBpad = 10;
+    /*const SSBpad = 10;
     const SSB = {
         x: Math.floor(ctx.width / 4) * 3 + SSBpad,
         y: SSBpad,
         w: Math.floor(ctx.width / 4) - (2 * SSBpad),
         h: ctx.height - (2 * SSBpad),
         stages: []
-    };
+    };*/
+    // fond 
+    pos = grid.pos(20, -1);
+    console.log(grid.y_subdivision);
 
+   // drawBox(pos.x,pos.y,dim.x,dim.y,UI_COLORS.light);
+    drawPanel(pos.x,pos.y,6,grid.y_subdivision+2,"secondary");
     runState.stages.forEach((stage, i) => {
-        const pad = 3, height = 20;
-        SSB.stages.push({
+        const pad = 10;
+       /* SSB.stages.push({
             x: SSB.x + pad,
             y: SSB.y + pad + (height + pad) * i,
             text: `${stage.stageNumber} ${stage.type === "event" ? stage.type + " " + stage.name : stage.type}`,
             width: SSB.w - (pad * 2),
             height,
             color: stage.done ? UI_COLORS.primary : UI_COLORS.secondary
-        });
+        }); */
+        console.log(i);
+        pos = grid.pos(20,2*i);
+        dim = grid.pos(5,1);
+        // drawBox(pos.x+pad, pos.y+pad*(i+1), dim.x, dim.y, UI_COLORS.primary);
+        drawPanel(pos.x+pad,pos.y+pad,5,2,"primary");
+        pos = grid.pos(21,2*i);
+        ctx.textAlign = "left";
+        drawShadowedText(stage.type, pos.x+(pad), pos.y+pad+grid.cell_height, UI_COLORS.shadow, UI_COLORS.text.light,UI_FONTS.getFont("big","primary"));
+
     });
 
-    drawBox(SSB.x, SSB.y, SSB.w, SSB.h, UI_COLORS.primary);
-    SSB.stages.forEach(stage => {
+    // drawBox(SSB.x, SSB.y, SSB.w, SSB.h, UI_COLORS.primary);
+  /*  SSB.stages.forEach(stage => {
         drawBox(stage.x, stage.y, stage.width, stage.height, stage.color);
         drawShadowedText(stage.text, stage.x + 10, stage.y + stage.height / 2 + 5, 1, UI_COLORS.shadow, UI_COLORS.text.light);
-    });
+    });*/
 }
 
 /** ========== Affichage des Personnages ========== **/
@@ -238,8 +253,8 @@ function drawAbility(ability, x, y) {
         UI_FONTS.getFont("tiny", "secondary"));
 }
 function drawCharacterAbilities(character_to_draw, x, y) {
-    pos = grid.pos(x,y);
-    
+    pos = grid.pos(x, y);
+
     drawBox(pos.x - abilities_sizing.w / 2,
         pos.y - abilities_sizing.h / 2,
         abilities_sizing.w,
@@ -251,7 +266,7 @@ function drawCharacterAbilities(character_to_draw, x, y) {
         UI_COLORS.shadow,
         UI_COLORS.text.light,
         UI_FONTS.getFont("medium", "primary"));
-    
+
     let i = 1;
     character_to_draw.abilities.forEach(element => {
         drawAbility(element, pos.x, pos.y + (i * (abilities_sizing.h + 2)));

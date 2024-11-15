@@ -49,7 +49,7 @@ function animateStartScreen() {
     // player sprite
     drawCharacter(spriteSource[characters[selectedIndex]],ctx.width/10,2*(ctx.height)/5,"walk");
     // choosed player box
-    drawCharacterSelectionSelected(characters[selectedIndex],14,9);
+    drawCharacterSelectionSelected(characters[selectedIndex],10,4);
     // player description
     /*
     i = 0
@@ -57,7 +57,7 @@ function animateStartScreen() {
         drawAbility(element,(ctx.width/5)*2,ctx.height/5*(3+i/2)+(2*i));
         i++;
     }); */
-    drawCharacterAbilities(playerPreset[characters[selectedIndex]],17,18);
+    drawCharacterAbilities(playerPreset[characters[selectedIndex]],12.5,7);
     
     // bandeau header de l'ecran
     headerGUI("CHOOSE PLAYER");
