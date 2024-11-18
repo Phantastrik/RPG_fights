@@ -45,14 +45,18 @@ function drawBox(x, y, width, height, color = UI_COLORS.primary,
 
 
 /** ========== Barre de Statistiques du Joueur ========== **/
-function drawHealthBar(hb) {
-    drawBox(hb.x - 1, hb.y - 1, hb.l + 2, hb.h + 2, UI_COLORS.light);  // Cadre
-    drawBox(hb.x, hb.y, hb.lval, hb.h, UI_COLORS.stats.pv.primary);  // Barre de santé
+function drawHealthBar(x,y,w,h,player) {
+    let ratio = player.pv / player.pvMax;
+    ratio = Math.floor(ratio*w); 
+    drawBox(x - 1, y - 1, w + 2, h + 2, UI_COLORS.light);  // Cadre
+    drawBox(x, y, ratio, h, UI_COLORS.stats.pv.primary);  // Barre de santé
 }
 
-function drawManaBar(mb) {
-    drawBox(mb.x - 1, mb.y - 1, mb.l + 2, mb.h + 2, UI_COLORS.light);  // Cadre
-    drawBox(mb.x, mb.y, mb.lval, mb.h, UI_COLORS.stats.pm.primary);  // Barre de mana
+function drawManaBar(x,y,w,h,player) {
+    let ratio = player.pm / player.pmMax;
+    ratio = Math.floor(ratio*w); 
+    drawBox(x - 1, y - 1, w + 2, h + 2, UI_COLORS.light);  // Cadre 
+    drawBox(x, y, ratio, h, UI_COLORS.stats.pm.primary);  // Barre de mana
 }
 
 

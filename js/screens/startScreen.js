@@ -30,24 +30,18 @@ function handleCharacterSelection(event) {
     } else if (event.key === "Enter") {
         // Valider le choix
         cancelAnimationFrame(startScreenAnimationId);
-        selectCharacter();
+        document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
         initRun(characters[selectedIndex]);
     }
 }
 
-// Fonction pour valider la sélection et passer à l'écran suivant
-function selectCharacter() {
-    document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
-     // Passer à l'écran suivant ou initialiser la partie avec le personnage sélectionné
-    //initRun(characters[selectedIndex]);
-}
 
 // Animation / dessin de l'ecran de démarrage
 function animateStartScreen() {
     // Effacer la zone de sélection
     clearCanvas();
     // player sprite
-    pos = grid.pos(2,5);
+    pos = grid.pos(-1,3);
     drawCharacter(spriteSource[characters[selectedIndex]],pos.x,pos.y,"walk");
     // choosed player box
     drawCharacterSelectionSelected(characters[selectedIndex],10,4);

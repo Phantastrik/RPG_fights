@@ -1,6 +1,10 @@
 // Récupère l'état de la Run
-function fetchRunState() {
-    return fetch(API_ROUTES.getRunState).then(response => response.json());
+function fetchRunState(characterClass = null) {
+    let route = API_ROUTES.getRunState;
+    if(characterClass !== null){
+        route += "?class=" + characterClass;
+    }
+    return fetch(route).then(response => response.json());
 }
 
 // Supprime la session de jeu (fin de partie)
