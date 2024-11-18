@@ -209,8 +209,11 @@ function drawCharacter(charData, x, y, state, stateVariant) {
 function drawMonster(name, x, y, state, stateVariant) {
 
     const stateAnimation = stateVariant !== undefined ? monster_spritesheet_data[name][state][stateVariant] : monster_spritesheet_data[name][state];
-    console.log(stateAnimation); 
-    if (monster_spritesheet_data[name].img === null || monster_spritesheet_data[name].img.src !== monster_spritesheet_data[name].src) {
+    
+    let img_filename = monster_spritesheet_data[name].img === null ? { src: ''} : monster_spritesheet_data[name].img.src.substring(monster_spritesheet_data[name].img.src.lastIndexOf('/')+1);
+    let src_filename = monster_spritesheet_data[name].src.substring(monster_spritesheet_data[name].src.lastIndexOf('/')+1);
+    
+    if (monster_spritesheet_data[name].img === null || img_filename !== src_filename) {
         monster_spritesheet_data[name].img = new Image();
         monster_spritesheet_data[name].img.src = monster_spritesheet_data[name].src;
     }
@@ -229,10 +232,10 @@ function drawMonster(name, x, y, state, stateVariant) {
     ctx.drawImage(monster_spritesheet_data[name].img,
         sourceX + monster_spritesheet_data[name].xcrop,
         sourceY + monster_spritesheet_data[name].ycrop,
-        monster_spritesheet_data[name].frameWidth - monster_spritesheet_data[name].xcrop,
+        (monster_spritesheet_data[name].frameWidth - monster_spritesheet_data[name].xcrop),
         monster_spritesheet_data[name].frameHeight - monster_spritesheet_data[name].ycrop,
         x, y,
-        (monster_spritesheet_data[name].displayWidth - monster_spritesheet_data[name].xcrop),
+        -(monster_spritesheet_data[name].displayWidth - monster_spritesheet_data[name].xcrop),
         monster_spritesheet_data[name].displayHeight - monster_spritesheet_data[name].ycrop);
 }
 

@@ -74,8 +74,8 @@ let spriteSource = {
         xcrop: 75,
         ycrop: 75,
         src: `../assets/player/warrior_sprite.png`,
-        walk: { x: 0, y: 0, frameCount: 8, },
-        run: { x: 0, y: 256, frameCount: 7 },
+        walk: { x: 0, y: 0, frameCount: 7, },
+        run: { x: 0, y: 256, frameCount: 6 },
         attaques: [
             { x: 0, y: 512, frameCount: 6 },
             { x: 0, y: 768, frameCount: 5 },
@@ -123,7 +123,7 @@ const frameSheet_data = {
     },
     secondary: {
         src: `../assets/UI/frames_secondary.png`,
-        img: null
+        img : null,
     },
     frameWidth: 32,
     frameHeight: 32,

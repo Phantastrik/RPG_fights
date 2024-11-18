@@ -47,7 +47,8 @@ function animateStartScreen() {
     // Effacer la zone de sélection
     clearCanvas();
     // player sprite
-    drawCharacter(spriteSource[characters[selectedIndex]],ctx.width/10,2*(ctx.height)/5,"walk");
+    pos = grid.pos(2,5);
+    drawCharacter(spriteSource[characters[selectedIndex]],pos.x,pos.y,"walk");
     // choosed player box
     drawCharacterSelectionSelected(characters[selectedIndex],10,4);
     // player description

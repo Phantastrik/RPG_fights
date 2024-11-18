@@ -1,7 +1,6 @@
 let stageScreenAnimationId = null; //id pour l'animation
 function showStageScreen(runState) {
     clearCanvas();
-    console.log(runState.stages[0].enemy);
     // Dessiner le personnage sélectionné
     startStageScreenAnimation();
 
@@ -13,12 +12,13 @@ function animateStageScreen() {
     // Effacer la zone de sélection
     clearCanvas();
     // player sprite
-    drawCharacter(spriteSource[runState.player.className],ctx.width/10,2*(ctx.height)/5,"run");
-    pos = grid.pos(20,10);
-    drawMonster("gobelin",pos.x,pos.y,"run");
+    pos = grid.pos(2,5);
+    drawCharacter(spriteSource[runState.player.className],pos.x,pos.y,"run");
+    pos = grid.pos(20,7);
+    drawMonster("gobelin",pos.x,pos.y,"walk");
 
     // player description
-    drawCharacterAbilities(runState.player,12.5,7);
+    drawCharacterAbilities(runState.player,3,1);
      
     // bandeau header de l'ecran
     // headerGUI("Stage");
