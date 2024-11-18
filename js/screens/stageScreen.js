@@ -11,14 +11,15 @@ function showStageScreen(runState) {
 function animateStageScreen() {
     // Effacer la zone de sélection
     clearCanvas();
+    drawStagesScreenHeader();
     // player sprite
     pos = grid.pos(2,5);
     drawCharacter(spriteSource[runState.player.className],pos.x,pos.y,"run");
     pos = grid.pos(20,7);
-    drawMonster("gobelin",pos.x,pos.y,"walk");
+    drawMonster("gobelin",pos.x,pos.y,"run");
 
     // player description
-    drawCharacterAbilities(runState.player,3,1);
+    drawCharacterAbilities(runState.player,20,4);
      
     // bandeau header de l'ecran
     // headerGUI("Stage");

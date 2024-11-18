@@ -175,6 +175,23 @@ function drawStagesSideBar() {
     });
 
 }
+function drawStagesScreenHeader(){
+    // panneau fond 
+    let nextStage  = runState.stages[0];
+    pos = grid.pos(-1,-1);
+    drawPanel(pos.x,pos.y,27,3,"primary");
+    // title
+    let screenTitle = "";
+    if(nextStage.type === "fight"){
+        screenTitle = "Fight against " + nextStage.enemy.name ;
+    }else if(nextStage.type === "event"){
+        screenTitle = "Event : " + nextStage.name;
+    }
+    pos = grid.pos(2,1);
+    ctx.textAlign = "left";
+    drawShadowedText(screenTitle, pos.x, pos.y,2, UI_COLORS.shadow, UI_COLORS.text.light,UI_FONTS.getFont("big","primary"));
+   
+}
 
 /** ========== Affichage des Personnages ========== **/
 function drawCharacter(charData, x, y, state, stateVariant) {
@@ -207,23 +224,27 @@ function drawCharacter(charData, x, y, state, stateVariant) {
         charData.displayHeight - charData.ycrop);
 }
 function drawMonster(name, x, y, state, stateVariant) {
-
+    // prise en charge de la variante pour les attaques
     const stateAnimation = stateVariant !== undefined ? monster_spritesheet_data[name][state][stateVariant] : monster_spritesheet_data[name][state];
     
+    // récupération des filenames des source images
     let img_filename = monster_spritesheet_data[name].img === null ? { src: ''} : monster_spritesheet_data[name].img.src.substring(monster_spritesheet_data[name].img.src.lastIndexOf('/')+1);
     let src_filename = monster_spritesheet_data[name].src.substring(monster_spritesheet_data[name].src.lastIndexOf('/')+1);
     
+    // déclartation de l'image si elle n'est pas chargée
     if (monster_spritesheet_data[name].img === null || img_filename !== src_filename) {
         monster_spritesheet_data[name].img = new Image();
         monster_spritesheet_data[name].img.src = monster_spritesheet_data[name].src;
+        console.log("refresh monster");
     }
 
+    // timing de l'animation
     const now = Date.now();
     if (now - lastUpdateTime > animationSpeed) {
         currentFrame = (currentFrame + 1) % stateAnimation.frameCount;
         lastUpdateTime = now;
     }
-
+    // prise en charge d'un crop pour les sprites
     const sourceX = currentFrame * monster_spritesheet_data[name].frameWidth + stateAnimation.x;
     const sourceY = stateAnimation.y;
 
