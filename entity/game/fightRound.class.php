@@ -7,6 +7,7 @@ class FightRound implements Observable, Executable, ArrayExportable{
     private $observers = [];
     private $done = false;
     private $choosedAbility = null;
+    private $enemyAbility = null;
     private $notification = array(
         "done"  => false,
         "fighter0" => array(
@@ -40,6 +41,7 @@ class FightRound implements Observable, Executable, ArrayExportable{
     public function __construct($fight){
         $this->fight = $fight;
         $this->subscribe($fight);
+        $this->enemyAbility = $this->fight->getFighterB()->getAnAbility();
     }
 
 
@@ -85,7 +87,12 @@ class FightRound implements Observable, Executable, ArrayExportable{
 
         // l'attaquant choisi une ability
         if($playerFirst && $this->choosedAbility != null){
-            $ab = $fightOrder[0]->getAbilities()[$this->choosedAbility];    
+            if($this->choosedAbility != null){
+                $ab = $fightOrder[0]->getAbilities()[$this->choosedAbility];
+            }else{
+                $ab = $fightOrder[0]->getAnAbility();
+            }
+                
         }else{
             $ab = $fightOrder[0]->getAnAbility();
         }
