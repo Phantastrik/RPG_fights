@@ -40,9 +40,9 @@ function animateStageScreen() {
     drawStagesScreenHeader();
     // player sprite
     pos = grid.pos(-1,3);
-    drawCharacter(spriteSource[runState.player.className],pos.x,pos.y,"run");
+    drawCharacter(spriteSource[runState.player.className],pos.x,pos.y,"idle");
     pos = grid.pos(20,7);
-    drawMonster("gobelin",pos.x,pos.y,"run");
+    drawMonster("gobelin",pos.x,pos.y,"idle");
 
     // player description
     // drawCharacterAbilities(runState.player,20,4);

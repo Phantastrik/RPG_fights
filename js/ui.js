@@ -6,9 +6,7 @@ ctx.font = "10px verdana";
 ctx.textAlign = "left";
 // Variables pour le chargement de l'image et l'animation
 let spriteSheet;
-let currentFrame = 0; // Nombre total de frames dans la sprite sheet
 let animationSpeed = 100;  // Vitesse d'animation en millisecondes
-let lastUpdateTime = 0;
 
 
 /** ========== Utilitaires ========== **/
@@ -206,14 +204,14 @@ function drawCharacter(charData, x, y, state, stateVariant) {
         spriteSheet = new Image();
         spriteSheet.src = charData.src;
     }
-
+    
     const now = Date.now();
-    if (now - lastUpdateTime > animationSpeed) {
-        currentFrame = (currentFrame + 1) % stateAnimation.frameCount;
-        lastUpdateTime = now;
+    if (now - charData.lastUpdateTime > animationSpeed) {
+        charData.currentFrame = (charData.currentFrame + 1) % stateAnimation.frameCount;
+        charData.lastUpdateTime = now;
     }
 
-    const sourceX = currentFrame * charData.frameWidth + stateAnimation.x;
+    const sourceX = charData.currentFrame * charData.frameWidth + stateAnimation.x;
     const sourceY = stateAnimation.y;
 
     ctx.clearRect(x, y, charData.frameWidth - charData.xcrop,
@@ -239,17 +237,19 @@ function drawMonster(name, x, y, state, stateVariant) {
     if (monster_spritesheet_data[name].img === null || img_filename !== src_filename) {
         monster_spritesheet_data[name].img = new Image();
         monster_spritesheet_data[name].img.src = monster_spritesheet_data[name].src;
-        console.log("refresh monster");
+        
     }
 
     // timing de l'animation
     const now = Date.now();
-    if (now - lastUpdateTime > animationSpeed) {
-        currentFrame = (currentFrame + 1) % stateAnimation.frameCount;
-        lastUpdateTime = now;
+    if (now - monster_spritesheet_data[name].lastUpdateTime > animationSpeed) {
+        monster_spritesheet_data[name].currentFrame = (monster_spritesheet_data[name].currentFrame + 1) % stateAnimation.frameCount;
+        monster_spritesheet_data[name].lastUpdateTime = now;
+        
+    
     }
     // prise en charge d'un crop pour les sprites
-    const sourceX = currentFrame * monster_spritesheet_data[name].frameWidth + stateAnimation.x;
+    const sourceX = monster_spritesheet_data[name].currentFrame * monster_spritesheet_data[name].frameWidth + stateAnimation.x;
     const sourceY = stateAnimation.y;
 
     ctx.clearRect(x, y, monster_spritesheet_data[name].frameWidth - monster_spritesheet_data[name].xcrop,
@@ -260,7 +260,7 @@ function drawMonster(name, x, y, state, stateVariant) {
         (monster_spritesheet_data[name].frameWidth - monster_spritesheet_data[name].xcrop),
         monster_spritesheet_data[name].frameHeight - monster_spritesheet_data[name].ycrop,
         x, y,
-        -(monster_spritesheet_data[name].displayWidth - monster_spritesheet_data[name].xcrop),
+        (monster_spritesheet_data[name].displayWidth - monster_spritesheet_data[name].xcrop),
         monster_spritesheet_data[name].displayHeight - monster_spritesheet_data[name].ycrop);
 }
 

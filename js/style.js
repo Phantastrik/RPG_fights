@@ -67,6 +67,8 @@ const grid = {
 
 let spriteSource = {
     warrior: {
+        lastUpdateTime : 0,
+        currentFrame : 0,
         frameWidth: 256,
         frameHeight: 256,
         displayWidth: 256,
@@ -74,6 +76,7 @@ let spriteSource = {
         xcrop: 0,
         ycrop: 0,
         src: `../assets/player/warrior_sprite.png`,
+        idle: { x: 0, y: 0, frameCount: 7, },
         walk: { x: 0, y: 0, frameCount: 7, },
         run: { x: 0, y: 256, frameCount: 6 },
         attaques: [
@@ -84,6 +87,8 @@ let spriteSource = {
         ]
     },
     rogue: {
+        lastUpdateTime : 0,
+        currentFrame : 0,
         frameWidth: 256,
         frameHeight: 256,
         displayWidth: 256,
@@ -91,6 +96,7 @@ let spriteSource = {
         xcrop: 0,
         ycrop: 0,
         src: `../assets/player/rogue_sprite.png`,
+        idle: { x: 0, y: 0, frameCount: 6 },
         walk: { x: 0, y: 256, frameCount: 9 },
         run: { x: 0, y: 512, frameCount: 8 },
         attaques: [
@@ -100,13 +106,16 @@ let spriteSource = {
         ]
     },
     mage: {
+        lastUpdateTime : 0,
+        currentFrame : 0,
         frameWidth: 256,
         frameHeight: 256,
         displayWidth: 256,
         displayHeight: 256,
         xcrop: 0,
         ycrop: 0,
-        src: `../assets/player/mage_sprite.png`,
+        src: `../assets/player/mage_sprite.png`,    
+        idle: { x: 0, y: 0, frameCount: 8 },
         walk: { x: 0, y: 256, frameCount: 7 },
         run: { x: 0, y: 512, frameCount: 8 },
         attaques: [
@@ -150,6 +159,8 @@ const frameSheet_data = {
 };
 const monster_spritesheet_data = {
     gobelin : {
+        lastUpdateTime : 0,
+        currentFrame : 0,
         img : null,
         src : `../assets/monster/gobelin_sprite.png`,
         frameWidth: 96,
@@ -158,6 +169,7 @@ const monster_spritesheet_data = {
         displayHeight: 128,
         xcrop: 0,
         ycrop: 0,
+        idle: { x: 0, y: 0, frameCount: 5 },
         walk: { x: 0, y: 96, frameCount: 7 },
         run: { x: 0, y: 192, frameCount: 6 },
         attaques: [
