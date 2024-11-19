@@ -48,6 +48,10 @@ function drawHealthBar(x,y,w,h,player) {
     ratio = Math.floor(ratio*w); 
     drawBox(x - 1, y - 1, w + 2, h + 2, UI_COLORS.light);  // Cadre
     drawBox(x, y, ratio, h, UI_COLORS.stats.pv.primary);  // Barre de santé
+    // texte
+    let barText =  ""+player.pv+"/"+player.pvMax
+    ctx.textAlign = "center";
+    drawShadowedText(barText,x+(w/2),y+(h/2)+3,1,UI_COLORS.shadow,UI_COLORS.text.dark,UI_FONTS.getFont("tiny", "secondary"));
 }
 
 function drawManaBar(x,y,w,h,player) {
@@ -55,6 +59,10 @@ function drawManaBar(x,y,w,h,player) {
     ratio = Math.floor(ratio*w); 
     drawBox(x - 1, y - 1, w + 2, h + 2, UI_COLORS.light);  // Cadre 
     drawBox(x, y, ratio, h, UI_COLORS.stats.pm.primary);  // Barre de mana
+    // texte
+    let barText =  ""+player.pm+"/"+player.pmMax
+    ctx.textAlign = "center";
+    drawShadowedText(barText,x+(w/2),y+(h/2)+3,1,UI_COLORS.shadow,UI_COLORS.text.dark,UI_FONTS.getFont("tiny", "secondary"));
 }
 
 
@@ -179,19 +187,22 @@ function drawStagesSideBar() {
 }
 function drawStagesScreenHeader(){
     // panneau fond 
-    let nextStage  = runState.stages[0];
+    let nextStage  = runState.stages[runState.currentStage];
     pos = grid.pos(-1,-1);
     drawPanel(pos.x,pos.y,27,3,"primary");
     // title
-    let screenTitle = "";
+    let stageCur  = runState.currentStage + 1;
+    let stageTotal = runState.maxStageNumber +1;
+    let screenTitle = "Stage "+stageCur+"/"+stageTotal+" : ";
     if(nextStage.type === "fight"){
-        screenTitle = "Fight against " + nextStage.enemy.name ;
+        screenTitle += "Fight against " + nextStage.enemy.name ;
     }else if(nextStage.type === "event"){
-        screenTitle = "Event : " + nextStage.name;
+        screenTitle += "Event : " + nextStage.name;
     }
     pos = grid.pos(2,1);
     ctx.textAlign = "left";
     drawShadowedText(screenTitle, pos.x, pos.y,2, UI_COLORS.shadow, UI_COLORS.text.light,UI_FONTS.getFont("big","primary"));
+
    
 }
 

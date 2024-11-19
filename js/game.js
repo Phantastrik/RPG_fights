@@ -20,6 +20,7 @@ function initRun(characterClass) {
 function nextRound(choosedAbility) {
     fetchNextRound(choosedAbility).then(state => {
         runState = state;
+        console.log(runState);
         // showStageScreen(runState);
     });
 }

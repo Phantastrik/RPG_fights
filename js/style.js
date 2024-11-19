@@ -19,10 +19,10 @@ const UI_COLORS = {
     },
     stats: {
         pv: {
-            primary: "red"
+            primary: "#f54242"
         },
         pm: {
-            primary: "blue"
+            primary: "#42b9f5"
         }
 
     }

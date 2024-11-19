@@ -17,6 +17,7 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     private $observers = [];
     private $notification = null;
     private $exportData = [
+        "type" => "fight",
         "fightRound" => array()
     ];
 
@@ -51,7 +52,6 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     public function getFighterB(){
         return $this->fighterB;
     }
-
     // 
     public function playRound($choosedAbility = null){
         $round = new FightRound($this);
@@ -68,7 +68,6 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
                 round($this->fighterB->calculateExpToNextLevel()/3)
             );
         }elseif($this->BWon){
-            // var_dump("fighter B gain XP");
             $this->fighterB->gainExp(
                 round($this->player->calculateExpToNextLevel()/3)
             );

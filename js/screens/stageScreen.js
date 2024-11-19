@@ -1,14 +1,16 @@
 let stageScreenAnimationId = null; //id pour l'animation
 
 let selectedAbilityIndex = 0;
+let stageNumber = 0;
 
 function showStageScreen(runState) {
     clearCanvas();
     // Dessiner le personnage sélectionné
     startStageScreenAnimation();
+    stageNumber = runState.stageNumber;
 
-      // Ajouter le gestionnaire d'événements pour la sélection
-      document.addEventListener("keydown", handleAbilitySelection);
+    // Ajouter le gestionnaire d'événements pour la sélection
+    document.addEventListener("keydown", handleAbilitySelection);
 }
 
 
@@ -24,10 +26,12 @@ function handleAbilitySelection(event) {
         startStageScreenAnimation();
     } else if (event.key === "Enter") {
         // Valider le choix
-        document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
-   
-        cancelAnimationFrame(stageScreenAnimationId);
-       
+        // document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
+
+        // cancelAnimationFrame(stageScreenAnimationId);
+        nextRound(selectedAbilityIndex);
+        startStageScreenAnimation();
+
         // selectCharacter();
         // initRun(characters[selectedIndex]);
     }
@@ -39,25 +43,34 @@ function animateStageScreen() {
     clearCanvas();
     drawStagesScreenHeader();
     // player sprite
-    pos = grid.pos(-1,3);
-    drawCharacter(spriteSource[runState.player.className],pos.x,pos.y,"idle");
-    pos = grid.pos(20,7);
-    drawMonster("gobelin",pos.x,pos.y,"idle");
-
+    pos = grid.pos(-1, 3);
+    drawCharacter(spriteSource[runState.player.className], pos.x, pos.y, "idle");
     // player description
     // drawCharacterAbilities(runState.player,20,4);
-    pos = grid.pos(8,12);
+    pos = grid.pos(8, 12);
     drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
     // vie / mana
-    pos = grid.pos(1,11.5);
-    dim = grid.pos(4,0.5);
-    drawHealthBar(pos.x,pos.y,dim.x,dim.y,runState.player);
-    pos = grid.pos(1,12);
-    drawManaBar(pos.x,pos.y,dim.x,dim.y,runState.player);
-    
-    
+    pos = grid.pos(1, 11.5);
+    dim = grid.pos(4, 0.5);
+    drawHealthBar(pos.x, pos.y, dim.x, dim.y, runState.player);
+    pos = grid.pos(1, 12);
+    drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.player);
 
-    
+
+
+    // monster
+    if (runState.stages[runState.currentStage].type === "fight") {
+        pos = grid.pos(20, 7);
+        drawMonster("gobelin", pos.x, pos.y, "idle");
+        // vie / mana
+        pos = grid.pos(20, 11.5);
+        dim = grid.pos(4, 0.5);
+        drawHealthBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy);
+        pos = grid.pos(20, 12);
+        drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy);
+
+    }
+
     stageScreenAnimationId = requestAnimationFrame(() => animateStageScreen());  // Boucle d'animation
 }
 
