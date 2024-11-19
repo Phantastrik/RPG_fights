@@ -365,7 +365,8 @@ HTML
             "exp" => $this->exp,
             "baseExp" => $this->baseExp,
             "abilities" => $abs,
-            "activeEffects" => $eff
+            "activeEffects" => $eff,
+            "modifiedStats" => $this->getModifiedStats()
         );
         return $res;
     }

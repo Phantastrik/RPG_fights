@@ -40,6 +40,7 @@ function handleCharacterSelection(event) {
 function animateStartScreen() {
     // Effacer la zone de sélection
     clearCanvas();
+    setBackground(UI_BG.bg2);
     // player sprite
     pos = grid.pos(-1,3);
     drawCharacter(spriteSource[characters[selectedIndex]],pos.x,pos.y,"walk");

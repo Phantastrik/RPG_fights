@@ -2,6 +2,12 @@ const CANVAS_DIMENSIONS = { width: 800, height: 416 };
 const UI_CONFIG = {
     shadowPad: 2
 }
+const UI_BG = {
+    bg1 : 'url(../assets/bg/background_1.png)',
+    bg2 : 'url(../assets/bg/background_2.png)',
+    bg3 : 'url(../assets/bg/background_3.png)',
+    bg4 : 'url(../assets/bg/background_4.png)'
+}
 const UI_COLORS = {
     primary: '#5186b8',
     shadow: '#293b4d',
@@ -18,12 +24,30 @@ const UI_COLORS = {
         magicAttack: '#54c4a8'
     },
     stats: {
+        lvl: {
+            primary : '#000000'
+        },
         pv: {
-            primary: "#f54242"
+            primary: "#f54242",
+            secondary : 'f54242'
         },
         pm: {
-            primary: "#42b9f5"
+            primary: "#42b9f5",
+            secondary : '#1c516b'
+        },
+        attaque : {
+            primary : "#a84632"
+        },
+        defense : {
+            primary : '#a87d32'
+        },
+        sagesse : {
+            primary : '#32a889'
+        },
+        vitesse : {
+            primary : '#59a832'
         }
+
 
     }
 }
@@ -36,13 +60,20 @@ const UI_FONTS = {
     },
     police: {
         primary: "Bestigia",
-        secondary: "Verdana"
+        secondary: "Verdana",
     },
     getFont: (size, police) => {
         return (UI_FONTS.size[size] + " " + UI_FONTS.police[police]);
     }
 }
-
+const digitalDisco = new FontFace('DigitalDisco', 'url(../assets/fonts/DigitalDisco.ttf)');
+digitalDisco.load().then(function(font){
+    UI_FONTS.police.primary = font.family;
+});
+const digitalDiscoThin = new FontFace('DigitalDisco Thin', 'url(../assets/fonts/DigitalDisco-Thin.ttf)');
+digitalDiscoThin.load().then(function(font){
+    UI_FONTS.police.secondary = font.family;
+});
 // grille d'accroche
 const grid = {
     x_subdivision: 25,
@@ -76,7 +107,7 @@ let spriteSource = {
         xcrop: 0,
         ycrop: 0,
         src: `../assets/player/warrior_sprite.png`,
-        idle: { x: 0, y: 0, frameCount: 7, },
+        idle: { x: 0, y: 1536, frameCount: 1, },
         walk: { x: 0, y: 0, frameCount: 7, },
         run: { x: 0, y: 256, frameCount: 6 },
         attaques: [
@@ -162,7 +193,7 @@ const monster_spritesheet_data = {
         lastUpdateTime : 0,
         currentFrame : 0,
         img : null,
-        src : `../assets/monster/gobelin_sprite.png`,
+        src : `../assets/monster/gobelin_sprite_reverse.png`,
         frameWidth: 96,
         frameHeight: 96,
         displayWidth: 128,

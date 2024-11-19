@@ -50,27 +50,30 @@ function animateStageScreen() {
     pos = grid.pos(8, 12);
     drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
     // vie / mana
-    pos = grid.pos(1, 11.5);
+  /*  pos = grid.pos(1, 11.5);
     dim = grid.pos(4, 0.5);
     drawHealthBar(pos.x, pos.y, dim.x, dim.y, runState.player);
     pos = grid.pos(1, 12);
-    drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.player);
-
-
-
+    drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.player); /*
+*/
     // monster
     if (runState.stages[runState.currentStage].type === "fight") {
+        setBackground(UI_BG.bg4);
+
         pos = grid.pos(20, 7);
         drawMonster("gobelin", pos.x, pos.y, "idle");
         // vie / mana
-        pos = grid.pos(20, 11.5);
+/*        pos = grid.pos(20, 11.5);
         dim = grid.pos(4, 0.5);
         drawHealthBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy);
         pos = grid.pos(20, 12);
-        drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy);
-
+        drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy); */
+        drawStatsBar(25,12,runState.stages[runState.currentStage].enemy,true,true);
+    }else{
+        setBackground(UI_BG.bg3);
     }
-
+   drawStatsBar(0,1.8,runState.player);
+    
     stageScreenAnimationId = requestAnimationFrame(() => animateStageScreen());  // Boucle d'animation
 }
 

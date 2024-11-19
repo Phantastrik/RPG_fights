@@ -43,26 +43,26 @@ function drawBox(x, y, width, height, color = UI_COLORS.primary,
 
 
 /** ========== Barre de Statistiques du Joueur ========== **/
-function drawHealthBar(x,y,w,h,player) {
+function drawHealthBar(x, y, w, h, player) {
     let ratio = player.pv / player.pvMax;
-    ratio = Math.floor(ratio*w); 
+    ratio = Math.floor(ratio * w);
     drawBox(x - 1, y - 1, w + 2, h + 2, UI_COLORS.light);  // Cadre
     drawBox(x, y, ratio, h, UI_COLORS.stats.pv.primary);  // Barre de santé
     // texte
-    let barText =  ""+player.pv+"/"+player.pvMax
+    let barText = "" + player.pv + " / " + player.pvMax
     ctx.textAlign = "center";
-    drawShadowedText(barText,x+(w/2),y+(h/2)+3,1,UI_COLORS.shadow,UI_COLORS.text.dark,UI_FONTS.getFont("tiny", "secondary"));
+    drawShadowedText(barText, x + (w / 2), y + (h / 2) + 3, 1, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
 }
 
-function drawManaBar(x,y,w,h,player) {
+function drawManaBar(x, y, w, h, player) {
     let ratio = player.pm / player.pmMax;
-    ratio = Math.floor(ratio*w); 
+    ratio = Math.floor(ratio * w);
     drawBox(x - 1, y - 1, w + 2, h + 2, UI_COLORS.light);  // Cadre 
     drawBox(x, y, ratio, h, UI_COLORS.stats.pm.primary);  // Barre de mana
     // texte
-    let barText =  ""+player.pm+"/"+player.pmMax
+    let barText = "" + player.pm + " / " + player.pmMax
     ctx.textAlign = "center";
-    drawShadowedText(barText,x+(w/2),y+(h/2)+3,1,UI_COLORS.shadow,UI_COLORS.text.dark,UI_FONTS.getFont("tiny", "secondary"));
+    drawShadowedText(barText, x + (w / 2), y + (h / 2) + 3, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
 }
 
 
@@ -97,7 +97,7 @@ function headerGUI(text) {
     drawPanel(pos.x, pos.y, 27, 3);
     // texte 
     pos = grid.pos(16, 1);
-   
+
     ctx.testAlign = "center";
     drawShadowedText(text, grid.x_center, pos.y, 2,
         UI_COLORS.shadow,
@@ -109,11 +109,11 @@ function drawCharacterSelectionSelected(text, x, y) {
     //drawBox(x - 100, y - 30, 200, 60, UI_COLORS.secondary);
     // panneau de fond
     pos = grid.pos(x, y);
-    
+
     //console.log(pos);
     drawPanel(pos.x, pos.y, 5, 2, "secondary");
     ctx.textAlign = "center";
-    pos = grid.pos(x+2.5, y+1.3);
+    pos = grid.pos(x + 2.5, y + 1.3);
     drawShadowedText(text, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
 }
 // box avec image
@@ -170,52 +170,52 @@ function drawStagesSideBar() {
 
     // fond 
     pos = grid.pos(20, -1);
-    drawPanel(pos.x,pos.y,6,grid.y_subdivision+2,"secondary");
+    drawPanel(pos.x, pos.y, 6, grid.y_subdivision + 2, "secondary");
     // etages
     runState.stages.forEach((stage, i) => {
         const pad = 10;
-        pos = grid.pos(20,2*i);
-        dim = grid.pos(5,1);
+        pos = grid.pos(20, 2 * i);
+        dim = grid.pos(5, 1);
         // drawBox(pos.x+pad, pos.y+pad*(i+1), dim.x, dim.y, UI_COLORS.primary);
-        drawPanel(pos.x+pad,pos.y+pad,5,2,"primary");
-        pos = grid.pos(21,2*i);
+        drawPanel(pos.x + pad, pos.y + pad, 5, 2, "primary");
+        pos = grid.pos(21, 2 * i);
         ctx.textAlign = "left";
-        drawShadowedText(stage.type, pos.x+(pad), pos.y+pad+grid.cell_height, UI_COLORS.shadow, UI_COLORS.text.light,UI_FONTS.getFont("big","primary"));
+        drawShadowedText(stage.type, pos.x + (pad), pos.y + pad + grid.cell_height, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
 
     });
 
 }
-function drawStagesScreenHeader(){
+function drawStagesScreenHeader() {
     // panneau fond 
-    let nextStage  = runState.stages[runState.currentStage];
-    pos = grid.pos(-1,-1);
-    drawPanel(pos.x,pos.y,27,3,"primary");
+    let nextStage = runState.stages[runState.currentStage];
+    pos = grid.pos(-1, -1);
+    drawPanel(pos.x, pos.y, 27, 3, "primary");
     // title
-    let stageCur  = runState.currentStage + 1;
-    let stageTotal = runState.maxStageNumber +1;
-    let screenTitle = "Stage "+stageCur+"/"+stageTotal+" : ";
-    if(nextStage.type === "fight"){
-        screenTitle += "Fight against " + nextStage.enemy.name ;
-    }else if(nextStage.type === "event"){
+    let stageCur = runState.currentStage + 1;
+    let stageTotal = runState.maxStageNumber + 1;
+    let screenTitle = "Stage " + stageCur + "/" + stageTotal + " : ";
+    if (nextStage.type === "fight") {
+        screenTitle += "Fight against " + nextStage.enemy.name;
+    } else if (nextStage.type === "event") {
         screenTitle += "Event : " + nextStage.name;
     }
-    pos = grid.pos(2,1);
+    pos = grid.pos(2, 1);
     ctx.textAlign = "left";
-    drawShadowedText(screenTitle, pos.x, pos.y,2, UI_COLORS.shadow, UI_COLORS.text.light,UI_FONTS.getFont("big","primary"));
+    drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
 
-   
+
 }
 
 /** ========== Affichage des Personnages ========== **/
 function drawCharacter(charData, x, y, state, stateVariant) {
-    
+
     const stateAnimation = stateVariant !== undefined ? charData[state][stateVariant] : charData[state];
 
     if (!spriteSheet || spriteSheet.src !== charData.src) {
         spriteSheet = new Image();
         spriteSheet.src = charData.src;
     }
-    
+
     const now = Date.now();
     if (now - charData.lastUpdateTime > animationSpeed) {
         charData.currentFrame = (charData.currentFrame + 1) % stateAnimation.frameCount;
@@ -239,16 +239,16 @@ function drawCharacter(charData, x, y, state, stateVariant) {
 function drawMonster(name, x, y, state, stateVariant) {
     // prise en charge de la variante pour les attaques
     const stateAnimation = stateVariant !== undefined ? monster_spritesheet_data[name][state][stateVariant] : monster_spritesheet_data[name][state];
-    
+
     // récupération des filenames des source images
-    let img_filename = monster_spritesheet_data[name].img === null ? { src: ''} : monster_spritesheet_data[name].img.src.substring(monster_spritesheet_data[name].img.src.lastIndexOf('/')+1);
-    let src_filename = monster_spritesheet_data[name].src.substring(monster_spritesheet_data[name].src.lastIndexOf('/')+1);
-    
+    let img_filename = monster_spritesheet_data[name].img === null ? { src: '' } : monster_spritesheet_data[name].img.src.substring(monster_spritesheet_data[name].img.src.lastIndexOf('/') + 1);
+    let src_filename = monster_spritesheet_data[name].src.substring(monster_spritesheet_data[name].src.lastIndexOf('/') + 1);
+
     // déclartation de l'image si elle n'est pas chargée
     if (monster_spritesheet_data[name].img === null || img_filename !== src_filename) {
         monster_spritesheet_data[name].img = new Image();
         monster_spritesheet_data[name].img.src = monster_spritesheet_data[name].src;
-        
+
     }
 
     // timing de l'animation
@@ -256,8 +256,8 @@ function drawMonster(name, x, y, state, stateVariant) {
     if (now - monster_spritesheet_data[name].lastUpdateTime > animationSpeed) {
         monster_spritesheet_data[name].currentFrame = (monster_spritesheet_data[name].currentFrame + 1) % stateAnimation.frameCount;
         monster_spritesheet_data[name].lastUpdateTime = now;
-        
-    
+
+
     }
     // prise en charge d'un crop pour les sprites
     const sourceX = monster_spritesheet_data[name].currentFrame * monster_spritesheet_data[name].frameWidth + stateAnimation.x;
@@ -317,4 +317,127 @@ function drawCharacterAbilities(character_to_draw, x, y) {
         drawAbility(element, pos.x, pos.y + (i * (abilities_sizing.h + 2)));
         i++;
     });
+}
+
+// -------------- stat bar ----
+function OlddrawStatsBar(x, y, character) {
+    let i = 0;
+    // LVL / PV / PM / ATT / DEF / SAG // VIT // EXP
+    dim = grid.pos(1.5, 1);
+    // LVL
+    pos = grid.pos(x, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.lvl.primary);
+    let text = 'Lvl.' + character.niveau;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 1.5;
+    // pv
+    dim = grid.pos(2.5, 1);
+    pos = grid.pos(x + i, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.pv.primary);
+    text = 'PV ' + character.pv + '/' + character.pvMax;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 2.5;
+    // pm
+    pos = grid.pos(x + i, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.pm.primary);
+    text = 'PM ' + character.pm + '/' + character.pmMax;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 2.5;
+    // ATT
+    dim = grid.pos(2, 1);
+    pos = grid.pos(x + i, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.attaque.primary);
+    text = 'ATT ' + character.attaque;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 2;
+    // DEF
+    pos = grid.pos(x + i, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.defense.primary);
+    text = 'DEF ' + character.defense;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 2;
+    // SAG
+    pos = grid.pos(x + i, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.sagesse.primary);
+    text = 'SAG ' + character.sagesse;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 2;
+
+    // VIT
+    pos = grid.pos(x + i, y);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.stats.vitesse.primary);
+    text = 'VIT ' + character.vitesse;
+    ctx.textAlign = "center";
+    drawShadowedText(text, pos.x + (dim.x / 2), pos.y + (dim.y / 2), UI_CONFIG.shadowPad, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+    i += 2;
+}
+
+function drawStatsBar(x, y, character, reverse = false, minimal = false) {
+    const stats = [
+        { label: `Lvl. ${character.niveau}`, width: 1.5, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true },
+        {
+            label: `PV ${character.pv}/${character.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
+            ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true
+        },
+        {
+            label: `PM ${character.pm}/${character.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
+            ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true
+        },
+        { label: `ATT ${character.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false },
+        { label: `DEF ${character.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minimal: false },
+        { label: `SAG ${character.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false },
+        { label: `VIT ${character.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false },
+    ];
+
+    // Calcul de la largeur totale si reverse
+    let totalWidth = 0;
+    if (reverse) {
+        stats.forEach(stat => totalWidth += stat.width);
+    }
+
+    let offsetX = reverse ? 0 : 0; // Départ à gauche ou à droite
+    stats.forEach(stat => {
+        if (!minimal || (minimal && stat.minimal)){
+
+            offsetX = reverse ? offsetX - stat.width : offsetX;
+            const dim = grid.pos(stat.width, 1);
+            const pos = grid.pos(x + offsetX, y);
+
+
+            // Dessiner la boîte de fond
+            drawBox(pos.x, pos.y, dim.x, dim.y, stat.color);
+
+            // Dessiner la boîte de ratio si applicable
+            if (stat.ratio !== null) {
+                drawBox(pos.x, pos.y, Math.floor(dim.x * stat.ratio), dim.y, stat.color_ratio);
+            }
+
+            // Dessiner le texte centré
+            ctx.textAlign = "center";
+            drawShadowedText(
+                stat.label,
+                pos.x + dim.x / 2,
+                pos.y + dim.y / 2,
+                UI_CONFIG.shadowPad,
+                UI_COLORS.shadow,
+                UI_COLORS.text.light,
+                UI_FONTS.getFont("small", "secondary")
+            );
+
+            // Avancer horizontalement
+            offsetX += reverse ? 0 : stat.width;
+
+        }
+    });
+}
+
+function setBackground(bg) {
+    canvas.style.background = bg;
+    canvas.style.backgroundSize = ctx.width + "px";
 }

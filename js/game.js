@@ -13,6 +13,8 @@ function startGame() {
 function initRun(characterClass) {
     fetchRunState(characterClass).then(state => {
         runState = state;
+
+        console.log(runState.player);
         showStageScreen(runState);
     });
 }
@@ -20,7 +22,6 @@ function initRun(characterClass) {
 function nextRound(choosedAbility) {
     fetchNextRound(choosedAbility).then(state => {
         runState = state;
-        console.log(runState);
         // showStageScreen(runState);
     });
 }
