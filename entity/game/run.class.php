@@ -42,7 +42,6 @@ class Run implements Executable, Observable, ArrayExportable
     public function getCurrentStage()
     {
         $res = 0;
-        $found = false;
         foreach ($this->stages as $s) {
             if ($s->isDone()) {
                 $res++;

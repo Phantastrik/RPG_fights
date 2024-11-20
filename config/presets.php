@@ -129,15 +129,15 @@ class Presets
 
 
         self::$preset_effect_refresh = new Effect("Refresh", 1);
-        self::$preset_effect_refresh->setModifierKey("pv", 100)->setModifierKey("pm", 100);
+        self::$preset_effect_refresh->setModifierKey("pv_modifier", 100)->setModifierKey("pm_modifier", 100);
         self::$preset_effect_cafeine = new Effect("Un bon cafe", 3);
-        self::$preset_effect_cafeine->setModifierKey("vitesse", 25);
+        self::$preset_effect_cafeine->setModifierKey("vitesse_modifier", 25);
         self::$preset_effect_roids = new Effect("Steroides", 2);
-        self::$preset_effect_roids->setModifierKey("attaque", 25)->setModifierKey("defense", -10);
+        self::$preset_effect_roids->setModifierKey("attaque_modifier", 25)->setModifierKey("defense_modifier", -10);
         self::$preset_effect_meditation = new Effect("Meditation", 4);
-        self::$preset_effect_meditation->setModifierKey("sagesse", 5)->setModifierKey("defense", 5);
+        self::$preset_effect_meditation->setModifierKey("sagesse_modifier", 5)->setModifierKey("defense_modifier", 5);
         self::$preset_effect_iron = new Effect("Iron balls", 1);
-        self::$preset_effect_iron->setModifierKey("defense", 30);
+        self::$preset_effect_iron->setModifierKey("defense_modifier", 30);
 
 
         // effects 

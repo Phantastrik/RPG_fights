@@ -9,6 +9,7 @@ function showStageScreen(runState) {
     startStageScreenAnimation();
     stageNumber = runState.stageNumber;
 
+
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleAbilitySelection);
 }
@@ -31,7 +32,7 @@ function handleAbilitySelection(event) {
         // cancelAnimationFrame(stageScreenAnimationId);
         nextRound(selectedAbilityIndex);
         startStageScreenAnimation();
-
+        console.log(runState.player.modifiedStats);
         // selectCharacter();
         // initRun(characters[selectedIndex]);
     }

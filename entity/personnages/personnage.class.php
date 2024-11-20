@@ -154,7 +154,7 @@ class Personnage implements Levelable, Caster, ArrayExportable
     }
 
     public function applyEffect(Effect $e){
-        $mod = $e->getModifier();
+        //$mod = $e->getModifier();
         array_push($this->activeEffects, $e);
         return $this;
     }
