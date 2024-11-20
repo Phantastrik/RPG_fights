@@ -273,9 +273,9 @@ const abilities_sizing = {
 function drawAbility(ability, x, y) {
     const flavorConfig = {
         "Attaque physique": { color: UI_COLORS.abilities.physicAttack, textColor: UI_COLORS.text.light },
-        "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark }
+        "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark },
+        "spell": { color: UI_COLORS.abilities.spell, textColor: UI_COLORS.text.dark },
     };
-
     drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h, flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,
@@ -311,65 +311,69 @@ function drawCharacterAbilities(character_to_draw, x, y) {
 
 // -------------- stat bar ----
 function drawStatsBar(x, y, character, reverse = false, minimal = false) {
-    const stats = [
-        {   label: `Lvl. ${character.niveau}`, width: 1.5, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
-            modified_value : character.modifiedStats.niveau, value :character.niveau,
-            modifiable : false
+    const stats = {
+        niveau: {
+            label: `Lvl. ${character.niveau}`, width: 1.5, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
+            modified_value: character.modifiedStats.niveau, value: character.niveau,
+            modifiable: false
         },
-        {
-            label: `PV ${character.pv}/${character.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
+        pv: {
+            label: `PV ${character.modifiedStats.pv}/${character.modifiedStats.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
             ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
-            modified_value : character.modifiedStats.pv, value :character.pv,
-            modifiable : false
+            modifiable: true
         },
-        {
-            label: `PM ${character.pm}/${character.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
+        pm: {
+            label: `PM ${character.modifiedStats.pm}/${character.modifiedStats.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
             ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
-            modified_value : character.modifiedStats.pm,value :character.pm,
-            modifiable : false
+            modifiable: true
         },
-        { label: `ATT ${character.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.attaque, value :character.attaque,
-            modifiable : true
+        attaque: {
+            label: `ATT ${character.modifiedStats.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
+            modifiable: true
         },
-        { label: `DEF ${character.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.defense, value :character.defense,
-            modifiable : true
+        defense: {
+            label: `DEF ${character.modifiedStats.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minim1al: false,
+            modifiable: true
         },
-        { label: `SAG ${character.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.sagesse, value :character.sagesse,
-            modifiable : true
+        sagesse: {
+            label: `SAG ${character.modifiedStats.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
+            modifiable: true
         },
-        { label: `VIT ${character.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.vitesse, value :character.vitesse,
-            modifiable : true
+        vitesse: {
+            label: `VIT ${character.modifiedStats.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
+            modifiable: true
         },
-    ];
+    };
 
     // Calcul de la largeur totale si reverse
     let totalWidth = 0;
     if (reverse) {
-        stats.forEach(stat => totalWidth += stat.width);
+        for (const [key, stat] of Object.entries(stats)) {
+            totalWidth += stat.width;
+        }
     }
 
     let offsetX = reverse ? 0 : 0; // Départ à gauche ou à droite
-    stats.forEach(stat => {
-        if (!minimal || (minimal && stat.minimal)){
-           // console.log(stat.modified_value-stat.value);
-            
+    // stats.forEach(stat => {
+    for (const [key, stat] of Object.entries(stats)) {
+        if (!minimal || (minimal && stat.minimal)) {
+            // console.log(stat.modified_value-stat.value);
+
             offsetX = reverse ? offsetX - stat.width : offsetX;
             const dim = grid.pos(stat.width, 1);
             const pos = grid.pos(x + offsetX, y);
 
-            if(stat.modifiable && stat.modified_value - stat.value !== 0 ){
-                drawBox(pos.x, pos.y+dim.y, dim.x, dim.y, stat.color);
-            }
             // Dessiner la boîte de fond
             drawBox(pos.x, pos.y, dim.x, dim.y, stat.color);
 
             // Dessiner la boîte de ratio si applicable
             if (stat.ratio !== null) {
                 drawBox(pos.x, pos.y, Math.floor(dim.x * stat.ratio), dim.y, stat.color_ratio);
+            }
+            let valmod = 0;
+            // stat.modifiable ? character.modifiedStats[key] : character[key];
+            if (character.modifiedStats[key] - character[key] !== 0) {
+                valmod = character.modifiedStats[key] - character[key];
             }
 
             // Dessiner le texte centré
@@ -380,27 +384,30 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
                 pos.y + dim.y / 2,
                 UI_CONFIG.shadowPad,
                 UI_COLORS.shadow,
-                UI_COLORS.text.light,
+                valmod == 0 ? UI_COLORS.text.light :
+                    valmod < 0 ? UI_COLORS.text.danger : UI_COLORS.text.sucess,
                 UI_FONTS.getFont("small", "secondary")
             );
-            if(stat.modifiable && stat.modified_value - stat.value !== 0 ){
-                drawShadowedText(
-                    (stat.modified_value > 0 ? "+"+stat.modified_value : stat.modified_value),
-                    pos.x + dim.x / 2,
-                    pos.y +dim.y + dim.y / 2,
-                    UI_CONFIG.shadowPad,
-                    UI_COLORS.shadow,
-                    UI_COLORS.text.light,
-                    UI_FONTS.getFont("small", "secondary")
-                );
-            }
 
-            // Avancer horizontalement
-            offsetX += reverse ? 0 : stat.width;
 
+            // Dessiner le texte centré
+            ctx.textAlign = "center";
+            drawShadowedText(
+                valmod > 0 ? `+${valmod}` : valmod,
+                pos.x + dim.x / 2,
+                pos.y + dim.y / 2 + dim.y,
+                UI_CONFIG.textShadowPad,
+                UI_COLORS.shadow,
+                valmod > 0 ? UI_COLORS.text.success : UI_COLORS.text.danger,
+                UI_FONTS.getFont("small", "secondary")
+            );
         }
-    });
-}
+
+        // Avancer horizontalement
+        offsetX += reverse ? 0 : stat.width;
+    }
+};
+
 
 function setBackground(bg) {
     canvas.style.background = bg;

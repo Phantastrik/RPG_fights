@@ -11,12 +11,26 @@ class Presets
     private static $ability_physic_shieldBash;
     private static $ability_magic_woosh;
     private static $ability_magic_fizz;
+    private static $ability_spell_defend;
+    private static $ability_spell_enrage;
+    private static $ability_spell_concentrate;
+    private static $ability_spell_weaken;
+    private static $ability_spell_vulnerate;
     private static $preset_ABILITIES;
     private static $preset_effect_refresh;
     private static $preset_effect_cafeine;
     private static $preset_effect_roids;
     private static $preset_effect_meditation;
     private static $preset_effect_iron;
+    private static $preset_effect_weaken;
+    private static $preset_effect_defend;
+    private static $preset_effect_rage;
+    private static $preset_effect_concentration;
+    private static $preset_effect_vulnerate;
+
+
+
+
     private static $preset_EFFECT;
     private static $preset_player_warrior;
     private static $preset_player_rogue;
@@ -51,6 +65,39 @@ class Presets
             "Zumba",
             "Cafeu",
             "Culmin"
+        );
+
+
+        self::$preset_effect_refresh = new Effect("Refresh", 1, true);
+        self::$preset_effect_refresh->setModifierKey("pv_modifier", 100)->setModifierKey("pm_modifier", 100);
+        self::$preset_effect_cafeine = new Effect("Un bon cafe", 3);
+        self::$preset_effect_cafeine->setModifierKey("vitesse_modifier", 25);
+        self::$preset_effect_roids = new Effect("Steroides", 2);
+        self::$preset_effect_roids->setModifierKey("attaque_modifier", 25)->setModifierKey("defense_modifier", -10);
+        self::$preset_effect_meditation = new Effect("Meditation", 4);
+        self::$preset_effect_meditation->setModifierKey("sagesse_modifier", 5)->setModifierKey("defense_modifier", 5);
+        self::$preset_effect_iron = new Effect("Iron balls", 1, true);
+        self::$preset_effect_iron->setModifierKey("defense_modifier", 30);
+        // effects de capacit
+        self::$preset_effect_weaken = new Effect("Weaken", 3);
+        self::$preset_effect_weaken->setModifierKey("attaque_modifier", -25);
+        self::$preset_effect_concentration = new Effect("wise", 3);
+        self::$preset_effect_weaken->setModifierKey("sagesse_modifier", 20);
+        self::$preset_effect_defend  = new Effect("defend", 3);
+        self::$preset_effect_defend->setModifierKey("defense_modifier", 20);
+        self::$preset_effect_rage = new Effect("rage", 3);;
+        self::$preset_effect_rage->setModifierKey("attaque_modifier", 20);
+        self::$preset_effect_vulnerate = new Effect("vulnerate", 3);
+        self::$preset_effect_vulnerate->setModifierKey("defense_modifier", -25);
+
+
+        // effects 
+        self::$preset_EFFECT = array(
+            "refresh" => self::$preset_effect_refresh,
+            "cafeine" => self::$preset_effect_cafeine,
+            "roids" => self::$preset_effect_roids,
+            "meditation" => self::$preset_effect_meditation,
+            "iron" => self::$preset_effect_iron
         );
 
 
@@ -112,6 +159,22 @@ class Presets
             "spread" => 0.1
         ));
 
+        self::$ability_spell_defend = new SpellAbility("defend", self::$preset_effect_defend, 1);
+        self::$ability_spell_defend->setTargetPlayer(true);
+        self::$ability_spell_defend->setTargetEnemy(false);
+        self::$ability_spell_enrage = new SpellAbility("enrage", self::$preset_effect_rage, 1);
+        self::$ability_spell_enrage->setTargetPlayer(true);
+        self::$ability_spell_enrage->setTargetEnemy(false);
+        self::$ability_spell_concentrate = new SpellAbility("concentrate", self::$preset_effect_concentration, 1);
+        self::$ability_spell_concentrate->setTargetPlayer(true);
+        self::$ability_spell_concentrate->setTargetEnemy(false);
+        self::$ability_spell_weaken = new SpellAbility("weaken", self::$preset_effect_weaken, 1);
+        self::$ability_spell_weaken->setTargetPlayer(false);
+        self::$ability_spell_weaken->setTargetEnemy(true);
+        self::$ability_spell_vulnerate = new SpellAbility("vulnerate", self::$preset_effect_vulnerate, 1);
+        self::$ability_spell_vulnerate->setTargetPlayer(false);
+        self::$ability_spell_vulnerate->setTargetEnemy(true);
+
         // Construction des tableaux de capacités à partir des objets créés
 
         self::$preset_ABILITIES = array(
@@ -123,41 +186,34 @@ class Presets
             "magic" => array(
                 "woosh" => self::$ability_magic_woosh,
                 "fizz" => self::$ability_magic_fizz
+            ),
+            "spell" => array(
+                "defend" => self::$ability_spell_defend,
+                "enrage" => self::$ability_spell_enrage,
+                "concentrate" => self::$ability_spell_concentrate,
+                "weaken" => self::$ability_spell_weaken,
+                "vulnerate" => self::$ability_spell_vulnerate
             )
         );
 
 
 
-        self::$preset_effect_refresh = new Effect("Refresh", 1);
-        self::$preset_effect_refresh->setModifierKey("pv_modifier", 100)->setModifierKey("pm_modifier", 100);
-        self::$preset_effect_cafeine = new Effect("Un bon cafe", 3);
-        self::$preset_effect_cafeine->setModifierKey("vitesse_modifier", 25);
-        self::$preset_effect_roids = new Effect("Steroides", 2);
-        self::$preset_effect_roids->setModifierKey("attaque_modifier", 25)->setModifierKey("defense_modifier", -10);
-        self::$preset_effect_meditation = new Effect("Meditation", 4);
-        self::$preset_effect_meditation->setModifierKey("sagesse_modifier", 5)->setModifierKey("defense_modifier", 5);
-        self::$preset_effect_iron = new Effect("Iron balls", 1);
-        self::$preset_effect_iron->setModifierKey("defense_modifier", 30);
-
-
-        // effects 
-        self::$preset_EFFECT = array(
-            "refresh" => self::$preset_effect_refresh,
-            "cafeine" => self::$preset_effect_cafeine,
-            "roids" => self::$preset_effect_roids,
-            "meditation" => self::$preset_effect_meditation,
-            "iron" => self::$preset_effect_iron
-        );
 
         self::$preset_player_warrior = new Warrior(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
         self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["shieldBash"]);
         self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["tacle"]);
+        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["spell"]["defend"]);
+        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["spell"]["enrage"]);
         self::$preset_player_rogue = new Rogue(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
         self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["stab"]);
         self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["tacle"]);
+        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["spell"]["weaken"]);
+        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["spell"]["vulnerate"]);
         self::$preset_player_mage = new Mage(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
         self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["fizz"]);
         self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["woosh"]);
+        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["spell"]["concentrate"]);
+        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["spell"]["weaken"]);
 
         self::$preset_PLAYER = array(
             "warrior" => self::$preset_player_warrior,
@@ -172,12 +228,29 @@ class Presets
     }
 
     // getters 
-    public static function getPreset_PLAYER_NAMES(){return self::$preset_PLAYER_NAMES;}
-    public static function getPreset_MONSTER_NAMES(){return self::$preset_MONSTER_NAMES;}
-    public static function getPreset_ABILITIES(){return self::$preset_ABILITIES;}
-    public static function getPreset_EFFECT(){return self::$preset_EFFECT;}
-    public static function getPreset_PLAYER(){return self::$preset_PLAYER;}
-    public static function getPreset_MONSTER(){return self::$preset_MONSTER;}
-
+    public static function getPreset_PLAYER_NAMES()
+    {
+        return self::$preset_PLAYER_NAMES;
+    }
+    public static function getPreset_MONSTER_NAMES()
+    {
+        return self::$preset_MONSTER_NAMES;
+    }
+    public static function getPreset_ABILITIES()
+    {
+        return self::$preset_ABILITIES;
+    }
+    public static function getPreset_EFFECT()
+    {
+        return self::$preset_EFFECT;
+    }
+    public static function getPreset_PLAYER()
+    {
+        return self::$preset_PLAYER;
+    }
+    public static function getPreset_MONSTER()
+    {
+        return self::$preset_MONSTER;
+    }
 }
 Presets::init();

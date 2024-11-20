@@ -6,6 +6,7 @@ class Effect implements ArrayExportable
 {
     private $name;
     private $duration;
+    private $permanent;
     private static $baseValues = [
         "pvMax_modifier" => 10,
         "pv_modifier" => 100,
@@ -27,10 +28,11 @@ class Effect implements ArrayExportable
         "vitesse_modifier" => 0  
     ];  // Effet appliqué (par exemple, +10 en attaque)
 
-    public function __construct($name, $duration)
+    public function __construct($name, $duration, $permanent = false)
     {
         $this->name = $name;
         $this->duration = $duration;
+        $this->permanent = $permanent;
     }
     public static function createFromPreset() : self{
         return Presets::getPreset_EFFECT()[array_rand(Presets::getPreset_EFFECT())];
@@ -40,13 +42,10 @@ class Effect implements ArrayExportable
         $res =  new Effect("Random Effect",1);
         $key = array_rand($res->getModifier());
         $rand = (mt_rand() / mt_getrandmax() * $spread) - $spread;
-        // var_dump($rand);
         // $res->getModifier()[$key]
         $val = round(self::$baseValues[$key] * (1 + $rand));
         
         $res->setModifierKey($key,$val);
-       // echo($key.'/'.$val.'<br>');
-        //var_dump($res);
         return $res;
     }
 
@@ -70,7 +69,9 @@ class Effect implements ArrayExportable
     {
         return $this->name;
     }
-
+    public function isPermanent(){
+        return $this->permanent;
+    }
     public function toHTML(){
         $res = <<<HTML
              <div class="row">

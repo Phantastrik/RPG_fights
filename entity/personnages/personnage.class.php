@@ -154,8 +154,20 @@ class Personnage implements Levelable, Caster, ArrayExportable
     }
 
     public function applyEffect(Effect $e){
+          
         //$mod = $e->getModifier();
         array_push($this->activeEffects, $e);
+        
+        if($e->isPermanent()){
+            $this->pvMax    += $e->getModifier()["pvMax_modifier"];
+            $this->pv       += $e->getModifier()["pv_modifier"];
+            $this->pmMax    += $e->getModifier()["pmMax_modifier"];
+            $this->pm       += $e->getModifier()["pm_modifier"];
+            $this->attaque  += $e->getModifier()["attaque_modifier"];
+            $this->defense  += $e->getModifier()["defense_modifier"];
+            $this->sagesse  += $e->getModifier()["sagesse_modifier"];
+            $this->vitesse  += $e->getModifier()["vitesse_modifier"];
+        }
         return $this;
     }
 
@@ -171,14 +183,16 @@ class Personnage implements Levelable, Caster, ArrayExportable
             "vitesse"  => $this->vitesse,
         ];
         foreach($this->activeEffects as $e){
-            $res["pvMax"]      = $res["pvMax"]      + $e->getModifier()["pvMax_modifier"];
-            $res["pv"]         = $res["pv"]         + $e->getModifier()["pv_modifier"];
-            $res["pmMax"]      = $res["pmMax"]      + $e->getModifier()["pmMax_modifier"];
-            $res["pm"]         = $res["pm"]         + $e->getModifier()["pm_modifier"];
-            $res["attaque"]    = $res["attaque"]    + $e->getModifier()["attaque_modifier"];
-            $res["defense"]    = $res["defense"]    + $e->getModifier()["defense_modifier"];
-            $res["sagesse"]    = $res["sagesse"]    + $e->getModifier()["sagesse_modifier"];
-            $res["vitesse"]    = $res["vitesse"]    + $e->getModifier()["vitesse_modifier"];
+            if(!$e->isPermanent()){
+                $res["pvMax"]      = $res["pvMax"]      + $e->getModifier()["pvMax_modifier"];
+                $res["pv"]         = $res["pv"]         + $e->getModifier()["pv_modifier"];
+                $res["pmMax"]      = $res["pmMax"]      + $e->getModifier()["pmMax_modifier"];
+                $res["pm"]         = $res["pm"]         + $e->getModifier()["pm_modifier"];
+                $res["attaque"]    = $res["attaque"]    + $e->getModifier()["attaque_modifier"];
+                $res["defense"]    = $res["defense"]    + $e->getModifier()["defense_modifier"];
+                $res["sagesse"]    = $res["sagesse"]    + $e->getModifier()["sagesse_modifier"];
+                $res["vitesse"]    = $res["vitesse"]    + $e->getModifier()["vitesse_modifier"];
+            }
         }
         return $res;
     }

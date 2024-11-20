@@ -1,6 +1,7 @@
 const CANVAS_DIMENSIONS = { width: 800, height: 416 };
 const UI_CONFIG = {
-    shadowPad: 2
+    shadowPad: 2,
+    textShadowPad : 1
 }
 const UI_BG = {
     bg1 : 'url(../assets/bg/background_1.png)',
@@ -17,11 +18,14 @@ const UI_COLORS = {
     text: {
         light: '#ffffff',
         medium: '#444444',
-        dark: '#000000'
+        dark: '#000000',
+        sucess : '#00FF00',
+        danger : '#FF0000'
     },
     abilities: {
         physicAttack: '#c4547c',
-        magicAttack: '#54c4a8'
+        magicAttack: '#54c4a8',
+        spell : '#bfc431'
     },
     stats: {
         lvl: {

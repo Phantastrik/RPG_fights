@@ -15,6 +15,7 @@ function showStartScreen(playerPreset) {
     startStartScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleCharacterSelection);
+    
 }
 
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages

@@ -117,6 +117,16 @@ class FightRound implements Observable, Executable, ArrayExportable
         // on applique les dégats au defenseur
         $pvLoss = $fightOrder[1]->getPv();
         $fightOrder[1]->receiveDamage($dmg_dealt);
+        // cas spécial pour un spell
+        if (get_class($ab) == 'Spell') {
+            if ($ab->canTargetPlayer()) {
+                $ab->applyOn($playerFirst ? $fightOrder[0] : $fightOrder[1]);
+            }
+            if ($ab->canTargetEnemy()) {
+                $ab->applyOn($fightOrder[0]);
+                $ab->applyOn($playerFirst ? $fightOrder[1] : $fightOrder[0]);
+            }
+        }
         $pvLoss -= $fightOrder[1]->getPv();
         $this->notification["fighter1"]["damageReceived"] = $pvLoss;
         $this->exportData[$playerFirst ? "enemy" : "player"]["damageReceived"] = $pvLoss;
@@ -154,6 +164,16 @@ class FightRound implements Observable, Executable, ArrayExportable
             // on applique les dégats au defenseur
             $pvLoss = $fightOrder[0]->getPv();
             $fightOrder[0]->receiveDamage($dmg_dealt);
+            // cas spécial pour un spell
+            if (get_class($ab) == 'SpellAbility') {
+                if ($ab->canTargetPlayer()) {
+                    $ab->applyOn($playerFirst ? $fightOrder[1] : $fightOrder[0]);
+                }
+                if ($ab->canTargetEnemy()) {
+                    $ab->applyOn($playerFirst ? $fightOrder[0] : $fightOrder[1]);
+    
+                }
+            }
             $pvLoss -= $fightOrder[0]->getPv();
             $this->notification["fighter0"]["damageReceived"] = $pvLoss;
             $this->exportData[$playerFirst ? "player" : "enemy"]["damageReceived"] = $pvLoss;

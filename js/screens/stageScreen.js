@@ -32,7 +32,6 @@ function handleAbilitySelection(event) {
         // cancelAnimationFrame(stageScreenAnimationId);
         nextRound(selectedAbilityIndex);
         startStageScreenAnimation();
-        console.log(runState.player.modifiedStats);
         // selectCharacter();
         // initRun(characters[selectedIndex]);
     }
@@ -42,39 +41,30 @@ function handleAbilitySelection(event) {
 function animateStageScreen() {
     // Effacer la zone de sélection
     clearCanvas();
+    // header
     drawStagesScreenHeader();
     // player sprite
     pos = grid.pos(-1, 3);
     drawCharacter(spriteSource[runState.player.className], pos.x, pos.y, "idle");
     // player description
-    // drawCharacterAbilities(runState.player,20,4);
     pos = grid.pos(8, 12);
     drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
-    // vie / mana
-  /*  pos = grid.pos(1, 11.5);
-    dim = grid.pos(4, 0.5);
-    drawHealthBar(pos.x, pos.y, dim.x, dim.y, runState.player);
-    pos = grid.pos(1, 12);
-    drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.player); /*
-*/
+
     // monster
     if (runState.stages[runState.currentStage].type === "fight") {
         setBackground(UI_BG.bg4);
-
+        // sprite
         pos = grid.pos(20, 7);
         drawMonster("gobelin", pos.x, pos.y, "idle");
-        // vie / mana
-/*        pos = grid.pos(20, 11.5);
-        dim = grid.pos(4, 0.5);
-        drawHealthBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy);
-        pos = grid.pos(20, 12);
-        drawManaBar(pos.x, pos.y, dim.x, dim.y, runState.stages[runState.currentStage].enemy); */
-        drawStatsBar(25,12,runState.stages[runState.currentStage].enemy,true,true);
-    }else{
+        // stats
+        drawStatsBar(25, 12, runState.stages[runState.currentStage].enemy, true, false);
+    } else {
+        // bg pour les event
         setBackground(UI_BG.bg3);
     }
-   drawStatsBar(0,1.8,runState.player);
-    
+    // statbar du perso
+    drawStatsBar(0, 1.8, runState.player);
+
     stageScreenAnimationId = requestAnimationFrame(() => animateStageScreen());  // Boucle d'animation
 }
 
