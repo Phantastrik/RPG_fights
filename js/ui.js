@@ -313,29 +313,36 @@ function drawCharacterAbilities(character_to_draw, x, y) {
 function drawStatsBar(x, y, character, reverse = false, minimal = false) {
     const stats = [
         {   label: `Lvl. ${character.niveau}`, width: 1.5, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
-            modified_value : character.modifiedStats.niveau
+            modified_value : character.modifiedStats.niveau, value :character.niveau,
+            modifiable : false
         },
         {
             label: `PV ${character.pv}/${character.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
             ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
-            modified_value : character.modifiedStats.pv
+            modified_value : character.modifiedStats.pv, value :character.pv,
+            modifiable : false
         },
         {
             label: `PM ${character.pm}/${character.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
             ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
-            modified_value : character.modifiedStats.pm
+            modified_value : character.modifiedStats.pm,value :character.pm,
+            modifiable : false
         },
         { label: `ATT ${character.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.attaque
+            modified_value : character.modifiedStats.attaque, value :character.attaque,
+            modifiable : true
         },
         { label: `DEF ${character.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.defense
+            modified_value : character.modifiedStats.defense, value :character.defense,
+            modifiable : true
         },
         { label: `SAG ${character.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.sagesse
+            modified_value : character.modifiedStats.sagesse, value :character.sagesse,
+            modifiable : true
         },
         { label: `VIT ${character.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
-            modified_value : character.modifiedStats.vitesse
+            modified_value : character.modifiedStats.vitesse, value :character.vitesse,
+            modifiable : true
         },
     ];
 
@@ -348,12 +355,15 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
     let offsetX = reverse ? 0 : 0; // Départ à gauche ou à droite
     stats.forEach(stat => {
         if (!minimal || (minimal && stat.minimal)){
-
+           // console.log(stat.modified_value-stat.value);
+            
             offsetX = reverse ? offsetX - stat.width : offsetX;
             const dim = grid.pos(stat.width, 1);
             const pos = grid.pos(x + offsetX, y);
 
-
+            if(stat.modifiable && stat.modified_value - stat.value !== 0 ){
+                drawBox(pos.x, pos.y+dim.y, dim.x, dim.y, stat.color);
+            }
             // Dessiner la boîte de fond
             drawBox(pos.x, pos.y, dim.x, dim.y, stat.color);
 
@@ -373,6 +383,17 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
                 UI_COLORS.text.light,
                 UI_FONTS.getFont("small", "secondary")
             );
+            if(stat.modifiable && stat.modified_value - stat.value !== 0 ){
+                drawShadowedText(
+                    (stat.modified_value > 0 ? "+"+stat.modified_value : stat.modified_value),
+                    pos.x + dim.x / 2,
+                    pos.y +dim.y + dim.y / 2,
+                    UI_CONFIG.shadowPad,
+                    UI_COLORS.shadow,
+                    UI_COLORS.text.light,
+                    UI_FONTS.getFont("small", "secondary")
+                );
+            }
 
             // Avancer horizontalement
             offsetX += reverse ? 0 : stat.width;
