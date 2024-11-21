@@ -162,8 +162,12 @@ function drawPanel(x, y, width, height, color = "primary") {
 }
 // box avec image
 function drawPane(x, y,color = "primary") {
+    if (!frameSheet_data[color].img || frameSheet_data[color].img.src !== frameSheet_data[color].src) {
+        frameSheet_data[color].img = new Image();
+        frameSheet_data[color].img.src = frameSheet_data[color].src;
+    }
+   
     let pane = frameSheet_data.elements.pane;
-    console.log([x,y])
     ctx.drawImage(frameSheet_data[color].img,
         pane.x * frameSheet_data.cellSize,
         pane.y * frameSheet_data.cellSize,
@@ -172,10 +176,47 @@ function drawPane(x, y,color = "primary") {
         frameSheet_data.cellSize, frameSheet_data.cellSize);
 }
 function drawKey(x,y,label){
-    drawPane(x,y,"secondary");
+    drawPanel(x,y,"secondary");
    // pos = grid.pos(x,y)
-    drawShadowedText(label, x, y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "primary"));
+    drawShadowedText(label, x+frameSheet_data.frameWidth/2, y+frameSheet_data.frameHeight/2+2, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "primary"));
 }
+// icon 
+function drawIcon(x, y,icon) {
+    if (!UI_ICONS.img || UI_ICONS.img.src !== UI_ICONS.src) {
+        UI_ICONS.img = new Image();
+        UI_ICONS.img.src = UI_ICONS.src;
+    }
+
+   
+    ctx.drawImage(UI_ICONS.img,
+        icon.x * UI_ICONS.cellSize,
+        icon.y * UI_ICONS.cellSize,
+        UI_ICONS.cellSize, UI_ICONS.cellSize,
+        x, y,
+        UI_ICONS.cellSize, UI_ICONS.cellSize);
+}
+function drawEffect(x,y,effect){
+    let stats = {
+        pvMax_modifier : {icon : UI_ICONS.elements.pvMax },
+        pv_modifier : {icon : UI_ICONS.elements.pv },
+        pmMax_modifier : {icon : UI_ICONS.elements.pmMax },
+        pm_modifier : {icon : UI_ICONS.elements.pm },
+        attaque_modifier : {icon : UI_ICONS.elements.attaque },
+        defense_modifier : {icon : UI_ICONS.elements.defense },
+        sagesse_modifier : {icon : UI_ICONS.elements.sagesse },
+        vitesse_modifier : {icon : UI_ICONS.elements.vitesse }  
+    }
+    let i;
+    for (const [key, value] of Object.entries(effect.modifiers)) {
+        if(value != 0){
+            // todo
+            i++;
+        }
+    }
+      
+
+}
+
 
 /** ========== Affichage des Stages ========== **/
 function drawStagesSideBar() {
@@ -292,8 +333,6 @@ function drawAbility(ability, x, y) {
         "spell": { color: UI_COLORS.abilities.spell, textColor: UI_COLORS.text.dark },
     };
     dim = grid.pos(1,0);
-    drawKey(x-abilities_sizing.w / 2-dim.x, y - abilities_sizing.h / 2, "Q");
-    drawKey(x+abilities_sizing.w / 2+dim.x, y - abilities_sizing.h / 2, "D");
     drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h, flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,
