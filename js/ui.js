@@ -160,7 +160,22 @@ function drawPanel(x, y, width, height, color = "primary") {
         }
     }
 }
-
+// box avec image
+function drawPane(x, y,color = "primary") {
+    let pane = frameSheet_data.elements.pane;
+    console.log([x,y])
+    ctx.drawImage(frameSheet_data[color].img,
+        pane.x * frameSheet_data.cellSize,
+        pane.y * frameSheet_data.cellSize,
+        frameSheet_data.cellSize, frameSheet_data.cellSize,
+        x, y,
+        frameSheet_data.cellSize, frameSheet_data.cellSize);
+}
+function drawKey(x,y,label){
+    drawPane(x,y,"secondary");
+   // pos = grid.pos(x,y)
+    drawShadowedText(label, x, y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "primary"));
+}
 
 /** ========== Affichage des Stages ========== **/
 function drawStagesSideBar() {
@@ -276,6 +291,9 @@ function drawAbility(ability, x, y) {
         "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark },
         "spell": { color: UI_COLORS.abilities.spell, textColor: UI_COLORS.text.dark },
     };
+    dim = grid.pos(1,0);
+    drawKey(x-abilities_sizing.w / 2-dim.x, y - abilities_sizing.h / 2, "Q");
+    drawKey(x+abilities_sizing.w / 2+dim.x, y - abilities_sizing.h / 2, "D");
     drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h, flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,

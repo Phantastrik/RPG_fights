@@ -173,6 +173,7 @@ const frameSheet_data = {
     frameHeight: 32,
     cellSize: 32,
     elements: {
+        pane : {x:0,y:4},
         panel: {
             top_left: { x: 0, y: 5 },
             top: { x: 1, y: 5 },

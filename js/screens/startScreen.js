@@ -48,7 +48,7 @@ function animateStartScreen() {
     // choosed player box
     drawCharacterSelectionSelected(characters[selectedIndex],10,4);
     // player description
-    drawCharacterAbilities(playerPreset[characters[selectedIndex]],12.5,7);
+    // drawCharacterAbilities(playerPreset[characters[selectedIndex]],12.5,7);
     
     // bandeau header de l'ecran
     headerGUI("CHOOSE PLAYER");

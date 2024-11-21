@@ -1,11 +1,11 @@
 //TODO
 
-- SpellAbility doit etre incorporé dans Ability
-- n'importe quel Ability peut avoir un effect
-- comme ça y'a plus qu'a faire un apply
+DONE - SpellAbility doit etre incorporé dans Ability
+DONE - n'importe quel Ability peut avoir un effect
+DONE - comme ça y'a plus qu'a faire un apply
 
-- fixer le fightRound->execute()
+DONE - fixer le fightRound->execute()
 
-- mettre a jour les autres fichiers
+DONE - mettre a jour les autres fichiers
 
-- mettre a jour l'export JSON*
+DONE - mettre a jour l'export JSON*
