@@ -46,9 +46,6 @@ function animateStageScreen() {
     // player sprite
     pos = grid.pos(-1, 3);
     drawCharacter(spriteSource[runState.player.className], pos.x, pos.y, "idle");
-    // player description
-    pos = grid.pos(8, 12);
-    drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
 
     // monster
     if (runState.stages[runState.currentStage].type === "fight") {
@@ -58,6 +55,10 @@ function animateStageScreen() {
         drawMonster("gobelin", pos.x, pos.y, "idle");
         // stats
         drawStatsBar(25, 12, runState.stages[runState.currentStage].enemy, true, false);
+        // player ability
+        pos = grid.pos(2, 4);
+        drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
+
     } else {
         // bg pour les event
         setBackground(UI_BG.bg3);

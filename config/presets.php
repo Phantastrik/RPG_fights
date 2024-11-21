@@ -82,7 +82,7 @@ class Presets
         self::$preset_effect_weaken = new Effect("Weaken", 3);
         self::$preset_effect_weaken->setModifierKey("attaque_modifier", -25);
         self::$preset_effect_concentration = new Effect("wise", 3);
-        self::$preset_effect_weaken->setModifierKey("sagesse_modifier", 20);
+        self::$preset_effect_concentration->setModifierKey("sagesse_modifier", 20);
         self::$preset_effect_defend  = new Effect("defend", 3);
         self::$preset_effect_defend->setModifierKey("defense_modifier", 20);
         self::$preset_effect_rage = new Effect("rage", 3);;
@@ -160,20 +160,20 @@ class Presets
         ));
 
         self::$ability_spell_defend = new SpellAbility("defend", self::$preset_effect_defend, 1);
-        self::$ability_spell_defend->setTargetPlayer(true);
-        self::$ability_spell_defend->setTargetEnemy(false);
+        self::$ability_spell_defend->setEffectTargetPlayer(true);
+        self::$ability_spell_defend->setEffectTargetEnemy(false);
         self::$ability_spell_enrage = new SpellAbility("enrage", self::$preset_effect_rage, 1);
-        self::$ability_spell_enrage->setTargetPlayer(true);
-        self::$ability_spell_enrage->setTargetEnemy(false);
+        self::$ability_spell_enrage->setEffectTargetPlayer(true);
+        self::$ability_spell_enrage->setEffectTargetEnemy(false);
         self::$ability_spell_concentrate = new SpellAbility("concentrate", self::$preset_effect_concentration, 1);
-        self::$ability_spell_concentrate->setTargetPlayer(true);
-        self::$ability_spell_concentrate->setTargetEnemy(false);
+        self::$ability_spell_concentrate->setEffectTargetPlayer(true);
+        self::$ability_spell_concentrate->setEffectTargetEnemy(false);
         self::$ability_spell_weaken = new SpellAbility("weaken", self::$preset_effect_weaken, 1);
-        self::$ability_spell_weaken->setTargetPlayer(false);
-        self::$ability_spell_weaken->setTargetEnemy(true);
+        self::$ability_spell_weaken->setEffectTargetPlayer(false);
+        self::$ability_spell_weaken->setEffectTargetEnemy(true);
         self::$ability_spell_vulnerate = new SpellAbility("vulnerate", self::$preset_effect_vulnerate, 1);
-        self::$ability_spell_vulnerate->setTargetPlayer(false);
-        self::$ability_spell_vulnerate->setTargetEnemy(true);
+        self::$ability_spell_vulnerate->setEffectTargetPlayer(false);
+        self::$ability_spell_vulnerate->setEffectTargetEnemy(true);
 
         // Construction des tableaux de capacités à partir des objets créés
 

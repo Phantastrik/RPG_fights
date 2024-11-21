@@ -143,9 +143,13 @@ class Personnage implements Levelable, Caster, ArrayExportable
         return $this;
     }
 
-    public function receiveDamage(int $damage) :self{
+    public function receiveDamage(int $damage){
         $real_damage = $damage - $this->defense;
-        return $this->loosePV($real_damage);
+        if($real_damage < 0){
+            $real_damage = 0;
+        }
+        $this->loosePV($real_damage);
+        return $real_damage;
     }
 
     public function addAbility(Ability $ab){
@@ -194,6 +198,11 @@ class Personnage implements Levelable, Caster, ArrayExportable
                 $res["vitesse"]    = $res["vitesse"]    + $e->getModifier()["vitesse_modifier"];
             }
         }
+        foreach($res as $key  => $value){
+            if($value <0 ){
+                $res[$key] = 0;
+            }
+        }
         return $res;
     }
 
@@ -218,19 +227,32 @@ class Personnage implements Levelable, Caster, ArrayExportable
         return $this;
     }
 
+
+    public function tickEffects(){
+        $key = 0;
+        foreach($this->activeEffects as $e){
+            if(!$e->tick()){
+                array_splice($this->activeEffects,$key,1);
+            }
+            $key++;
+        }
+    }
+
     // ---IMPLEMENTS Cast
     public function cast(Ability $ability){
         $damage = 0;
+        $stats = $this->getModifiedStats();
         // si assez de PM pour utilisr l'ability
         if($this->usePm($ability->getPmCost())){
             $damage = $ability->getBasicDamage()
-            + $this->attaque * $ability->getAttaqueUse()
-            + $this->defense * $ability->getDefenseUse()
-            + $this->sagesse * $ability->getSagesseUse()
-            + $this->vitesse * $ability->getVitesseUse();
+            + $stats["attaque"] * $ability->getAttaqueUse()
+            + $stats["defense"] * $ability->getDefenseUse()
+            + $stats["sagesse"] * $ability->getSagesseUse()
+            + $stats["vitesse"] * $ability->getVitesseUse();
 
         }
         $damage = $ability->applySpread($damage);
+        if($damage <0){$damage = 0;}
         return $damage;
     }
 

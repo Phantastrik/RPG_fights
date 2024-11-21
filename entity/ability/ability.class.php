@@ -8,6 +8,9 @@ class Ability implements ArrayExportable
 
     protected static $namelist = ['Pif','Bam','Frizz', 'Zoub'];
 	protected $name = null;
+    protected $effect = null;
+    protected $effect_target_player;
+    protected $effect_target_enemy;
 	protected $pm_cost = null;
 	protected $basic_damage = null;
 	protected $attaque_use  = null;
@@ -31,6 +34,8 @@ class Ability implements ArrayExportable
         $this->vitesse_use = 0;
         $this->spread = 0.2;
         $this->flavor = "vanilla";
+        $this->effect_target_enemy = false;
+        $this->effect_target_player = false;
     }
    // Getters
 
@@ -70,6 +75,31 @@ class Ability implements ArrayExportable
     public function getSpread(){
         return $this->spread;
     }
+    public function canEffectTargetEnemy(){
+        return $this->effect_target_enemy;
+    }
+    public function setEffectTargetEnemy(bool $val){
+        $this->effect_target_enemy = $val;
+        return $this;
+    }
+    public function canEffectTargetPlayer(){
+        return $this->effect_target_player;
+    }
+    public function setEffectTargetPlayer(bool $val){
+        $this->effect_target_player = $val;
+        return $this;
+    }
+    public function getEffect(){
+        return $this->effect;
+    }
+    
+    public function applyEffectOn(Personnage $personnage){
+        if($this->effect != null){
+            $personnage->applyEffect($this->effect);
+        }
+        return $this;
+    }
+
     public function setStats($stats){
         $this->pm_cost      = $stats["pm_cost"];
         $this->basic_damage = $stats["basic_damage"];
@@ -124,6 +154,7 @@ HTML
     }
 
     public function arrayExport(){
+        $eff = $this->effect == null ? null : $this->effect->arrayExport();
         return array(
             "name" => $this->name,
             "pm_cost" => $this->pm_cost,
@@ -133,7 +164,8 @@ HTML
             "sagesse_use" => $this->sagesse_use,
             "vitesse_use" => $this->vitesse_use,
             "spread" => $this->spread,
-            "flavor" => $this->flavor
+            "flavor" => $this->flavor, 
+            "effect" => $eff
         );
     }
 

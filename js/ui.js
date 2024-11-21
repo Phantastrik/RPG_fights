@@ -389,18 +389,6 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
                 UI_FONTS.getFont("small", "secondary")
             );
 
-
-            // Dessiner le texte centré
-            ctx.textAlign = "center";
-            drawShadowedText(
-                valmod > 0 ? `+${valmod}` : valmod,
-                pos.x + dim.x / 2,
-                pos.y + dim.y / 2 + dim.y,
-                UI_CONFIG.textShadowPad,
-                UI_COLORS.shadow,
-                valmod > 0 ? UI_COLORS.text.success : UI_COLORS.text.danger,
-                UI_FONTS.getFont("small", "secondary")
-            );
         }
 
         // Avancer horizontalement

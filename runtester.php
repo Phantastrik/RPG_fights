@@ -11,10 +11,10 @@ $player = Presets::getPreset_PLAYER()[array_rand(Presets::getPreset_PLAYER())];
 
 
 $run = new Run($player,15);
-$listener = new RunListener();
-$run->subscribe($listener);
-$run->notify();
-//$run->playStage();
+// $listener = new RunListener();
+// $run->subscribe($listener);
+// $run->notify();
+echo(json_encode($run->playRound()->arrayExport()));
 
 
 /*
