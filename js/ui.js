@@ -207,9 +207,15 @@ function drawEffect(x,y,effect){
         vitesse_modifier : {icon : UI_ICONS.elements.vitesse }  
     }
     let i;
-    for (const [key, value] of Object.entries(effect.modifiers)) {
+    for (const [key, value] of Object.entries(effect.modifier)) {c
         if(value != 0){
-            // todo
+            drawIcon(x,y+(i*UI_ICONS.cellSize),stats[key].icon);
+            if(value<0){
+                drawIcon(x+UI_ICONS.cellSize,y+(i*UI_ICONS.cellSize),UI_ICONS.elements.arrow_down);
+            }   
+            if(value>0){
+                drawIcon(x+UI_ICONS.cellSize,y+(i*UI_ICONS.cellSize),UI_ICONS.elements.arrow_up);
+            }   
             i++;
         }
     }

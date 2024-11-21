@@ -66,6 +66,11 @@ function animateStageScreen() {
     // statbar du perso
     drawStatsBar(0, 1.8, runState.player);
 
+    if(runState.player.activeEffects.length > 0){
+        pos = grid.pos(4,4);
+;        drawEffect(pos.x,pos.y,runState.player.activeEffects[0]);
+    }
+
     stageScreenAnimationId = requestAnimationFrame(() => animateStageScreen());  // Boucle d'animation
 }
 
