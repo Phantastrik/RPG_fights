@@ -127,25 +127,39 @@ function drawPanel(x, y, width, height, color = "primary") {
         for (let j = 0; j < height; j++) {
 
             let key1 = "";
-            if (j == 0) {
-                key1 = "top";
-            } else {
-                if (j === (height - 1)) {
-                    key1 = "bottom";
+            if (height > 1) { // si c'est une ligne pas de position verticale
+                if (j == 0) {
+                    key1 = "top";
                 } else {
-                    key1 = "middle";
+                    if (j === (height - 1)) {
+                        key1 = "bottom";
+                    } else {
+                        key1 = "middle";
+                    }
                 }
             }
+            
+
             let key2 = "";
             if (i == 0) {
-                key2 = "_left";
+                key2 = "left";
             } else {
                 if (i === (width - 1)) {
-                    key2 = "_right";
+                    key2 = "right";
+                }else{
+                    // cas pour une simple ligne
+                   // if(height === 1){
+                        key2 = "center"        
+                   // }
                 }
             }
             // console.log(width-1);
-            let key = key1 + key2;
+            let key;
+            if (height > 1) {
+                key = key1 + '_' + key2;
+            }else{
+                key = key2;
+            }
             let pane = frameSheet_data.elements.panel[key];
             let posx = x + i * frameSheet_data.cellSize;
             let posy = y + j * frameSheet_data.cellSize;
@@ -161,12 +175,12 @@ function drawPanel(x, y, width, height, color = "primary") {
     }
 }
 // box avec image
-function drawPane(x, y,color = "primary") {
+function drawPane(x, y, color = "primary") {
     if (!frameSheet_data[color].img || frameSheet_data[color].img.src !== frameSheet_data[color].src) {
         frameSheet_data[color].img = new Image();
         frameSheet_data[color].img.src = frameSheet_data[color].src;
     }
-   
+
     let pane = frameSheet_data.elements.pane;
     ctx.drawImage(frameSheet_data[color].img,
         pane.x * frameSheet_data.cellSize,
@@ -175,19 +189,19 @@ function drawPane(x, y,color = "primary") {
         x, y,
         frameSheet_data.cellSize, frameSheet_data.cellSize);
 }
-function drawKey(x,y,label){
-    drawPanel(x,y,"secondary");
-   // pos = grid.pos(x,y)
-    drawShadowedText(label, x+frameSheet_data.frameWidth/2, y+frameSheet_data.frameHeight/2+2, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "primary"));
+function drawKey(x, y, label) {
+    drawPanel(x, y, "secondary");
+    // pos = grid.pos(x,y)
+    drawShadowedText(label, x + frameSheet_data.frameWidth / 2, y + frameSheet_data.frameHeight / 2 + 2, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "primary"));
 }
 // icon 
-function drawIcon(x, y,icon) {
+function drawIcon(x, y, icon) {
     if (!UI_ICONS.img || UI_ICONS.img.src !== UI_ICONS.src) {
         UI_ICONS.img = new Image();
         UI_ICONS.img.src = UI_ICONS.src;
     }
 
-   
+
     ctx.drawImage(UI_ICONS.img,
         icon.x * UI_ICONS.cellSize,
         icon.y * UI_ICONS.cellSize,
@@ -195,49 +209,48 @@ function drawIcon(x, y,icon) {
         x, y,
         UI_ICONS.cellSize, UI_ICONS.cellSize);
 }
-function drawEffect(x,y,effect){
+function drawEffect(x, y, effect) {
     let stats = {
-        pvMax_modifier : {icon : UI_ICONS.elements.pvMax },
-        pv_modifier : {icon : UI_ICONS.elements.pv },
-        pmMax_modifier : {icon : UI_ICONS.elements.pmMax },
-        pm_modifier : {icon : UI_ICONS.elements.pm },
-        attaque_modifier : {icon : UI_ICONS.elements.attaque },
-        defense_modifier : {icon : UI_ICONS.elements.defense },
-        sagesse_modifier : {icon : UI_ICONS.elements.sagesse },
-        vitesse_modifier : {icon : UI_ICONS.elements.vitesse }  
+        pvMax_modifier: { icon: UI_ICONS.elements.pvMax },
+        pv_modifier: { icon: UI_ICONS.elements.pv },
+        pmMax_modifier: { icon: UI_ICONS.elements.pmMax },
+        pm_modifier: { icon: UI_ICONS.elements.pm },
+        attaque_modifier: { icon: UI_ICONS.elements.attaque },
+        defense_modifier: { icon: UI_ICONS.elements.defense },
+        sagesse_modifier: { icon: UI_ICONS.elements.sagesse },
+        vitesse_modifier: { icon: UI_ICONS.elements.vitesse }
     }
     let i = 0;
     for (const [key, value] of Object.entries(effect.modifier)) {
-        if(value != 0){
+        if (value != 0) {
             // icone de la stat
-            drawPane(x,
-                    y-(i*UI_ICONS.cellSize),
-                    "secondary"
+            // longueur du bandeau
+            let boxWidth = 2;
+
+            drawPanel(x+ (i * boxWidth),
+                y,boxWidth,1,
+                "secondary"
             )
-            drawIcon(x,y+(i*UI_ICONS.cellSize),stats[key].icon);
-             ;
+            drawIcon(x+ (i * boxWidth), y , stats[key].icon);
+            ;
             /*drawPane(x+UI_ICONS.cellSize,
                 y-(i*UI_ICONS.cellSize),
                 "secondary"
             );*/
             let colorValue = UI_COLORS.text.light;
-            if(value<0){
+            if (value < 0) {
                 colorValue = UI_COLORS.text.danger;
-            }   
-            if(value>0){
+            }
+            if (value > 0) {
                 colorValue = UI_COLORS.text.sucess
             }
-            drawPane(x+UI_ICONS.cellSize,
-                y-(i*UI_ICONS.cellSize),
-                "secondary"
-            );  
             // valeur modifier 
             ctx.textAlign = "left";
-            drawShadowedText(value,x+UI_ICONS.cellSize+8,y+(i*UI_ICONS.cellSize)+UI_ICONS.cellSize/1.5,0,UI_COLORS.shadow,colorValue,UI_FONTS.getFont("small","secondary"));
+            drawShadowedText(value, x + UI_ICONS.cellSize+ (i * UI_ICONS.cellSize) , y + UI_ICONS.cellSize / 1.5, 2, UI_COLORS.shadow, colorValue, UI_FONTS.getFont("small", "secondary"));
             i++;
         }
     }
-      
+
 
 }
 
@@ -356,7 +369,7 @@ function drawAbility(ability, x, y) {
         "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark },
         "spell": { color: UI_COLORS.abilities.spell, textColor: UI_COLORS.text.dark },
     };
-    dim = grid.pos(1,0);
+    dim = grid.pos(1, 0);
     drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h, flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,

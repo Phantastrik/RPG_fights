@@ -45,12 +45,13 @@ function animateStartScreen() {
     // player sprite
     pos = grid.pos(-1,3);
     drawCharacter(spriteSource[characters[selectedIndex]],pos.x,pos.y,"walk");
+    
+
     // choosed player box
     drawCharacterSelectionSelected(characters[selectedIndex],10,4);
     // player description
     // drawCharacterAbilities(playerPreset[characters[selectedIndex]],12.5,7);
-    pos = grid.pos(5,5);
-    
+ 
    // drawKey(pos.x, pos.y,"Q");
     // bandeau header de l'ecran
     headerGUI("CHOOSE PLAYER");

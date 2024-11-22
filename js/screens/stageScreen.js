@@ -64,7 +64,7 @@ function animateStageScreen() {
             runState.stages[runState.currentStage].enemy.activeEffects.forEach(effect => {
                 pos = grid.pos(20, 5 + i);
                 drawEffect(pos.x, pos.y, effect);
-                i++;
+                i+=0.5;
             });
 
         }
@@ -81,7 +81,7 @@ function animateStageScreen() {
         runState.player.activeEffects.forEach(effect =>{
             pos = grid.pos(5, 3.5+i);
             drawEffect(pos.x, pos.y, effect);
-            i++;
+            i+=0.8;
         });
        
     }

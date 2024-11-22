@@ -20,7 +20,7 @@ const UI_COLORS = {
         medium: '#444444',
         dark: '#000000',
         sucess: '#00FF00',
-        danger: '#FF5555'
+        danger: '#e8d207'
     },
     abilities: {
         physicAttack: '#c4547c',
@@ -33,7 +33,7 @@ const UI_COLORS = {
         },
         pv: {
             primary: "#f54242",
-            secondary: 'f54242'
+            secondary: '#822222'
         },
         pm: {
             primary: "#42b9f5",
@@ -194,14 +194,17 @@ const frameSheet_data = {
         pane: { x: 0, y: 4 },
         panel: {
             top_left: { x: 0, y: 5 },
-            top: { x: 1, y: 5 },
+            top_center: { x: 1, y: 5 },
             top_right: { x: 2, y: 5 },
             middle_left: { x: 0, y: 6 },
-            middle: { x: 1, y: 6 },
+            middle_center: { x: 1, y: 6 },
             middle_right: { x: 2, y: 6 },
             bottom_left: { x: 0, y: 7 },
-            bottom: { x: 1, y: 7 },
-            bottom_right: { x: 2, y: 7 }
+            bottom_center: { x: 1, y: 7 },
+            bottom_right: { x: 2, y: 7 },
+            left: {x:1 ,y:4 },
+            right : {x:3,y:4},
+            center : {x:2,y:4}
         }
     },
     getSource: function (element) {
