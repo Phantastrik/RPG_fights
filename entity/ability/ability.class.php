@@ -95,7 +95,7 @@ class Ability implements ArrayExportable
     
     public function applyEffectOn(Personnage $personnage){
         if($this->effect != null){
-            $personnage->applyEffect($this->effect);
+            $personnage->applyEffect($this->effect->copy());
         }
         return $this;
     }

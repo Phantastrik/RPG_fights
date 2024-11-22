@@ -20,7 +20,7 @@ const UI_COLORS = {
         medium: '#444444',
         dark: '#000000',
         sucess: '#00FF00',
-        danger: '#FF0000'
+        danger: '#FF5555'
     },
     abilities: {
         physicAttack: '#c4547c',
@@ -106,14 +106,14 @@ const UI_ICONS = {
     elements: {
         arrow_up: { x: 0, y: 2 },
         arrow_down: { x: 1, y: 2 },
-        pv: { x: 0, y: 6 },
+        pv: { x: 6, y: 0 },
         pvMax: { x: 0, y: 1 },
         pm: { x: 10, y: 0 },
         pmMax : {x: 5, y:19},
         attaque: { x: 1, y: 5 },
         defense: { x: 1, y: 6 },
         sagesse: { x: 10, y: 13 },
-        vitesse: { x: 14, y: 3 },
+        vitesse: { x: 3, y: 14 },
         exp: { x: 5, y: 0 }
     }
 }

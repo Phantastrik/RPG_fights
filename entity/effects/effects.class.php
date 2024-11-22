@@ -55,6 +55,11 @@ class Effect implements ArrayExportable
         $this->duration--;
         return $this->duration > 0;
     }
+    public function copy(){
+        $res = new Effect($this->name,$this->duration,$this->permanent);
+        $res->modifier = $this->modifier;
+        return $res;
+    }
 
     public function getModifier()
     {
@@ -99,6 +104,7 @@ HTML
     public function arrayExport(){
         return array(
             "name" => $this->name,
+            "permanent" =>$this->permanent,
             "duration" => $this->duration,
             "modifier" => $this->modifier
         );
