@@ -9,3 +9,13 @@ DONE - fixer le fightRound->execute()
 DONE - mettre a jour les autres fichiers
 
 DONE - mettre a jour l'export JSON*
+
+
+Faire un drawEnemyUI et un drawPlayerUI
+puis un drawEventUI
+puis un drawFightUI
+
+trouver un moyen d'animer les attaques
+
+possibilité de choisir le nextStage selon 2 ou 3;
+ajouter une map ou on choisi le nextStage;

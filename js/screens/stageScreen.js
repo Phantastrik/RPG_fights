@@ -59,16 +59,31 @@ function animateStageScreen() {
         pos = grid.pos(2, 4);
         drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
 
+        if (runState.stages[runState.currentStage].enemy.activeEffects.length > 0) {
+            let i = 0;
+            runState.stages[runState.currentStage].enemy.activeEffects.forEach(effect => {
+                pos = grid.pos(20, 5 + i);
+                drawEffect(pos.x, pos.y, effect);
+                i++;
+            });
+
+        }
+
     } else {
         // bg pour les event
         setBackground(UI_BG.bg3);
     }
     // statbar du perso
     drawStatsBar(0, 1.8, runState.player);
-
-    if(runState.player.activeEffects.length > 0){
-        pos = grid.pos(4,4);
-;        drawEffect(pos.x,pos.y,runState.player.activeEffects[0]);
+    
+    if (runState.player.activeEffects.length > 0) {
+        let i = 0;
+        runState.player.activeEffects.forEach(effect =>{
+            pos = grid.pos(5, 3.5+i);
+            drawEffect(pos.x, pos.y, effect);
+            i++;
+        });
+       
     }
 
     stageScreenAnimationId = requestAnimationFrame(() => animateStageScreen());  // Boucle d'animation

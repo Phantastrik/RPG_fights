@@ -206,8 +206,8 @@ function drawEffect(x,y,effect){
         sagesse_modifier : {icon : UI_ICONS.elements.sagesse },
         vitesse_modifier : {icon : UI_ICONS.elements.vitesse }  
     }
-    let i;
-    for (const [key, value] of Object.entries(effect.modifier)) {c
+    let i = 0;
+    for (const [key, value] of Object.entries(effect.modifier)) {
         if(value != 0){
             drawIcon(x,y+(i*UI_ICONS.cellSize),stats[key].icon);
             if(value<0){
@@ -216,6 +216,9 @@ function drawEffect(x,y,effect){
             if(value>0){
                 drawIcon(x+UI_ICONS.cellSize,y+(i*UI_ICONS.cellSize),UI_ICONS.elements.arrow_up);
             }   
+            // valeur modifier 
+            ctx.textAlign = "left";
+            drawShadowedText(value,x+UI_ICONS.cellSize*2,y+(i*UI_ICONS.cellSize)+UI_ICONS.cellSize/1.5,UI_CONFIG.textShadowPad,UI_COLORS.shadow,UI_COLORS.text.light,UI_FONTS.getFont("medium","primary"));
             i++;
         }
     }
