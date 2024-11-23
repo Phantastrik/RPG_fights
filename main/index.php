@@ -13,8 +13,8 @@ if(isset($_SESSION['run'])){
 $w = new Webpage("RPG Fight");
 
 $w->appendContent(<<<HTML
+    <div class="container-fluid" style = "background-color:#873e3e">
     <h1>RPG Fight Game</h1>
-    <div class="container">
         <canvas id="gameCanvas" width="800" height="416" ></canvas>
         <br><button onclick="startGame()">Démarrer la Partie</button>
         <button onclick="nextRound()">Round Suivant</button>
@@ -28,6 +28,9 @@ $w->appendCss(<<<CSS
         border:solid black 1px;
         background-image: url(../assets/bg/bg_prairie.jpg);
         background-size: 800px;
+    }$
+    body {
+        background-image: url(../assets/bg/bg_prairie.jpg);
     }
 CSS
 );

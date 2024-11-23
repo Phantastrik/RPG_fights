@@ -6,9 +6,11 @@ function showStageScreen(runState) {
     if (gameStarted) {
         document.removeEventListener("keydown", handleAbilitySelection); // event du fight screen
         document.removeEventListener("keydown", handleEventKeys); // EventScreen
+    
     }
 
     if (runState.stages[runState.currentStage].type === "fight") {
+
         if (eventScreenAnimationId !== null) {
             cancelAnimationFrame(eventScreenAnimationId);
         }
