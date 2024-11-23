@@ -1,7 +1,7 @@
 // Variables globales pour la sélection de personnage
 let characters = [];
 let selectedIndex = 0;
-let startScreenAnimationId = null; //id pour l'animation
+
 
 // Fonction pour afficher l'écran de démarrage
 function showStartScreen(playerPreset) {
@@ -21,6 +21,7 @@ function showStartScreen(playerPreset) {
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages
 function handleCharacterSelection(event) {
     if (event.key === "q" || event.key === "Q") {
+        console.log("le Q du debut");
         // Aller à gauche dans la sélection
         selectedIndex = (selectedIndex - 1 + characters.length) % characters.length;
         startStartScreenAnimation();

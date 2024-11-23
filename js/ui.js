@@ -298,7 +298,6 @@ function drawStagesScreenHeader() {
 /** ========== Affichage des Personnages ========== **/
 function drawCharacter(charData, x, y, state, stateVariant) {
     const stateAnimation = stateVariant !== undefined ? charData[state][stateVariant] : charData[state];
-
     if (!spriteSheet || spriteSheet.src !== charData.src) {
         spriteSheet = new Image();
         spriteSheet.src = charData.src;
