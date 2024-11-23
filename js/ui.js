@@ -226,12 +226,13 @@ function drawEffect(x, y, effect) {
             // icone de la stat
             // longueur du bandeau
             let boxWidth = 2;
-
-            drawPanel(x+ (i * boxWidth),
+            console.log(key);
+            console.log(x+ (i * boxWidth));
+            drawPanel(x+ (i * boxWidth*UI_ICONS.cellSize),
                 y,boxWidth,1,
                 "secondary"
             )
-            drawIcon(x+ (i * boxWidth), y , stats[key].icon);
+            drawIcon(x+ (i * boxWidth*UI_ICONS.cellSize), y , stats[key].icon);
             ;
             /*drawPane(x+UI_ICONS.cellSize,
                 y-(i*UI_ICONS.cellSize),
@@ -246,7 +247,11 @@ function drawEffect(x, y, effect) {
             }
             // valeur modifier 
             ctx.textAlign = "left";
-            drawShadowedText(value, x + UI_ICONS.cellSize+ (i * UI_ICONS.cellSize) , y + UI_ICONS.cellSize / 1.5, 2, UI_COLORS.shadow, colorValue, UI_FONTS.getFont("small", "secondary"));
+            drawShadowedText(value,
+                x + UI_ICONS.cellSize+ (i * boxWidth*UI_ICONS.cellSize),
+                y + UI_ICONS.cellSize/1.5,
+                2, UI_COLORS.shadow,
+                colorValue, UI_FONTS.getFont("small", "secondary"));
             i++;
         }
     }
