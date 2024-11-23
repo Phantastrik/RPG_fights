@@ -226,8 +226,6 @@ function drawEffect(x, y, effect) {
             // icone de la stat
             // longueur du bandeau
             let boxWidth = 2;
-            console.log(key);
-            console.log(x+ (i * boxWidth));
             drawPanel(x+ (i * boxWidth*UI_ICONS.cellSize),
                 y,boxWidth,1,
                 "secondary"

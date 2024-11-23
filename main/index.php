@@ -44,6 +44,8 @@ $w->appendContent(<<<HTML
 <script src="../js/ui.js"></script>
 <script src="../js/screens/startScreen.js"></script>
 <script src="../js/screens/stageScreen.js"></script>
+<script src="../js/screens/eventScreen.js"></script>
+<script src="../js/screens/fightScreen.js"></script>
 <script src="../js/screens/endScreen.js"></script>
 <script src="../js/game.js"></script>
 HTML
