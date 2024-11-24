@@ -75,6 +75,19 @@ class Run implements Executable, Observable, ArrayExportable
         $this->notify();
         return $this;
     }
+    public function playEvent($choosedEffect = null){
+        
+        $currentStage = $this->getCurrentStage();
+        if (get_class($this->stages[$currentStage]) == "EventStage") {
+            $this->stages[$currentStage]->setChoosedEffect($choosedEffect)
+                                        ->execute();
+        } else {
+            $this->stages[$currentStage]->execute();
+        }
+
+        $this->notify();
+        return $this;
+    }
 
     // IMPLEMENTS Executable
     public function execute()

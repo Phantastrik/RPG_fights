@@ -16,6 +16,8 @@ const UI_COLORS = {
     contrast: '#b86c51',
     light: '#FFFFFF',
     hint : '#595959',
+    transparent : 'rgba(0,0,0,0)',
+    light_alpha : 'rgba(89, 89, 89,0.7)',
     text: {
         light: '#ffffff',
         medium: '#444444',

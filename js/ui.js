@@ -206,7 +206,7 @@ function drawIcon(x, y, icon, sizing = 1) {
         x, y,
         UI_ICONS.cellSize * sizing, UI_ICONS.cellSize * sizing);
 }
-function drawEffect(x, y, effect, drawPermanent = false) {
+function drawEffect(x, y, effect, drawPermanent = false, selected = false) {
     if (!effect.permanent || drawPermanent) {
 
         let stats = {
@@ -230,7 +230,7 @@ function drawEffect(x, y, effect, drawPermanent = false) {
                 // panneau de fond
                 drawPanel(x + (modifierPad) + j * UI_ICONS.cellSize,
                     y, boxWidth, 1,
-                    "secondary"
+                    selected ? "primary" : "secondary"
                 )
 
                 // icone de la stat
@@ -270,7 +270,8 @@ function drawEffect(x, y, effect, drawPermanent = false) {
                     j++
                 }
 
-                i += 1;
+                i = (i + 1)%3;
+                
 
             }
         }
@@ -313,7 +314,7 @@ function drawStagesScreenHeader() {
     if (nextStage.type === "fight") {
         // rien
     } else if (nextStage.type === "event") {
-        screenTitle += " / Event ! ";
+        screenTitle += ` ${nextStage.name}`;
     }
     pos = grid.pos(4, 1);
     ctx.textAlign = "left";
@@ -527,7 +528,7 @@ function setBackground(bg) {
 
 function drawControlsHint(x, y) {
     dim = grid.pos(4, controls.length*0.5 + 1);
-    drawBox(x, y, dim.x, dim.y, UI_COLORS.hint, 2, UI_COLORS.shadow);
+    drawBox(x, y, dim.x, dim.y, UI_COLORS.light_alpha, 2, UI_COLORS.transparent);
     //
     let i = 0.5;
     ctx.textAlign = "left";

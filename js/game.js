@@ -33,6 +33,14 @@ function nextRound(choosedAbility) {
     });
 }
 
+function eventSelected(choosedEffect){
+    fetchNextRound(null,choosedEffect).then(state => {
+        runState = state;
+        console.log(runState);
+        showStageScreen(runState);
+    });
+}
+
 function endGame() {
     showEndScreen();
     deleteSession();

@@ -24,6 +24,18 @@ HTML
 );
 $w->appendCssUrl('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
 $w->appendCss(<<<CSS
+    @font-face {
+
+        font-family: "DigitalDisco";
+        src: url('../assets/fonts/DigitalDisco.ttf');
+
+    }
+    @font-face {
+
+        font-family: "DigitalDisco Thin";
+        src: url('../assets/fonts/DigitalDisco-Thin.ttf');
+
+    }
     canvas{
         border:solid black 1px;
         background-image: url(../assets/bg/bg_prairie.jpg);

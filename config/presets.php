@@ -4,8 +4,10 @@ require_once __DIR__ . '/autoload.php';
 
 class Presets
 {
+    // names
     private static $preset_PLAYER_NAMES;
     private static $preset_MONSTER_NAMES;
+    // abilities
     private static $ability_physic_tacle;
     private static $ability_physic_stab;
     private static $ability_physic_shieldBash;
@@ -17,6 +19,8 @@ class Presets
     private static $ability_spell_weaken;
     private static $ability_spell_vulnerate;
     private static $preset_ABILITIES;
+
+    // effects
     private static $preset_effect_refresh;
     private static $preset_effect_cafeine;
     private static $preset_effect_roids;
@@ -27,15 +31,28 @@ class Presets
     private static $preset_effect_rage;
     private static $preset_effect_concentration;
     private static $preset_effect_vulnerate;
-
-
-
-
+    private static $preset_effect_prayer;
+    private static $preset_effect_heal;
+    private static $preset_effect_drink;
+    private static $preset_effect_sharpen;
+    private static $preset_effect_tough;
+    private static $preset_effect_study;
+    private static $preset_effect_all;
+    private static $preset_effect_restore;
+    private static $preset_effect_feast;
     private static $preset_EFFECT;
+
+    // player
     private static $preset_player_warrior;
     private static $preset_player_rogue;
     private static $preset_player_mage;
     private static $preset_PLAYER;
+
+    // Events
+    private static $preset_event_names;
+
+
+    // monster
     private static $preset_MONSTER;
 
     public static function init()
@@ -67,16 +84,54 @@ class Presets
             "Culmin"
         );
 
+        // effets d'evenement
+        self::$preset_effect_refresh = new Effect("Refresh", 1, true);
+        self::$preset_effect_refresh->setModifierKey("pv_modifier", 100)->setModifierKey("pm_modifier", 100);
+
+        // un truc qui augmente les HP max
+        self::$preset_effect_prayer = new Effect("Prayer", 1, true);
+        self::$preset_effect_prayer->setModifierKey("pvMax_modifier", 5);
+        // un truc qui soigne un  peu
+        self::$preset_effect_heal = new Effect("Heal", 1, true);
+        self::$preset_effect_heal->setModifierKey("pv_modifier", 15);
+        // un truc qui redonne un peu de mana
+        self::$preset_effect_drink = new Effect("Drink", 1, true);
+        self::$preset_effect_drink->setModifierKey("pm_modifier", 15);
+        // un truc qui augmente de 5 l'attaque
+        self::$preset_effect_sharpen = new Effect("Sharpen", 1, true);
+        self::$preset_effect_sharpen->setModifierKey("attaque_modifier", 5);
+        // un truc qui augmente de 5 la defense
+        self::$preset_effect_tough = new Effect("Tough", 1, true);
+        self::$preset_effect_tough->setModifierKey("defense_modifier", 5);
+        // un truc qui augmente de 5 la sagesse
+        self::$preset_effect_study = new Effect("Study", 1, true);
+        self::$preset_effect_study->setModifierKey("sagesse_modifier", 5);
+        // un truc qui augmente toutes les stats de 1 
+        self::$preset_effect_all = new Effect("All", 1, true);
+        self::$preset_effect_all->setModifierKey("pvMax_modifier", 1)
+            ->setModifierKey("pmMax_modifier", 1)
+            ->setModifierKey("attaque_modifier", 1)
+            ->setModifierKey("defense_modifier", 1)
+            ->setModifierKey("sagesse_modifier", 1)
+            ->setModifierKey("vitesse_modifier", 1);
+        // un truc qui redonne 50 hp
+        self::$preset_effect_restore = new Effect("Restore", 1, true);
+        self::$preset_effect_restore->setModifierKey("pv_modifier", 50);
+        // un truc qui donne 50 mana
+        self::$preset_effect_feast = new Effect("Feast", 1, true);
+        self::$preset_effect_feast->setModifierKey("pm_modifier", 50);
+
+
 
         self::$preset_effect_refresh = new Effect("Refresh", 1, true);
         self::$preset_effect_refresh->setModifierKey("pv_modifier", 100)->setModifierKey("pm_modifier", 100);
         self::$preset_effect_cafeine = new Effect("Un bon cafe", 3);
         self::$preset_effect_cafeine->setModifierKey("vitesse_modifier", 25);
-        self::$preset_effect_roids = new Effect("Steroides", 2);
+        self::$preset_effect_roids = new Effect("Steroides", 3);
         self::$preset_effect_roids->setModifierKey("attaque_modifier", 25)->setModifierKey("defense_modifier", -10);
         self::$preset_effect_meditation = new Effect("Meditation", 4);
         self::$preset_effect_meditation->setModifierKey("sagesse_modifier", 5)->setModifierKey("defense_modifier", 5);
-        self::$preset_effect_iron = new Effect("Iron balls", 1, true);
+        self::$preset_effect_iron = new Effect("Iron balls", 3);
         self::$preset_effect_iron->setModifierKey("defense_modifier", 30);
         // effects de capacit
         self::$preset_effect_weaken = new Effect("Weaken", 4);
@@ -94,11 +149,31 @@ class Presets
         // effects 
         self::$preset_EFFECT = array(
             "refresh" => self::$preset_effect_refresh,
-           "cafeine" => self::$preset_effect_cafeine,
-           "roids" => self::$preset_effect_roids,
-           "meditation" => self::$preset_effect_meditation,
-           "iron" => self::$preset_effect_iron
+            "cafeine" => self::$preset_effect_cafeine,
+            "roids" => self::$preset_effect_roids,
+            "meditation" => self::$preset_effect_meditation,
+            "iron" => self::$preset_effect_iron,
+            "prayer" => self::$preset_effect_prayer,
+            "heal" => self::$preset_effect_heal,
+            "drink" => self::$preset_effect_drink,
+            "sharpen" => self::$preset_effect_sharpen,
+            "tough" => self::$preset_effect_tough,
+            "study" => self::$preset_effect_study,
+          //  "all" => self::$preset_effect_all,
+            "restore" => self::$preset_effect_restore,
+            "feast" => self::$preset_effect_feast
         );
+
+        self::$preset_event_names = [
+            "Stop at the campfire",
+            "Something on the way",
+            "Trade offer",
+            "A strange statue is looking at you",
+            "Strategical pause",
+            "Lucky day! ",
+            "Is someone gazing at me ? ",
+            "I've been here before"
+        ];
 
 
         // Déclarer les objets PhysicAttackAbility avec les noms préfixés
@@ -251,6 +326,9 @@ class Presets
     public static function getPreset_MONSTER()
     {
         return self::$preset_MONSTER;
+    }
+    public static function getPreset_event_names(){
+        return self::$preset_event_names;
     }
 }
 Presets::init();

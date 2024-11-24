@@ -6,9 +6,12 @@ if (isset($_SESSION['player']) && isset($_SESSION['run']) ) {
     if(isset($_GET['ability'])){
         $_SESSION['run']->playRound($_GET["ability"]);
     }else{
-        $_SESSION['run']->playStage();
+        if(isset($_GET['eventChoice'])){
+            $_SESSION['run']->playEvent($_GET["eventChoice"]);
+        }else{
+            $_SESSION['run']->playStage();
+        }
     }
-    
 }
 // Exporter l'état de la Run en JSON
 header('Content-Type: application/json');

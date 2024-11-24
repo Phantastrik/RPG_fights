@@ -13,11 +13,17 @@ function deleteSession() {
 }
 
 // Récupère le prochain round de combat
-function fetchNextRound(choosedAbility) {
+function fetchNextRound(choosedAbility,choosedEffect) {
     if(choosedAbility !== null && choosedAbility!== undefined ){
         $route = API_ROUTES.fetchNextRound + "?ability=" + choosedAbility;
     }else{
-        $route = API_ROUTES.fetchNextRound;
+        
+        console.log(choosedEffect);
+        if(choosedEffect !== null && choosedEffect!== undefined ){
+            $route = API_ROUTES.fetchNextRound + "?eventChoice=" + choosedEffect;
+        }else{
+            $route = API_ROUTES.fetchNextRound;
+        }
     }
     return fetch($route).then(response => response.json());
 }
