@@ -3,28 +3,34 @@
 DONE - SpellAbility doit etre incorporé dans Ability
 DONE - n'importe quel Ability peut avoir un effect
 DONE - comme ça y'a plus qu'a faire un apply
-
 DONE - fixer le fightRound->execute()
-
 DONE - mettre a jour les autres fichiers
-
 DONE - mettre a jour l'export JSON*
-
 DONE trouver un moyen d'animer les attaques
+DONE - ajouter des key hint
+DONE - possibilité de chosiir parmi 2 effets dans un evenement
+DONE - puis un drawEventUI - separation des deux ecran OK
+DONE - puis un drawFightUI-  separation des deux ecran OK
+
+// -------- P1 -------------- 
+ajouter la possibilité de generer le prochain stage au fur et a mesure -> comme ça on peut  continuer a l'infini
 
 Faire un drawEnemyUI et un drawPlayerUI
-// puis un drawEventUI - separation des deux ecran OK
-// puis un drawFightUI- separation des deux ecran OK
-
 faire en sorte de voir qui a attaqué en premier
-faire en sorte de voir les degats infligés
 
-possibilité de chosiir parmi 2 effets dans un evenement
+ajouter des boss
 
 possibilité de choisir le nextStage selon 2 ou 3;
 ajouter une map ou on choisi le nextStage;
 
-ajouter la possibilité de generer le prochain stage au fur et a mesure -> comme ça on peut  continuer a l'infini
 
-ajouter des boss
-ajouter des key hint
+
+// -------- P2 --------------
+faire en sorte de voir les degats infligés
+
+
+
+
+
+
+
