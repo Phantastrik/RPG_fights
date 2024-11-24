@@ -5,6 +5,13 @@ let monsterState = "idle";
 let stateVariant = 0;
 let monsterStateVariant = 0;
 function showFightScreen(runState) {
+
+    controls = [
+        {key:'Q', label:"Previous"},
+        {key:'D', label:"Next"},
+        {key:'Enter', label:"Choose Ability"},
+    ]
+
     clearCanvas();
 
     // Dessiner le personnage sélectionné
@@ -104,7 +111,10 @@ function animateFightScreen() {
         });
 
     }
-
+    // controls hint
+    pos = grid.pos(21,2);
+    drawControlsHint(pos.x,pos.y);
+   
     fightScreenAnimationId = requestAnimationFrame(() => animateFightScreen());  // Boucle d'animation
 }
 

@@ -192,7 +192,7 @@ function drawKey(x, y, label) {
     drawShadowedText(label, x + frameSheet_data.frameWidth / 2, y + frameSheet_data.frameHeight / 2 + 2, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("small", "primary"));
 }
 // icon 
-function drawIcon(x, y, icon) {
+function drawIcon(x, y, icon, sizing = 1) {
     if (!UI_ICONS.img || UI_ICONS.img.src !== UI_ICONS.src) {
         UI_ICONS.img = new Image();
         UI_ICONS.img.src = UI_ICONS.src;
@@ -204,7 +204,7 @@ function drawIcon(x, y, icon) {
         icon.y * UI_ICONS.cellSize,
         UI_ICONS.cellSize, UI_ICONS.cellSize,
         x, y,
-        UI_ICONS.cellSize, UI_ICONS.cellSize);
+        UI_ICONS.cellSize * sizing, UI_ICONS.cellSize * sizing);
 }
 function drawEffect(x, y, effect, drawPermanent = false) {
     if (!effect.permanent || drawPermanent) {
@@ -255,7 +255,7 @@ function drawEffect(x, y, effect, drawPermanent = false) {
                 // si l'effet est permanent, on ne dessine pas le timer
                 //permanence
                 if (effect.permanent) {
-                    j+= 0.5
+                    j += 0.5
                     drawIcon(x + (modifierPad) + j * UI_ICONS.cellSize, y, UI_ICONS.elements.permanent);
                 } else {
                     // duration icon
@@ -270,7 +270,7 @@ function drawEffect(x, y, effect, drawPermanent = false) {
                     j++
                 }
 
-                i+= 1;
+                i += 1;
 
             }
         }
@@ -303,16 +303,19 @@ function drawStagesScreenHeader() {
     let nextStage = runState.stages[runState.currentStage];
     pos = grid.pos(-1, -1);
     drawPanel(pos.x, pos.y, 27, 3, "primary");
+    // icon 
+    pos = grid.pos(2, 0);
+    drawIcon(pos.x, pos.y, UI_ICONS.elements[nextStage.type], 1.5);
+
     // title
     let stageCur = runState.currentStage + 1;
-    let stageTotal = runState.maxStageNumber + 1;
-    let screenTitle = "Stage " + stageCur + "/" + stageTotal + " : ";
+    let screenTitle = "Stage " + stageCur;
     if (nextStage.type === "fight") {
-        screenTitle += "Fight against " + nextStage.enemy.name;
+        // rien
     } else if (nextStage.type === "event") {
-        screenTitle += "Event ! ";
+        screenTitle += " / Event ! ";
     }
-    pos = grid.pos(2, 1);
+    pos = grid.pos(4, 1);
     ctx.textAlign = "left";
     drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
 }
@@ -433,33 +436,33 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
         niveau: {
             label: `Lvl. ${character.niveau}`, width: 2, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
             modified_value: character.modifiedStats.niveau, value: character.niveau,
-            modifiable: false, icon : null
+            modifiable: false, icon: null
         },
         pv: {
             label: `${character.modifiedStats.pv}/${character.modifiedStats.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
             ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
-            modifiable: true, icon : UI_ICONS.elements.pv
+            modifiable: true, icon: UI_ICONS.elements.pv
         },
         pm: {
             label: `${character.modifiedStats.pm}/${character.modifiedStats.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
             ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
-            modifiable: true, icon : UI_ICONS.elements.pm
+            modifiable: true, icon: UI_ICONS.elements.pm
         },
         attaque: {
             label: `${character.modifiedStats.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
-            modifiable: true, icon : UI_ICONS.elements.attaque
+            modifiable: true, icon: UI_ICONS.elements.attaque
         },
         defense: {
             label: `${character.modifiedStats.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minim1al: false,
-            modifiable: true, icon : UI_ICONS.elements.defense
+            modifiable: true, icon: UI_ICONS.elements.defense
         },
         sagesse: {
             label: `${character.modifiedStats.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
-            modifiable: true, icon : UI_ICONS.elements.sagesse
+            modifiable: true, icon: UI_ICONS.elements.sagesse
         },
         vitesse: {
             label: `${character.modifiedStats.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
-            modifiable: true, icon : UI_ICONS.elements.vitesse
+            modifiable: true, icon: UI_ICONS.elements.vitesse
         },
     };
 
@@ -492,15 +495,15 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
             if (character.modifiedStats[key] - character[key] !== 0) {
                 valmod = character.modifiedStats[key] - character[key];
             }
-            if(stat.icon !== null){
-                drawIcon(pos.x,pos.y,stat.icon);
+            if (stat.icon !== null) {
+                drawIcon(pos.x, pos.y, stat.icon);
             }
 
             // Dessiner le texte centré
             ctx.textAlign = "center";
             drawShadowedText(
                 stat.label,
-                pos.x + dim.x /1.5,
+                pos.x + dim.x / 1.5,
                 pos.y + dim.y / 1.5,
                 UI_CONFIG.shadowPad,
                 UI_COLORS.shadow,
@@ -520,4 +523,24 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
 function setBackground(bg) {
     canvas.style.background = bg;
     canvas.style.backgroundSize = ctx.width + "px";
+}
+
+function drawControlsHint(x, y) {
+    dim = grid.pos(4, controls.length*0.5 + 1);
+    drawBox(x, y, dim.x, dim.y, UI_COLORS.hint, 2, UI_COLORS.shadow);
+    //
+    let i = 0.5;
+    ctx.textAlign = "left";
+    pad = grid.pos(0.2, i);
+    drawShadowedText("Controls:", x + pad.x, y + pad.y, 2, UI_COLORS.shadow, UI_COLORS.light, UI_FONTS.getFont("small", "primary"));
+    i+= 0.7;
+    controls.forEach(element => {
+        // key
+        pad = grid.pos(0.2, i);
+        drawShadowedText(element.key, x + pad.x, y + pad.y, 2, UI_COLORS.shadow, UI_COLORS.light, UI_FONTS.getFont("tiny", "secondary"));
+        // label
+        pad = grid.pos(1.5, i);
+        drawShadowedText(`: ${element.label}`, x + pad.x, y + pad.y, 2, UI_COLORS.shadow, UI_COLORS.light, UI_FONTS.getFont("tiny", "secondary"));
+        i += 0.4;
+    });
 }

@@ -3,8 +3,16 @@ let characters = [];
 let selectedIndex = 0;
 
 
+
 // Fonction pour afficher l'écran de démarrage
 function showStartScreen(playerPreset) {
+    // tableau des controls 
+    controls = [
+        {key:'Q', label:"Previous"},
+        {key:'D', label:"Next"},
+        {key:'Enter', label:"Choose player"},
+    ]
+
     // Effacer le canvas
     Object.keys(playerPreset).forEach(key => {
         characters.push(key);
@@ -54,6 +62,8 @@ function animateStartScreen() {
    // drawKey(pos.x, pos.y,"Q");
     // bandeau header de l'ecran
     headerGUI("CHOOSE PLAYER");
+    pos = grid.pos(21,2);
+    drawControlsHint(pos.x,pos.y);
    
     startScreenAnimationId = requestAnimationFrame(() => animateStartScreen());  // Boucle d'animation
 }

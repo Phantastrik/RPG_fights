@@ -15,6 +15,7 @@ const UI_COLORS = {
     secondary: '#519eb8',
     contrast: '#b86c51',
     light: '#FFFFFF',
+    hint : '#595959',
     text: {
         light: '#ffffff',
         medium: '#444444',
@@ -110,13 +111,15 @@ const UI_ICONS = {
         pvMax: { x: 0, y: 1 },
         pm: { x: 10, y: 0 },
         pmMax : {x: 5, y:19},
-        attaque: { x: 1, y: 5 },
+        attaque: { x: 2, y: 5 },
         defense: { x: 1, y: 6 },
         sagesse: { x: 10, y: 13 },
         vitesse: { x: 12, y: 3 },
         exp: { x: 5, y: 0 },
         time : {x:15,y:10},
-        permanent : {x:5,y:3}
+        permanent : {x:5,y:3},
+        fight : {x:9,y:5},
+        event : {x: 14,y:16}
     }
 }
 

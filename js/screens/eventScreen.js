@@ -1,7 +1,11 @@
 
 let eventPlayerState = "walk";
 
-function showEventScreen(runState) {
+function showEventScreen() {
+    controls = [
+        {key:'Enter', label:"Choose Effect"},
+    ]
+
     clearCanvas();
     startEventScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
@@ -53,7 +57,10 @@ function animateEventScreen() {
     } */
     // effets de l'event
     drawEventPanel();
-
+    // controls hint
+    pos = grid.pos(21,2);
+    drawControlsHint(pos.x,pos.y);
+   
 
     eventScreenAnimationId = requestAnimationFrame(() => animateEventScreen());  // Boucle d'animation
 }
