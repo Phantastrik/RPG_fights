@@ -18,7 +18,6 @@ function showFightScreen(runState) {
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages
 function handleAbilitySelection(event) {
     if (event.key === "q" || event.key === "Q") {
-        console.log("le Q du fight");
         // Aller à gauche dans la sélection
         selectedAbilityIndex = (selectedAbilityIndex - 1 + runState.player.abilities.length) % runState.player.abilities.length;
         startFightScreenAnimation();

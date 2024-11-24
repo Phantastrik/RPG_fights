@@ -18,7 +18,7 @@ class EventStage extends Stage implements ArrayExportable{
     // redefinition de execute
     public function execute(){
         foreach($this->effects as $effect){
-            $this->player->applyEffect($effect);
+            $this->player->applyEffect($effect->copy());
         }
         $this->done = true;
     }

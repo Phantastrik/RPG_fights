@@ -113,8 +113,10 @@ const UI_ICONS = {
         attaque: { x: 1, y: 5 },
         defense: { x: 1, y: 6 },
         sagesse: { x: 10, y: 13 },
-        vitesse: { x: 3, y: 14 },
-        exp: { x: 5, y: 0 }
+        vitesse: { x: 12, y: 3 },
+        exp: { x: 5, y: 0 },
+        time : {x:15,y:10},
+        permanent : {x:5,y:3}
     }
 }
 

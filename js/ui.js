@@ -109,7 +109,6 @@ function drawCharacterSelectionSelected(text, x, y) {
     // panneau de fond
     pos = grid.pos(x, y);
 
-    //console.log(pos);
     drawPanel(pos.x, pos.y, 5, 2, "secondary");
     ctx.textAlign = "center";
     pos = grid.pos(x + 2.5, y + 1.3);
@@ -138,7 +137,6 @@ function drawPanel(x, y, width, height, color = "primary") {
                     }
                 }
             }
-            
 
             let key2 = "";
             if (i == 0) {
@@ -146,18 +144,17 @@ function drawPanel(x, y, width, height, color = "primary") {
             } else {
                 if (i === (width - 1)) {
                     key2 = "right";
-                }else{
+                } else {
                     // cas pour une simple ligne
-                   // if(height === 1){
-                        key2 = "center"        
-                   // }
+                    // if(height === 1){
+                    key2 = "center"
+                    // }
                 }
             }
-            // console.log(width-1);
             let key;
             if (height > 1) {
                 key = key1 + '_' + key2;
-            }else{
+            } else {
                 key = key2;
             }
             let pane = frameSheet_data.elements.panel[key];
@@ -209,51 +206,76 @@ function drawIcon(x, y, icon) {
         x, y,
         UI_ICONS.cellSize, UI_ICONS.cellSize);
 }
-function drawEffect(x, y, effect) {
-    let stats = {
-        pvMax_modifier: { icon: UI_ICONS.elements.pvMax },
-        pv_modifier: { icon: UI_ICONS.elements.pv },
-        pmMax_modifier: { icon: UI_ICONS.elements.pmMax },
-        pm_modifier: { icon: UI_ICONS.elements.pm },
-        attaque_modifier: { icon: UI_ICONS.elements.attaque },
-        defense_modifier: { icon: UI_ICONS.elements.defense },
-        sagesse_modifier: { icon: UI_ICONS.elements.sagesse },
-        vitesse_modifier: { icon: UI_ICONS.elements.vitesse }
-    }
-    let i = 0;
-    for (const [key, value] of Object.entries(effect.modifier)) {
-        if (value != 0) {
-            // icone de la stat
-            // longueur du bandeau
-            let boxWidth = 2;
-            drawPanel(x+ (i * boxWidth*UI_ICONS.cellSize),
-                y,boxWidth,1,
-                "secondary"
-            )
-            drawIcon(x+ (i * boxWidth*UI_ICONS.cellSize), y , stats[key].icon);
-            ;
-            /*drawPane(x+UI_ICONS.cellSize,
-                y-(i*UI_ICONS.cellSize),
-                "secondary"
-            );*/
-            let colorValue = UI_COLORS.text.light;
-            if (value < 0) {
-                colorValue = UI_COLORS.text.danger;
-            }
-            if (value > 0) {
-                colorValue = UI_COLORS.text.sucess
-            }
-            // valeur modifier 
-            ctx.textAlign = "left";
-            drawShadowedText(value,
-                x + UI_ICONS.cellSize+ (i * boxWidth*UI_ICONS.cellSize),
-                y + UI_ICONS.cellSize/1.5,
-                2, UI_COLORS.shadow,
-                colorValue, UI_FONTS.getFont("small", "secondary"));
-            i++;
-        }
-    }
+function drawEffect(x, y, effect, drawPermanent = false) {
+    if (!effect.permanent || drawPermanent) {
 
+        let stats = {
+            pvMax_modifier: { icon: UI_ICONS.elements.pvMax },
+            pv_modifier: { icon: UI_ICONS.elements.pv },
+            pmMax_modifier: { icon: UI_ICONS.elements.pmMax },
+            pm_modifier: { icon: UI_ICONS.elements.pm },
+            attaque_modifier: { icon: UI_ICONS.elements.attaque },
+            defense_modifier: { icon: UI_ICONS.elements.defense },
+            sagesse_modifier: { icon: UI_ICONS.elements.sagesse },
+            vitesse_modifier: { icon: UI_ICONS.elements.vitesse }
+        }
+        let i = 0;
+        for (const [key, value] of Object.entries(effect.modifier)) {
+            if (value != 0) {
+                let j = 0;
+                // longueur du bandeau
+                let boxWidth = 3;
+                // if (effect.permanent) { boxWidth--; }
+                let modifierPad = i * boxWidth * UI_ICONS.cellSize;
+                // panneau de fond
+                drawPanel(x + (modifierPad) + j * UI_ICONS.cellSize,
+                    y, boxWidth, 1,
+                    "secondary"
+                )
+
+                // icone de la stat
+                drawIcon(x + (modifierPad) + j * UI_ICONS.cellSize, y, stats[key].icon);
+                j++;
+                // couleur positif / negatif
+                let colorValue = UI_COLORS.text.light;
+                if (value < 0) {
+                    colorValue = UI_COLORS.text.danger;
+                }
+                if (value > 0) {
+                    colorValue = UI_COLORS.text.sucess
+                }
+                // valeur modifier 
+                ctx.textAlign = "left";
+                drawShadowedText(value,
+                    x + (modifierPad) + j * UI_ICONS.cellSize,
+                    y + UI_ICONS.cellSize / 1.5,
+                    2, UI_COLORS.shadow,
+                    colorValue, UI_FONTS.getFont("small", "secondary"));
+                j += 0.5;
+                // si l'effet est permanent, on ne dessine pas le timer
+                //permanence
+                if (effect.permanent) {
+                    j+= 0.5
+                    drawIcon(x + (modifierPad) + j * UI_ICONS.cellSize, y, UI_ICONS.elements.permanent);
+                } else {
+                    // duration icon
+                    drawIcon(x + (modifierPad) + j * UI_ICONS.cellSize, y, UI_ICONS.elements.time);
+                    j++
+                    // duration text
+                    drawShadowedText(effect.duration,
+                        x + (modifierPad) + j * UI_ICONS.cellSize,
+                        y + UI_ICONS.cellSize / 1.5,
+                        2, UI_COLORS.shadow,
+                        UI_COLORS.text.light, UI_FONTS.getFont("small", "secondary"));
+                    j++
+                }
+
+                i+= 1;
+
+            }
+        }
+
+    }
 
 }
 
@@ -288,7 +310,7 @@ function drawStagesScreenHeader() {
     if (nextStage.type === "fight") {
         screenTitle += "Fight against " + nextStage.enemy.name;
     } else if (nextStage.type === "event") {
-        screenTitle += "Event : " + nextStage.name;
+        screenTitle += "Event ! ";
     }
     pos = grid.pos(2, 1);
     ctx.textAlign = "left";
@@ -409,35 +431,35 @@ function drawCharacterAbilities(character_to_draw, x, y) {
 function drawStatsBar(x, y, character, reverse = false, minimal = false) {
     const stats = {
         niveau: {
-            label: `Lvl. ${character.niveau}`, width: 1.5, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
+            label: `Lvl. ${character.niveau}`, width: 2, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
             modified_value: character.modifiedStats.niveau, value: character.niveau,
-            modifiable: false
+            modifiable: false, icon : null
         },
         pv: {
-            label: `PV ${character.modifiedStats.pv}/${character.modifiedStats.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
+            label: `${character.modifiedStats.pv}/${character.modifiedStats.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
             ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
-            modifiable: true
+            modifiable: true, icon : UI_ICONS.elements.pv
         },
         pm: {
-            label: `PM ${character.modifiedStats.pm}/${character.modifiedStats.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
+            label: `${character.modifiedStats.pm}/${character.modifiedStats.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
             ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
-            modifiable: true
+            modifiable: true, icon : UI_ICONS.elements.pm
         },
         attaque: {
-            label: `ATT ${character.modifiedStats.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
-            modifiable: true
+            label: `${character.modifiedStats.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
+            modifiable: true, icon : UI_ICONS.elements.attaque
         },
         defense: {
-            label: `DEF ${character.modifiedStats.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minim1al: false,
-            modifiable: true
+            label: `${character.modifiedStats.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minim1al: false,
+            modifiable: true, icon : UI_ICONS.elements.defense
         },
         sagesse: {
-            label: `SAG ${character.modifiedStats.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
-            modifiable: true
+            label: `${character.modifiedStats.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
+            modifiable: true, icon : UI_ICONS.elements.sagesse
         },
         vitesse: {
-            label: `VIT ${character.modifiedStats.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
-            modifiable: true
+            label: `${character.modifiedStats.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
+            modifiable: true, icon : UI_ICONS.elements.vitesse
         },
     };
 
@@ -453,7 +475,6 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
     // stats.forEach(stat => {
     for (const [key, stat] of Object.entries(stats)) {
         if (!minimal || (minimal && stat.minimal)) {
-            // console.log(stat.modified_value-stat.value);
 
             offsetX = reverse ? offsetX - stat.width : offsetX;
             const dim = grid.pos(stat.width, 1);
@@ -471,18 +492,21 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
             if (character.modifiedStats[key] - character[key] !== 0) {
                 valmod = character.modifiedStats[key] - character[key];
             }
+            if(stat.icon !== null){
+                drawIcon(pos.x,pos.y,stat.icon);
+            }
 
             // Dessiner le texte centré
             ctx.textAlign = "center";
             drawShadowedText(
                 stat.label,
-                pos.x + dim.x / 2,
-                pos.y + dim.y / 2,
+                pos.x + dim.x /1.5,
+                pos.y + dim.y / 1.5,
                 UI_CONFIG.shadowPad,
                 UI_COLORS.shadow,
                 valmod == 0 ? UI_COLORS.text.light :
                     valmod < 0 ? UI_COLORS.text.danger : UI_COLORS.text.sucess,
-                UI_FONTS.getFont("small", "secondary")
+                UI_FONTS.getFont("medium", "secondary")
             );
 
         }

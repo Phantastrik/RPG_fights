@@ -43,14 +43,14 @@ function animateEventScreen() {
     drawStatsBar(0, 1.8, runState.player);
 
     // effets du joueur
-    if (runState.player.activeEffects.length > 0) {
+  /*  if (runState.player.activeEffects.length > 0) {
         let i = 0;
         runState.player.activeEffects.forEach(effect => {
             pos = grid.pos(5, 3.5 + i);
             drawEffect(pos.x, pos.y, effect);
             i += 0.8;
         });
-    }
+    } */
     // effets de l'event
     drawEventPanel();
 
@@ -69,25 +69,25 @@ function startEventScreenAnimation() {
 function drawEventPanel() {
     mainframe = {
         pos: { x: 8, y: 4 },
-        dim: { x: 8, y: 6 }
+        dim: { x: 8, y: runState.stages[runState.currentStage].effects.length * 2 +1 }
     };
     pos = grid.pos(mainframe.pos.x, mainframe.pos.y);
-   // drawPanel(pos.x, pos.y, mainframe.dim.x, mainframe.dim.y, "secondary");
+    drawPanel(pos.x, pos.y, mainframe.dim.x, mainframe.dim.y, "primary");
 
     // Liste des effets
     if (runState.stages[runState.currentStage].effects.length > 0) {
-        let i = 0;
-        let j = 1
+        let i = 1;
+        let j = 0.8;
         runState.stages[runState.currentStage].effects.forEach(effect => {
-            pos = grid.pos(mainframe.pos.x + i, mainframe.pos.y + j * frameSheet_data.cellSize * 2);
+            pos = grid.pos(mainframe.pos.x +j, mainframe.pos.y+i);
             // texte 
             ctx.textAlign = "left";
             drawShadowedText(`${effect.name} : `, pos.x, pos.y, 0
                 , UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("medium", "secondary"));
-            j++;
-            pos = grid.pos(mainframe.pos.x + i, mainframe.pos.y + j * frameSheet_data.cellSize * 2);
-            drawEffect(grid.x_center + pos.x,
-                pos.y, effect);
+            
+            pos = grid.pos(mainframe.pos.x + j, mainframe.pos.y +i);
+            drawEffect( pos.x,
+                pos.y, effect,true);
             i += 0.8;
         });
     }

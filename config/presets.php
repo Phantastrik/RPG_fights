@@ -79,25 +79,25 @@ class Presets
         self::$preset_effect_iron = new Effect("Iron balls", 1, true);
         self::$preset_effect_iron->setModifierKey("defense_modifier", 30);
         // effects de capacit
-        self::$preset_effect_weaken = new Effect("Weaken", 3);
+        self::$preset_effect_weaken = new Effect("Weaken", 4);
         self::$preset_effect_weaken->setModifierKey("attaque_modifier", -25);
-        self::$preset_effect_concentration = new Effect("wise", 3);
+        self::$preset_effect_concentration = new Effect("wise", 4);
         self::$preset_effect_concentration->setModifierKey("sagesse_modifier", 20);
-        self::$preset_effect_defend  = new Effect("defend", 3);
+        self::$preset_effect_defend  = new Effect("defend", 4);
         self::$preset_effect_defend->setModifierKey("defense_modifier", 20);
-        self::$preset_effect_rage = new Effect("rage", 3);;
+        self::$preset_effect_rage = new Effect("rage", 4);
         self::$preset_effect_rage->setModifierKey("attaque_modifier", 20);
-        self::$preset_effect_vulnerate = new Effect("vulnerate", 3);
+        self::$preset_effect_vulnerate = new Effect("vulnerate", 4);
         self::$preset_effect_vulnerate->setModifierKey("defense_modifier", -25);
 
 
         // effects 
         self::$preset_EFFECT = array(
             "refresh" => self::$preset_effect_refresh,
-            "cafeine" => self::$preset_effect_cafeine,
-            "roids" => self::$preset_effect_roids,
-            "meditation" => self::$preset_effect_meditation,
-            "iron" => self::$preset_effect_iron
+           "cafeine" => self::$preset_effect_cafeine,
+           "roids" => self::$preset_effect_roids,
+           "meditation" => self::$preset_effect_meditation,
+           "iron" => self::$preset_effect_iron
         );
 
 
