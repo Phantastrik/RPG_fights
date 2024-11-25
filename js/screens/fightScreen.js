@@ -7,9 +7,9 @@ let monsterStateVariant = 0;
 function showFightScreen(runState) {
 
     controls = [
-        {key:'Q', label:"Previous"},
-        {key:'D', label:"Next"},
-        {key:'Enter', label:"Choose Ability"},
+        { key: 'Q', label: "Previous" },
+        { key: 'D', label: "Next" },
+        { key: 'Enter', label: "Choose Ability" },
     ]
 
     clearCanvas();
@@ -33,23 +33,7 @@ function handleAbilitySelection(event) {
         selectedAbilityIndex = (selectedAbilityIndex + 1) % runState.player.abilities.length;
         startFightScreenAnimation();
     } else if (event.key === "Enter") {
-        // Valider le choix
-        fightPlayerState = "attaques";
-        stateVariant = selectedAbilityIndex % spriteSource[runState.player.className].attaques.length;
-
-        monsterState = "attaques";
-        monsterStateVariant = Math.floor(Math.random() * monster_spritesheet_data["gobelin"].attaques.length);
-
-        setTimeout(() => {
-            fightPlayerState = "idle";
-            monsterState = "idle";
-            // document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
-            cancelAnimationFrame(fightScreenAnimationId);
-            // cancelAnimationFrame(fightScreenAnimationId);
-            nextRound(selectedAbilityIndex);
-            showStageScreen(runState);
-        }, spriteSource[runState.player.className]["attaques"][stateVariant].frameCount * animationSpeed);
-        showStageScreen(runState);
+       endPhaseAnimation();
 
     }
 }
@@ -76,7 +60,7 @@ function animateFightScreen() {
 
         if (monsterState === "attaques") {
             drawMonster("gobelin", pos.x, pos.y, monsterState, monsterStateVariant);
-        } else {
+        } else {   
             drawMonster("gobelin", pos.x, pos.y, monsterState);
         }
         // stats
@@ -112,9 +96,9 @@ function animateFightScreen() {
 
     }
     // controls hint
-    pos = grid.pos(21,2);
-    drawControlsHint(pos.x,pos.y);
-   
+    pos = grid.pos(21, 2);
+    drawControlsHint(pos.x, pos.y);
+
     fightScreenAnimationId = requestAnimationFrame(() => animateFightScreen());  // Boucle d'animation
 }
 
@@ -125,4 +109,58 @@ function startFightScreenAnimation() {
         cancelAnimationFrame(fightScreenAnimationId);
     }
     animateFightScreen();  // Lance la première frame de l'animation
+}
+
+function endPhaseAnimation() {
+    
+    playerFirst = runState.stages[runState.currentStage].enemy.vitesse <= runState.player.vitesse;
+    if (playerFirst) {
+        // le joueur attaque
+        fightPlayerState = "attaques";
+        stateVariant = selectedAbilityIndex % spriteSource[runState.player.className].attaques.length;
+        
+        
+        setTimeout(() => {
+            fightPlayerState = "idle";
+     
+            // le monstra attaque
+            monsterState = "attaques";
+            monsterStateVariant = Math.floor(Math.random() * monster_spritesheet_data["gobelin"].attaques.length);
+            // fin des animations 
+            setTimeout(endTurn,
+             monster_spritesheet_data["gobelin"]["attaques"][monsterStateVariant].frameCount * animationSpeed);
+
+            showStageScreen(runState);
+
+        }, spriteSource[runState.player.className]["attaques"][stateVariant].frameCount * animationSpeed);
+        
+        showStageScreen(runState);
+    } else {
+        // le monstra attaque
+        monsterState = "attaques";
+        monsterStateVariant = Math.floor(Math.random() * monster_spritesheet_data["gobelin"].attaques.length);
+        setTimeout(() => {
+            monsterState = 'idle';
+
+            // le player attaque
+            fightPlayerState = "attaques";
+            stateVariant = selectedAbilityIndex % spriteSource[runState.player.className].attaques.length;
+            // fin des animations 
+            setTimeout(endTurn, spriteSource[runState.player.className]["attaques"][stateVariant].frameCount * animationSpeed);
+
+            showStageScreen(runState);
+
+        }, monster_spritesheet_data["gobelin"]["attaques"][monsterStateVariant].frameCount * animationSpeed);
+        showStageScreen(runState);
+    }
+}
+
+function endTurn() {
+    fightPlayerState = "idle";
+    monsterState = "idle";
+    // document.removeEventListener("keydown", handleCharacterSelection); // Retirer le gestionnaire d'événements
+    cancelAnimationFrame(fightScreenAnimationId);
+    // cancelAnimationFrame(fightScreenAnimationId);
+    nextRound(selectedAbilityIndex);
+    showStageScreen(runState);
 }

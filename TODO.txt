@@ -13,6 +13,8 @@ DONE - puis un drawEventUI - separation des deux ecran OK
 DONE - puis un drawFightUI-  separation des deux ecran OK
 
 // -------- P1 -------------- 
+Dans le fightScreen, refaire le mode d'animation pour qu'il s'affiche en debut de screen et non a la fin
+
 ajouter la possibilité de generer le prochain stage au fur et a mesure -> comme ça on peut  continuer a l'infini
 
 Faire un drawEnemyUI et un drawPlayerUI
