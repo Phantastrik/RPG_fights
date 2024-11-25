@@ -11,7 +11,7 @@ class Monster extends Personnage
 
     public function __construct($name,int $baseLevel = 1){
        
-        parent::__construct(self::$namelist[rand(0,count(self::$namelist)-1)]);
+        parent::__construct($name);
         if(!is_null($name)){
             $this->name = $name;            
         }
@@ -28,6 +28,10 @@ class Monster extends Personnage
             $this->gainExp($this->calculateExpToNextLevel());
         }
         $this->refresh();
+    }
+    public static function createFromPreset(){
+        $p = Presets::getPreset_MONSTER();
+        return $p[mt_rand(0,count($p)-1)];
     }
 
     // permet de randomizer un peu les stats
