@@ -19,6 +19,23 @@ class Presets
     private static $ability_spell_weaken;
     private static $ability_spell_vulnerate;
     private static $preset_ABILITIES;
+    // - monster ability
+    private static $ability_physic_poc;
+    private static $ability_spell_burn;
+    private static $ability_spell_stun;
+    private static $ability_physic_slice;
+    private static $ability_physic_claw;
+    private static $ability_physic_bonk;
+    private static $ability_physic_chop;
+    private static $ability_magic_sparkle;
+    private static $ability_magic_boom;
+    private static $ability_magic_melancholia;
+    
+    private static $ability_spell_charge;
+    private static $ability_spell_dry;
+    
+    
+
 
     // effects
     private static $preset_effect_refresh;
@@ -31,6 +48,11 @@ class Presets
     private static $preset_effect_rage;
     private static $preset_effect_concentration;
     private static $preset_effect_vulnerate;
+
+    private static $preset_effect_burn;
+    private static $preset_effect_stun;
+    private static $preset_effect_dry;
+
     private static $preset_effect_prayer;
     private static $preset_effect_heal;
     private static $preset_effect_drink;
@@ -53,6 +75,15 @@ class Presets
 
 
     // monster
+
+    private static $preset_enemy_gobelin;
+    private static $preset_enemy_orc;
+    private static $preset_enemy_gorgon;
+    private static $preset_enemy_lamia;
+    private static $preset_enemy_spirit;
+    private static $preset_enemy_spore;
+    private static $preset_enemy_shaman;
+
     private static $preset_MONSTER;
 
     public static function init()
@@ -145,6 +176,14 @@ class Presets
         self::$preset_effect_vulnerate = new Effect("vulnerate", 4);
         self::$preset_effect_vulnerate->setModifierKey("defense_modifier", -25);
 
+        self::$preset_effect_burn = new Effect("Burn",3);
+        self::$preset_effect_burn->setModifierKey("pv_modifier", -20)
+                                ->setModifierKey("pvMax_modifier", -20);
+        self::$preset_effect_stun = new Effect("Stun",3);
+        self::$preset_effect_stun->setModifierKey("vitesse_modifier", -20);
+        self::$preset_effect_dry = new Effect("dry",1,true);
+        self::$preset_effect_dry->setModifierKey("pm_modifier", -20)
+                                ->setModifierKey("pmMax_modifier", -20);
 
         // effects 
         self::$preset_EFFECT = array(
@@ -159,7 +198,7 @@ class Presets
             "sharpen" => self::$preset_effect_sharpen,
             "tough" => self::$preset_effect_tough,
             "study" => self::$preset_effect_study,
-          //  "all" => self::$preset_effect_all,
+            //  "all" => self::$preset_effect_all,
             "restore" => self::$preset_effect_restore,
             "feast" => self::$preset_effect_feast
         );
@@ -234,6 +273,93 @@ class Presets
             "spread" => 0.1
         ));
 
+    // - monster ability
+    self::$ability_physic_poc = new PhysicAttackAbility("Poc");
+    self::$ability_physic_poc->setStats(array(
+            "pm_cost" => 8,
+            "basic_damage" => 11,
+            "attaque_use" => 1,
+            "defense_use" => 0,
+            "sagesse_use" => 0,
+            "vitesse_use" => 0.1,
+            "spread" => 0.3
+        ));
+    self::$ability_physic_slice = new PhysicAttackAbility("Slice");
+    self::$ability_physic_slice->setStats(array(
+            "pm_cost" => 15,
+            "basic_damage" => 13,
+            "attaque_use" => 1,
+            "defense_use" => 0,
+            "sagesse_use" => 0,
+            "vitesse_use" => 0.2,
+            "spread" => 0.2
+        ));
+    self::$ability_physic_claw = new PhysicAttackAbility("Claw");
+    self::$ability_physic_claw->setStats(array(
+            "pm_cost" => 5,
+            "basic_damage" => 5,
+            "attaque_use" => 1,
+            "defense_use" => 0.2,
+            "sagesse_use" => 0,
+            "vitesse_use" => 0.2,
+            "spread" => 0.1
+        ));
+    self::$ability_physic_bonk = new PhysicAttackAbility("Bonk");
+    self::$ability_physic_bonk->setStats(array(
+            "pm_cost" => 10,
+            "basic_damage" => 10,
+            "attaque_use" => 0.5,
+            "defense_use" => 0.5,
+            "sagesse_use" => 0,
+            "vitesse_use" => 0.1,
+            "spread" => 0.2
+        ));
+    self::$ability_physic_chop = new PhysicAttackAbility("Chop");
+    self::$ability_physic_chop->setStats(array(
+            "pm_cost" => 17,
+            "basic_damage" => 15,
+            "attaque_use" => 0.8,
+            "defense_use" => 0,
+            "sagesse_use" => 0,
+            "vitesse_use" => 0.3,
+            "spread" => 0.1
+        ));
+    self::$ability_magic_sparkle = new MagicAttackAbility("Sparkle");
+    self::$ability_magic_sparkle->setStats(array(
+            "pm_cost" => 18,
+            "basic_damage" => 15,
+            "attaque_use" => 0,
+            "defense_use" => 0,
+            "sagesse_use" => 1,
+            "vitesse_use" => 0.1,
+            "spread" => 0.3
+        ));
+    self::$ability_magic_boom = new MagicAttackAbility("Boom");
+    self::$ability_magic_boom->setStats(array(
+            "pm_cost" => 25,
+            "basic_damage" => 30,
+            "attaque_use" => 0,
+            "defense_use" => 0.5,
+            "sagesse_use" => 0.5,
+            "vitesse_use" => 0,
+            "spread" => 0.5
+        ));
+    self::$ability_magic_melancholia = new MagicAttackAbility("Melancholia");
+    self::$ability_magic_melancholia->setStats(array(
+            "pm_cost" => 12,
+            "basic_damage" => 16,
+            "attaque_use" => 0.5,
+            "defense_use" => 0,
+            "sagesse_use" => 0.7,
+            "vitesse_use" => 0,
+            "spread" => 0.2
+        ));
+    
+    self::$ability_spell_burn = new SpellAbility("Burn",self::$preset_effect_burn,15);
+    self::$ability_spell_stun = new SpellAbility("Stun",self::$preset_effect_stun,15);
+    self::$ability_spell_charge = new SpellAbility("Charge",self::$preset_effect_all,15);
+    self::$ability_spell_dry = new SpellAbility("Dry",self::$preset_effect_dry,15);
+
         self::$ability_spell_defend = new SpellAbility("defend", self::$preset_effect_defend, 1);
         self::$ability_spell_defend->setEffectTargetPlayer(true);
         self::$ability_spell_defend->setEffectTargetEnemy(false);
@@ -297,8 +423,105 @@ class Presets
         );
 
 
+        // MONSTERS 
+        // gobelin
+        self::$preset_enemy_gobelin = new Monster("gobelin");
+        self::$preset_enemy_gobelin ->setPv(90)
+                                    ->setPvMax(90)
+                                    ->setPm(30)
+                                    ->setPmMax(30)
+                                    ->setAttaque(8)
+                                    ->setDefense(9)
+                                    ->setSagesse(13)
+                                    ->setvitesse(15)
+                                    ->addAbility(self::$ability_physic_poc)
+                                    ->addAbility(self::$ability_spell_charge);
+        // orc              
+        self::$preset_enemy_orc = new Monster("orc");
+        self::$preset_enemy_orc->setPv(100)
+                                ->setPvMax(100)
+                                ->setPm(50)
+                                ->setPmMax(50)
+                                ->setAttaque(13)
+                                ->setDefense(8)
+                                ->setSagesse(5)
+                                ->setvitesse(12)
+                                ->addAbility(self::$ability_physic_chop)
+                                ->addAbility(self::$ability_spell_enrage);
+        // gorgon
+        self::$preset_enemy_gorgon = new Monster("gorgon");
+        self::$preset_enemy_gorgon->setPv(130)
+                                    ->setPvMax(130)
+                                    ->setPm(100)
+                                    ->setPmMax(100)
+                                    ->setAttaque(8)
+                                    ->setDefense(15)
+                                    ->setSagesse(11)
+                                    ->setvitesse(10)
+                                    ->addAbility(self::$ability_physic_claw)
+                                    ->addAbility(self::$ability_magic_melancholia)
+                                    ->addAbility(self::$ability_spell_stun);
+        // lamia
+        self::$preset_enemy_lamia = new Monster("lamia");
+        self::$preset_enemy_lamia->setPv(150)
+                                ->setPvMax(150)
+                                ->setPm(50)
+                                ->setPmMax(50)
+                                ->setAttaque(17)
+                                ->setDefense(7)
+                                ->setSagesse(10)
+                                ->setvitesse(13)
+                                ->addAbility(self::$ability_physic_slice)
+                                ->addAbility(self::$ability_physic_claw)
+                                ->addAbility(self::$ability_spell_stun);
+        // spirit
+        self::$preset_enemy_spirit = new Monster("spirit");
+        self::$preset_enemy_spirit->setPv(35)
+                                    ->setPvMax(35)
+                                    ->setPm(150)
+                                    ->setPmMax(150)
+                                    ->setAttaque(1)
+                                    ->setDefense(12)
+                                    ->setSagesse(15)
+                                    ->setvitesse(3)
+                                    ->addAbility(self::$ability_magic_boom)
+                                    ->addAbility(self::$ability_magic_sparkle)
+                                    ->addAbility(self::$ability_spell_dry);
+        // spore
+        self::$preset_enemy_spore = new Monster("spore");
+        self::$preset_enemy_spore->setPv(55)
+                                    ->setPvMax(55)
+                                    ->setPm(100)
+                                    ->setPmMax(100)
+                                    ->setAttaque(10)
+                                    ->setDefense(13)
+                                    ->setSagesse(20)
+                                    ->setvitesse(10)
+                                    ->addAbility(self::$ability_physic_poc)
+                                    ->addAbility(self::$ability_magic_boom)
+                                    ->addAbility(self::$ability_spell_vulnerate);
+        // shaman
+        self::$preset_enemy_shaman = new Monster("shaman");
+        self::$preset_enemy_shaman->setPv(115)
+                                ->setPvMax(115)
+                                ->setPm(120)
+                                ->setPmMax(120)
+                                ->setAttaque(10)
+                                ->setDefense(18)
+                                ->setSagesse(20)
+                                ->setvitesse(10)
+                                ->addAbility(self::$ability_physic_bonk)
+                                ->addAbility(self::$ability_magic_sparkle)
+                                ->addAbility(self::$ability_spell_dry);
+
         self::$preset_MONSTER = array(
-            "little" => new Monster("Slime", 1)
+            self::$preset_enemy_gobelin,
+            self::$preset_enemy_orc,
+            self::$preset_enemy_gorgon,
+            self::$preset_enemy_lamia,
+            self::$preset_enemy_spirit,
+            self::$preset_enemy_spore,
+            self::$preset_enemy_shaman
         );
     }
 
@@ -327,7 +550,8 @@ class Presets
     {
         return self::$preset_MONSTER;
     }
-    public static function getPreset_event_names(){
+    public static function getPreset_event_names()
+    {
         return self::$preset_event_names;
     }
 }

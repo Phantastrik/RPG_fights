@@ -16,7 +16,7 @@ class Monster extends Personnage
             $this->name = $name;            
         }
         $this->className = "Monster";
-        array_push($this->abilities,new PhysicAttackAbility("Poc"));
+       // array_push($this->abilities,new PhysicAttackAbility("Poc"));
 
         // clacul des stats
         $this->statSpreadValue = 0.3;

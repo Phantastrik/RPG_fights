@@ -90,6 +90,60 @@ class Personnage implements Levelable, Caster, ArrayExportable
     {
         return $this->niveau;
     }
+
+    public function setPvMax($pvMax)
+    {
+        $this->pvMax = $pvMax;
+        return $this;
+    }
+    public function setPv($pv)
+    {
+        $this->pv = $pv;
+        return $this;
+    }
+    public function setPmMax($pvMax)
+    {
+        $this->pvMax = $pvMax;
+        return $this;
+    }
+    public function setPm($pm)
+    {
+        $this->pm = $pm;
+        return $this;
+    }
+    
+
+    public function setAttaque($attaque)
+    {
+        $this->attaque = $attaque;
+        return $this;
+    }
+
+    public function setDefense($defense)
+    {
+        $this->defense = $defense;
+        return $this;
+    }
+
+    public function setSagesse($sagesse)
+    {
+        $this->sagesse = $sagesse;
+        return $this;
+    }
+
+    public function setVitesse($vitesse)
+    {
+        $this->vitesse = $vitesse;
+        return $this;
+    }
+
+
+
+
+
+
+
+
     // Calculer l'XP pour le prochain niveau
     public function calculateExpToNextLevel()
     {
