@@ -57,6 +57,7 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
         $this->playerWon = $this->enemy->isDead();
         $this->enemyWon = $this->player->isDead();
         if($this->playerWon || $this->enemyWon){
+            $this->rewardWinner();
             $this->done = true;
         }
     }
@@ -75,8 +76,9 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     }
     public function rewardWinner(){
         if($this->playerWon){
+            $xp =round($this->enemy->calculateExpToNextLevel()/3); 
             $this->player->gainExp(
-                round($this->enemy->calculateExpToNextLevel()/3)
+                $xp
             );
         }elseif($this->enemyWon){
             $this->enemy->gainExp(

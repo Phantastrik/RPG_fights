@@ -145,7 +145,7 @@ let spriteSource = {
             { x: 0, y: 1024, frameCount: 4 },
             { x: 0, y: 1280, frameCount: 4 }
         ],
-        
+        die : {x:0,y:2304, frameCount:6},
         jump : {x:0, y:2048, frameCount : 6}
     },
     rogue: {
@@ -166,6 +166,7 @@ let spriteSource = {
             { x: 0, y: 1024, frameCount: 5 },
             { x: 0, y: 1280, frameCount: 4 },
         ],
+        die : {x:0,y:2304, frameCount:6},
         jump : {x:0, y:1792, frameCount : 9}
     },
     mage: {
@@ -186,6 +187,7 @@ let spriteSource = {
             { x: 0, y: 1024, frameCount: 9 },
             { x: 0, y: 1280, frameCount: 16 }
         ],
+        die : {x:0,y:2304, frameCount:4},
         jump : {x:0, y:1792, frameCount : 8}
     }
 };

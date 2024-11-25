@@ -10,32 +10,19 @@ function showEndScreen() {
     clearCanvas();
     startEndScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
-    document.addEventListener("keydown", handleEventKeys);
+    document.addEventListener("keydown", handleEndKeys);
 }
 
 
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages
-function handleEventKeys(event) {
-    if (event.key === "q" || event.key === "Q") {
-        // Aller à gauche dans la sélection
-        selectedEffectIndex = (selectedEffectIndex - 1
-            + runState.stages[runState.currentStage].effects.length)
-            % runState.stages[runState.currentStage].effects.length;
-        startEndScreenAnimation();
-    } else if (event.key === "d" || event.key === "D") {
-        // Aller à droite dans la sélection
-        selectedEffectIndex = (selectedEffectIndex + 1) % runState.stages[runState.currentStage].effects.length;
-        startEndScreenAnimation();
+function handleEndKeys(event) {
+    if (event.key === "r" || event.key === "R") {
+        
+        cancelAnimationFrame(endScreenAnimationId);
+        initRun();
     } else if (event.key === "Enter") {
-        endPlayerState = "jump";
-        setTimeout(() => {
-            endPlayerState = "walk";
-            // Valider le choix
-            cancelAnimationFrame(EndScreenAnimationId);
-            eventSelected(selectedEffectIndex);
-        }, spriteSource[runState.player.className].jump.frameCount * animationSpeed) * 1.5;
-
-        showStageScreen();
+        cancelAnimationFrame(endScreenAnimationId);
+        initRun();
     }
 }
 
@@ -50,7 +37,7 @@ function animateEndScreen() {
     drawCharacter(spriteSource[runState.player.className],
         pos.x, pos.y, endPlayerState);
 
-    // bg pour les event
+    // bg pour la fin
     setBackground(UI_BG.bg1);
 
     // statbar du perso
