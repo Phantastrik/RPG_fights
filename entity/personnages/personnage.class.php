@@ -98,12 +98,13 @@ class Personnage implements Levelable, Caster, ArrayExportable
     }
     public function setPv($pv)
     {
+        
         $this->pv = $pv;
         return $this;
     }
-    public function setPmMax($pvMax)
+    public function setPmMax($pmMax)
     {
-        $this->pvMax = $pvMax;
+        $this->pmMax = $pmMax;
         return $this;
     }
     public function setPm($pm)
@@ -143,7 +144,6 @@ class Personnage implements Levelable, Caster, ArrayExportable
 
 
 
-
     // Calculer l'XP pour le prochain niveau
     public function calculateExpToNextLevel()
     {
@@ -165,7 +165,7 @@ class Personnage implements Levelable, Caster, ArrayExportable
     }
 
     public function getAnAbility(){
-        $res = $this->abilities[rand(0,count($this->abilities)-1)];
+        $res = $this->abilities[mt_rand(0,count($this->abilities)-1)];
         return $res;
     }
 
@@ -207,7 +207,7 @@ class Personnage implements Levelable, Caster, ArrayExportable
     }
 
     public function addAbility(Ability $ab){
-        array_push($this->abilities,$ab);
+          array_push($this->abilities,$ab);
         return $this;
     }
 
@@ -259,9 +259,6 @@ class Personnage implements Levelable, Caster, ArrayExportable
         }
         return $res;
     }
-
-  
-
 
     // ---IMPLEMENTS Levelable
     public function levelUp()

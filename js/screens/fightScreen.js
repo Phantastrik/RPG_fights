@@ -4,6 +4,8 @@ let fightPlayerState = "idle";
 let monsterState = "idle";
 let stateVariant = 0;
 let monsterStateVariant = 0;
+let monsterName;
+
 function showFightScreen(runState) {
 
     controls = [
@@ -11,6 +13,7 @@ function showFightScreen(runState) {
         { key: 'D', label: "Next" },
         { key: 'Enter', label: "Choose Ability" },
     ]
+    monsterName = runState.stages[runState.currentStage].enemy.name;
 
     clearCanvas();
 
@@ -33,7 +36,7 @@ function handleAbilitySelection(event) {
         selectedAbilityIndex = (selectedAbilityIndex + 1) % runState.player.abilities.length;
         startFightScreenAnimation();
     } else if (event.key === "Enter") {
-       endPhaseAnimation();
+        endPhaseAnimation();
 
     }
 }
@@ -59,9 +62,9 @@ function animateFightScreen() {
         pos = grid.pos(20, 7);
 
         if (monsterState === "attaques") {
-            drawMonster("gobelin", pos.x, pos.y, monsterState, monsterStateVariant);
-        } else {   
-            drawMonster("gobelin", pos.x, pos.y, monsterState);
+            drawMonster(monsterName, pos.x, pos.y, monsterState, monsterStateVariant);
+        } else {
+            drawMonster(monsterName, pos.x, pos.y, monsterState);
         }
         // stats
         drawStatsBar(25, 12, runState.stages[runState.currentStage].enemy, true, false);
@@ -112,28 +115,38 @@ function startFightScreenAnimation() {
 }
 
 function endPhaseAnimation() {
-    
+
     playerFirst = runState.stages[runState.currentStage].enemy.vitesse <= runState.player.vitesse;
     if (playerFirst) {
         // le joueur attaque
         fightPlayerState = "attaques";
         stateVariant = selectedAbilityIndex % spriteSource[runState.player.className].attaques.length;
-        
-        
+        monsterState = 'hurt';
         setTimeout(() => {
-            fightPlayerState = "idle";
-     
+            monsterState = 'idle';
+        }, monster_spritesheet_data[monsterName].hurt.frameCount * animationSpeed);
+        showStageScreen(runState);
+
+        setTimeout(() => {
+            fightPlayerState = "hurt";
+
+            setTimeout(() => {
+                fightPlayerState = 'idle';
+            }, spriteSource[runState.player.className]["attaques"][stateVariant].frameCount * animationSpeed);
+            showStageScreen(runState);
+
+
             // le monstra attaque
             monsterState = "attaques";
             monsterStateVariant = Math.floor(Math.random() * monster_spritesheet_data["gobelin"].attaques.length);
             // fin des animations 
             setTimeout(endTurn,
-             monster_spritesheet_data["gobelin"]["attaques"][monsterStateVariant].frameCount * animationSpeed);
+                monster_spritesheet_data[monsterName]["attaques"][monsterStateVariant].frameCount * animationSpeed);
 
             showStageScreen(runState);
 
         }, spriteSource[runState.player.className]["attaques"][stateVariant].frameCount * animationSpeed);
-        
+
         showStageScreen(runState);
     } else {
         // le monstra attaque
@@ -150,7 +163,7 @@ function endPhaseAnimation() {
 
             showStageScreen(runState);
 
-        }, monster_spritesheet_data["gobelin"]["attaques"][monsterStateVariant].frameCount * animationSpeed);
+        }, monster_spritesheet_data[monsterName]["attaques"][monsterStateVariant].frameCount * animationSpeed);
         showStageScreen(runState);
     }
 }

@@ -139,6 +139,7 @@ let spriteSource = {
         idle: { x: 0, y: 1536, frameCount: 1, },
         walk: { x: 0, y: 0, frameCount: 7, },
         run: { x: 0, y: 256, frameCount: 6 },
+        hurt: { x: 0, y: 1792, frameCount: 2 },
         attaques: [
             { x: 0, y: 512, frameCount: 6 },
             { x: 0, y: 768, frameCount: 5 },
@@ -161,6 +162,7 @@ let spriteSource = {
         idle: { x: 0, y: 0, frameCount: 6 },
         walk: { x: 0, y: 256, frameCount: 9 },
         run: { x: 0, y: 512, frameCount: 8 },
+        hurt: { x: 0, y: 2048, frameCount: 3 },
         attaques: [
             { x: 0, y: 768, frameCount: 4 },
             { x: 0, y: 1024, frameCount: 5 },
@@ -182,6 +184,7 @@ let spriteSource = {
         idle: { x: 0, y: 0, frameCount: 8 },
         walk: { x: 0, y: 256, frameCount: 7 },
         run: { x: 0, y: 512, frameCount: 8 },
+        hurt: { x: 0, y: 2048, frameCount: 4 },
         attaques: [
             { x: 0, y: 768, frameCount: 7 },
             { x: 0, y: 1024, frameCount: 9 },
@@ -280,7 +283,7 @@ const monster_spritesheet_data = {
         lastUpdateTime: 0,
         currentFrame: 0,
         img: null,
-        src: `../assets/monster/orc_sprite.png`,
+        src: `../assets/monster/shaman_sprite.png`,
         frameWidth: 96,
         frameHeight: 96,
         displayWidth: 128,

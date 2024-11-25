@@ -30,8 +30,6 @@ function nextRound(choosedAbility) {
     fetchNextRound(choosedAbility).then(state => {
         runState = state;
         console.log(runState);
-        console.log(runState.player);
-        console.log(runState.player.isDead);
         if(runState.player.isDead){
             showEndScreen();
         }else{

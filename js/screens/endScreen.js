@@ -8,6 +8,9 @@ function showEndScreen() {
     ]
 
     clearCanvas();
+    // bg pour la fin
+
+
     startEndScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleEndKeys);
@@ -17,7 +20,7 @@ function showEndScreen() {
 // Fonction de gestion des touches pour naviguer dans la sélection de personnages
 function handleEndKeys(event) {
     if (event.key === "r" || event.key === "R") {
-        
+
         cancelAnimationFrame(endScreenAnimationId);
         initRun();
     } else if (event.key === "Enter") {
@@ -37,8 +40,7 @@ function animateEndScreen() {
     drawCharacter(spriteSource[runState.player.className],
         pos.x, pos.y, endPlayerState);
 
-    // bg pour la fin
-    setBackground(UI_BG.bg1);
+    setBackground(UI_BG.bg1); 
 
     // statbar du perso
     drawStatsBar(0, 1.8, runState.player);
