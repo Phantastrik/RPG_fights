@@ -1,29 +1,34 @@
 <?php
-require_once __DIR__.'/../config/autoload.php';
+require_once __DIR__ . '/../config/autoload.php';
 
-if(isset($_SESSION['player'])){
+if (isset($_SESSION['player'])) {
     unset($_SESSION['player']);
 }
-if(isset($_SESSION['run'])){
+if (isset($_SESSION['run'])) {
     unset($_SESSION['run']);
 }
 
 
 
-$w = new Webpage("RPG Fight");
+$w = new Webpage("Foggy's Castle");
 
-$w->appendContent(<<<HTML
-    <div class="container-fluid" style = "background-color:#873e3e">
-    <h1>RPG Fight Game</h1>
-        <canvas id="gameCanvas" width="800" height="416" ></canvas>
-        <br><button onclick="startGame()">Démarrer la Partie</button>
-        <button onclick="nextRound()">Round Suivant</button>
+$w->appendContent(
+    <<<HTML
+    <div class="container-fluid" style = "background-color:#252525;text-align:center">
+        <h1 class="text-light" style = "margin-bottom:25px">Foggy's Castle</h1>
+        <canvas id="gameCanvas" width="800" height="416" style="display:inline-block;margin-bottom:25px" ></canvas>
+        <div class="container-fluid" style = "background-color:#252525;padding-bottom:300px" >
+            <p class ="text-light"> Bienvenue dans les contrées du Foggy's Castle. <br>
+                Choisissez votre héro et courrez a votre perte.
+            </p>
+        </div>
     </div>
     
 HTML
 );
 $w->appendCssUrl('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
-$w->appendCss(<<<CSS
+$w->appendCss(
+    <<<CSS
     @font-face {
 
         font-family: "DigitalDisco";
@@ -47,11 +52,13 @@ $w->appendCss(<<<CSS
 CSS
 );
 
-$w->appendContent(<<<HTML
+$w->appendContent(
+    <<<HTML
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 HTML
 );
-$w->appendContent(<<<HTML
+$w->appendContent(
+    <<<HTML
 
 <script src="../js/style.js"></script>
 <script src="../js/config.js"></script>
@@ -69,7 +76,6 @@ HTML
 <script src="../js/old.game.js"></script>
 HTML
 );*/
-echo($w->toHTML());
+echo ($w->toHTML());
 
 // <script src="game.js"></script>
-
