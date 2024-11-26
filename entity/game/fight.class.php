@@ -91,8 +91,8 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     }
     public function rewardWinner(){
         if($this->playerWon){
-            $xp =round($this->enemy->getNiveau()*100); 
-            $rand = (mt_rand(0,100)-50)/100;
+            $xp =round($this->enemy->getNiveau()*50); 
+            $rand = (mt_rand(0,50)-25)/100;
             $xp *= (1+$rand);
 
 

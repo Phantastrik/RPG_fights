@@ -400,20 +400,23 @@ class Presets
 
 
         self::$preset_player_warrior = new Warrior(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
-        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["shieldBash"]);
-        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["tacle"]);
-        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["spell"]["defend"]);
-        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["spell"]["enrage"]);
+        self::$preset_player_warrior->addAbility(self::$preset_ABILITIES["physic"]["shieldBash"])
+                                    ->addAbility(self::$preset_ABILITIES["physic"]["tacle"])
+                                    ->addAbility(self::$preset_ABILITIES["spell"]["defend"])
+                                    ->addAbility(self::$preset_ABILITIES["spell"]["enrage"])
+                                    ->setDefense(15);
         self::$preset_player_rogue = new Rogue(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
-        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["stab"]);
-        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["tacle"]);
-        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["spell"]["weaken"]);
-        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["spell"]["vulnerate"]);
+        self::$preset_player_rogue->addAbility(self::$preset_ABILITIES["physic"]["stab"])
+                                    ->addAbility(self::$preset_ABILITIES["physic"]["tacle"])
+                                    ->addAbility(self::$preset_ABILITIES["spell"]["weaken"])
+                                    ->addAbility(self::$preset_ABILITIES["spell"]["vulnerate"])
+                                    ->setVitesse(15);
         self::$preset_player_mage = new Mage(self::$preset_PLAYER_NAMES[array_rand(self::$preset_PLAYER_NAMES)]);
-        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["fizz"]);
-        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["woosh"]);
-        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["spell"]["concentrate"]);
-        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["spell"]["weaken"]);
+        self::$preset_player_mage->addAbility(self::$preset_ABILITIES["magic"]["fizz"])
+                                ->addAbility(self::$preset_ABILITIES["magic"]["woosh"])
+                                ->addAbility(self::$preset_ABILITIES["spell"]["concentrate"])
+                                ->addAbility(self::$preset_ABILITIES["spell"]["weaken"])
+                                ->setSagesse(15);
 
         self::$preset_PLAYER = array(
             "warrior" => self::$preset_player_warrior,
