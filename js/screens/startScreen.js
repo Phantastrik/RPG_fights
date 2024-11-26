@@ -61,7 +61,7 @@ function animateStartScreen() {
  
    // drawKey(pos.x, pos.y,"Q");
     // bandeau header de l'ecran
-    headerGUI("CHOOSE PLAYER");
+    headerGUI("Welcome to foggy's Castle","Choose a hero and defeat the foes");
     pos = grid.pos(21,2);
     drawControlsHint(pos.x,pos.y);
    

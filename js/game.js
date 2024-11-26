@@ -18,7 +18,7 @@ function startGame() {
     );
 }
 
-function initRun(characterClass) {
+function initRun(characterClass,seed = null) {
     fetchRunState(characterClass).then(state => {
         runState = state;
         showStageScreen(runState);
@@ -47,7 +47,6 @@ function eventSelected(choosedEffect){
 }
 
 function endGame() {
-    showEndScreen();
     deleteSession();
 }
 

@@ -32,9 +32,9 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     public static function createFromStageNumber(Personnage $player,$stageNumber){
         $baseLevel = round($stageNumber/3);
         $enemy = Monster::createFromPreset();
-        /* for ($i=0; $i < $baseLevel; $i++) { 
+        for ($i=0; $i < $baseLevel; $i++) { 
             $enemy->levelUp();
-        }*/
+        }
         return new Fight($stageNumber,$player,$enemy);
     }
 
@@ -91,7 +91,11 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     }
     public function rewardWinner(){
         if($this->playerWon){
-            $xp =round($this->enemy->calculateExpToNextLevel()/3); 
+            $xp =round($this->enemy->getNiveau()*100); 
+            $rand = (mt_rand(0,100)-50)/100;
+            $xp *= (1+$rand);
+
+
             $this->player->gainExp(
                 $xp
             );

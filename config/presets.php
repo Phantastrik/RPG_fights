@@ -425,7 +425,7 @@ class Presets
         // MONSTERS 
         // gobelin
         self::$preset_enemy_gobelin = new Monster("gobelin");
-        self::$preset_enemy_gobelin->setPv(90)
+        self::$preset_enemy_gobelin->setPv(80)
             ->setPvMax(90)
             ->setPm(30)
             ->setPmMax(30)
@@ -437,7 +437,7 @@ class Presets
             ->addAbility(self::$ability_spell_charge);
         // orc              
         self::$preset_enemy_orc = new Monster("orc");
-        self::$preset_enemy_orc->setPv(100)
+        self::$preset_enemy_orc->setPv(95)
             ->setPvMax(100)
             ->setPm(50)
             ->setPmMax(50)
@@ -450,8 +450,8 @@ class Presets
             ->addAbility(self::$ability_spell_enrage);
         // gorgon
         self::$preset_enemy_gorgon = new Monster("gorgon");
-        self::$preset_enemy_gorgon->setPv(130)
-            ->setPvMax(130)
+        self::$preset_enemy_gorgon->setPv(100)
+            ->setPvMax(100)
             ->setPm(100)
             ->setPmMax(100)
             ->setAttaque(8)
@@ -463,8 +463,8 @@ class Presets
             ->addAbility(self::$ability_spell_stun);
         // lamia
         self::$preset_enemy_lamia = new Monster("lamia");
-        self::$preset_enemy_lamia->setPv(150)
-            ->setPvMax(150)
+        self::$preset_enemy_lamia->setPv(100)
+            ->setPvMax(100)
             ->setPm(50)
             ->setPmMax(50)
             ->setAttaque(17)
@@ -503,7 +503,7 @@ class Presets
         // shaman
         self::$preset_enemy_shaman = new Monster("shaman");
         self::$preset_enemy_shaman->setPv(115)
-            ->setPvMax(115)
+            ->setPvMax(85)
             ->setPm(120)
             ->setPmMax(120)
             ->setAttaque(10)

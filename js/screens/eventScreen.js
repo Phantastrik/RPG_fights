@@ -58,7 +58,7 @@ function animateEventScreen() {
  
 
     // statbar du perso
-    drawStatsBar(0, 1.8, runState.player);
+    drawStatsBar(0, 1, runState.player);
 
     // effets de l'event
     drawEventPanel();

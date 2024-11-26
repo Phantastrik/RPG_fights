@@ -22,21 +22,15 @@ function showEndScreen() {
 
     setBackground(UI_BG.bg1);
     // animation de fin 
-    fightPlayerState = "hurt";
+    fightPlayerState = 'die';
+
     setTimeout(() => {
-        fightPlayerState = 'die';
+        cancelAnimationFrame(endScreenAnimationId);
+        drawPlayer = false;
 
-        setTimeout(() => {
-            fightPlayerState = 'die';
-            cancelAnimationFrame(endScreenAnimationId);
-
-            drawPlayer = false;
-
-        }, spriteSource[runState.player.className].die.frameCount * animationSpeed);
-        startEndScreenAnimation();
-
-    }, spriteSource[runState.player.className].hurt.frameCount * animationSpeed);
+    }, spriteSource[runState.player.className].die.frameCount * animationSpeed);
     startEndScreenAnimation();
+
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleEndKeys);
 }
@@ -47,10 +41,12 @@ function handleEndKeys(event) {
     if (event.key === "r" || event.key === "R") {
 
         cancelAnimationFrame(endScreenAnimationId);
-        initRun();
+        deleteSession();
+        initRun(runState.player.className,runState.seed);
     } else if (event.key === "Enter") {
         cancelAnimationFrame(endScreenAnimationId);
-        initRun();
+        deleteSession();
+        startGame();
     }
 }
 
@@ -70,11 +66,11 @@ function animateEndScreen() {
 
 
     // statbar du perso
-    drawStatsBar(0, 1.8, runState.player);
+    drawStatsBar(0, 1, runState.player);
     drawStats()
 
     // controls hint
-    pos = grid.pos(21, 2);
+    pos = grid.pos(21, 1);
     drawControlsHint(pos.x, pos.y);
 
 
@@ -90,37 +86,37 @@ function startEndScreenAnimation() {
     animateEndScreen();  // Lance la première frame de l'animation
 }
 
-function calculateStats(){
+function calculateStats() {
 
-    runStats.push({ key : 'Stage number', value: runState.stages.length});
+    runStats.push({ key: 'Stage number', value: runState.stages.length });
 
     let count = 0;
     let enemies = 0
     runState.stages.forEach(stage => {
-        if(stage.type=="fight"){
+        if (stage.type == "fight") {
             stage.fightRound.forEach(round => {
                 count += round.enemy.damageReceived;
             })
-            if(stage.playerWon){
+            if (stage.playerWon) {
                 enemies++;
             }
         }
     });
-    
+
     runStats.damageDealt = count;
-    runStats.push({ key : 'Damage Dealt', value: count});
+    runStats.push({ key: 'Damage Dealt', value: count });
     runStats.enemyDefeated = enemies;
-    runStats.push({ key : 'Enemy defeated', value: enemies});
+    runStats.push({ key: 'Enemy defeated', value: enemies });
 }
 
-function drawStats(){
-    
-    pos = grid.pos(7.5,4);
-    dim = grid.pos(10,6);
-    drawBox(pos.x, pos.y, dim.x, dim.y,
-         UI_COLORS.light_alpha, 2, UI_COLORS.transparent);
+function drawStats() {
 
-          //
+    pos = grid.pos(7.5, 4);
+    dim = grid.pos(10, 6);
+    drawBox(pos.x, pos.y, dim.x, dim.y,
+        UI_COLORS.light_alpha, 2, UI_COLORS.transparent);
+
+    //
     let i = 0.5;
     ctx.textAlign = "left";
     pad = grid.pos(0.2, i);
@@ -136,5 +132,5 @@ function drawStats(){
         drawShadowedText(`: ${element.value}`, pos.x + pad.x, pos.y + pad.y, 2, UI_COLORS.shadow, UI_COLORS.light, UI_FONTS.getFont("small", "secondary"));
         i += 1;
     });
-    
+
 }

@@ -1,9 +1,13 @@
 // Récupère l'état de la Run
-function fetchRunState(characterClass = null) {
+function fetchRunState(characterClass = null,seed=null) {
     let route = API_ROUTES.getRunState;
     if(characterClass !== null){
         route += "?class=" + characterClass;
     }
+    if(seed !== null){
+        route += "?seed=" + seed;
+    }
+    
     return fetch(route).then(response => response.json());
 }
 

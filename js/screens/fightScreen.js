@@ -106,7 +106,7 @@ function animateFightScreen() {
         });
     }
     // statbar du perso
-    drawStatsBar(0, 1.8, runState.player);
+    drawStatsBar(0, 1, runState.player);
 
     if (runState.player.activeEffects.length > 0) {
         let i = 0;
@@ -118,7 +118,7 @@ function animateFightScreen() {
 
     }
     // controls hint
-    pos = grid.pos(21, 2);
+    pos = grid.pos(21, 1);
     drawControlsHint(pos.x, pos.y);
 
     fightScreenAnimationId = requestAnimationFrame(() => animateFightScreen());  // Boucle d'animation

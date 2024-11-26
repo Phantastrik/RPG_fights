@@ -19,7 +19,13 @@ if (!isset($_SESSION['player'])) {
 // Initialiser une Run en session, si ce n’est pas déjà fait
 if (!isset($_SESSION['run'])) {
     // echo("stting the session");    
-    $_SESSION['run'] = new Run($_SESSION['player'], rand(10, 15));
+    if (isset($_GET['seed'])) {
+        $_SESSION['run'] = new Run($_SESSION['player'], rand(10, 15),$_GET['seed']);
+    }else{
+        $_SESSION['run'] = new Run($_SESSION['player'], rand(10, 15));
+    }
+    
+   
 }
 
 $run = $_SESSION['run'];

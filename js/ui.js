@@ -91,18 +91,27 @@ function drawPlayerStats(x, y) {
 
 
 /** ========== Interface de Sélection de Personnage ========== **/
-function headerGUI(text) {
+function headerGUI(text, subText) {
     // panneau de fond
     pos = grid.pos(-1, -1);
-    drawPanel(pos.x, pos.y, 27, 3);
+    dim = grid.pos(27, 2.5);
+    drawBox(pos.x, pos.y, dim.x, dim.y, UI_COLORS.primary, UI_CONFIG.shadowPad, UI_COLORS.shadowColor);
     // texte 
-    pos = grid.pos(16, 1);
+    pos = grid.pos(16, 0.75);
 
     ctx.testAlign = "center";
     drawShadowedText(text, grid.x_center, pos.y, 2,
         UI_COLORS.shadow,
         UI_COLORS.text.light,
         UI_FONTS.getFont("big", "primary"));
+
+    pos = grid.pos(16, 1.4);
+
+    ctx.testAlign = "center";
+    drawShadowedText(subText, grid.x_center, pos.y, 2,
+        UI_COLORS.shadow,
+        UI_COLORS.text.light,
+        UI_FONTS.getFont("small", "secondary"));
 }
 
 function drawCharacterSelectionSelected(text, x, y) {
@@ -303,10 +312,12 @@ function drawStagesScreenHeader() {
     // panneau fond 
     let nextStage = runState.stages[runState.currentStage];
     pos = grid.pos(-1, -1);
-    drawPanel(pos.x, pos.y, 27, 3, "primary");
-    // icon 
-    pos = grid.pos(2, 0);
-    drawIcon(pos.x, pos.y, UI_ICONS.elements[nextStage.type], 1.5);
+    dim = grid.pos(27,2);
+    // drawPanel(pos.x, pos.y, 27, 3, "primary");
+    drawBox(pos.x,pos.y,dim.x,dim.y,UI_COLORS.primary,UI_CONFIG.shadowPad,UI_COLORS.shadow);
+   // icon 
+    pos = grid.pos(1, 0);
+    drawIcon(pos.x, pos.y, UI_ICONS.elements[nextStage.type], 1);
 
     // title
     let stageCur = runState.currentStage + 1;
@@ -316,9 +327,9 @@ function drawStagesScreenHeader() {
     } else if (nextStage.type === "event") {
         screenTitle += ` ${nextStage.name}`;
     }
-    pos = grid.pos(4, 1);
+    pos = grid.pos(3, 0.75);
     ctx.textAlign = "left";
-    drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
+    drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("medium", "primary"));
 }
 
 /** ========== Affichage des Personnages ========== **/
@@ -550,16 +561,18 @@ function drawControlsHint(x, y) {
 function drawEndScreenHeader() {
     // panneau fond 
     pos = grid.pos(-1, -1);
-    drawPanel(pos.x, pos.y, 27, 3, "primary");
+    dim = grid.pos(27,2);
+    // drawPanel(pos.x, pos.y, 27, 3, "primary");
+    drawBox(pos.x,pos.y,dim.x,dim.y,UI_COLORS.primary,UI_CONFIG.shadowPad,UI_COLORS.shadowColor)
     // icon 
-    pos = grid.pos(2, 0);
-    drawIcon(pos.x, pos.y, UI_ICONS.elements.dead, 1.5);
+    pos = grid.pos(1, 0);
+    drawIcon(pos.x, pos.y, UI_ICONS.elements.dead, 1);
 
     // title
     let screenTitle = "This is the end " + runState.player.className;
 
-    pos = grid.pos(4, 1);
+    pos = grid.pos(2, 0.75);
     ctx.textAlign = "left";
-    drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
+    drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("medium", "primary"));
 
 }

@@ -10,9 +10,9 @@ const UI_BG = {
     bg4: 'url(../assets/bg/background_4.png)'
 }
 const UI_COLORS = {
-    primary: '#5186b8',
+    primary: '#24395c',
     shadow: '#293b4d',
-    secondary: '#519eb8',
+    secondary: '#0e1624',
     contrast: '#b86c51',
     light: '#FFFFFF',
     hint : '#595959',
