@@ -391,14 +391,15 @@ const abilities_sizing = {
     w: 150,
     h: 40
 }
-function drawAbility(ability, x, y) {
+function drawAbility(ability, x, y,disabled = false) {
     const flavorConfig = {
         "Attaque physique": { color: UI_COLORS.abilities.physicAttack, textColor: UI_COLORS.text.light },
         "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark },
         "spell": { color: UI_COLORS.abilities.spell, textColor: UI_COLORS.text.dark },
     };
     dim = grid.pos(1, 0);
-    drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h, flavorConfig[ability.flavor].color);
+    drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h,
+        disabled ? UI_COLORS.disabled :  flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,
         UI_CONFIG.shadowPad,
@@ -435,35 +436,35 @@ function drawCharacterAbilities(character_to_draw, x, y) {
 function drawStatsBar(x, y, character, reverse = false, minimal = false) {
     const stats = {
         niveau: {
-            label: `Lvl. ${character.niveau}`, width: 2, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
+            label: `${character.name} (Lvl. ${character.niveau})`, width: 4, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
             modified_value: character.modifiedStats.niveau, value: character.niveau,
-            modifiable: false, icon: null
+            modifiable: false, icon: null, textPad : -20
         },
         pv: {
             label: `${character.modifiedStats.pv}/${character.modifiedStats.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
             ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
-            modifiable: true, icon: UI_ICONS.elements.pv
+            modifiable: true, icon: UI_ICONS.elements.pv, textPad : 0
         },
         pm: {
             label: `${character.modifiedStats.pm}/${character.modifiedStats.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
             ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
-            modifiable: true, icon: UI_ICONS.elements.pm
+            modifiable: true, icon: UI_ICONS.elements.pm, textPad : 0
         },
         attaque: {
             label: `${character.modifiedStats.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
-            modifiable: true, icon: UI_ICONS.elements.attaque
+            modifiable: true, icon: UI_ICONS.elements.attaque, textPad : 0
         },
         defense: {
             label: `${character.modifiedStats.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minim1al: false,
-            modifiable: true, icon: UI_ICONS.elements.defense
+            modifiable: true, icon: UI_ICONS.elements.defense, textPad : 0
         },
         sagesse: {
             label: `${character.modifiedStats.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
-            modifiable: true, icon: UI_ICONS.elements.sagesse
+            modifiable: true, icon: UI_ICONS.elements.sagesse, textPad : 0
         },
         vitesse: {
             label: `${character.modifiedStats.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
-            modifiable: true, icon: UI_ICONS.elements.vitesse
+            modifiable: true, icon: UI_ICONS.elements.vitesse, textPad : 0
         },
     };
 
@@ -504,7 +505,7 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
             ctx.textAlign = "center";
             drawShadowedText(
                 stat.label,
-                pos.x + dim.x / 1.5,
+                pos.x + dim.x / 1.5+stat.textPad,
                 pos.y + dim.y / 1.5,
                 UI_CONFIG.shadowPad,
                 UI_COLORS.shadow,

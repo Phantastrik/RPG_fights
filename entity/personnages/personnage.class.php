@@ -161,11 +161,17 @@ class Personnage implements Levelable, Caster, ArrayExportable
     }
 
     public function isDead(){
-        return $this->pv <= 0;
+        return $this->getModifiedStats()["pv"] <= 0;
     }
 
     public function getAnAbility(){
-        $res = $this->abilities[mt_rand(0,count($this->abilities)-1)];
+        $abs = array();
+        foreach ($this->abilities as $ab) {
+            if($ab->getpmCost() <= $this->getModifiedStats()["pm"]){
+                array_push($abs,$ab);
+            }
+        }
+        $res = $abs[mt_rand(0,count($abs)-1)];
         return $res;
     }
 
@@ -252,6 +258,13 @@ class Personnage implements Levelable, Caster, ArrayExportable
                 $res["vitesse"]    = $res["vitesse"]    + $e->getModifier()["vitesse_modifier"];
             }
         }
+        if($res["pv"]> $res["pvMax"]){
+            $res["pv"] = $res["pvMax"];
+        } 
+        
+        if($res["pm"]> $res["pmMax"]){
+            $res["pm"] = $res["pmMax"];
+        } 
         foreach($res as $key  => $value){
             if($value <0 ){
                 $res[$key] = 0;

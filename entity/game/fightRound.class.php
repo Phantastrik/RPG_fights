@@ -34,7 +34,7 @@ class FightRound implements Observable, Executable, ArrayExportable
         $this->player = $player;
         $this->enemy = $enemy;
         $this->enemyAbility = $this->enemy->getAnAbility();
-        // $this->exportData["enemy"]["usedAbility"] = $this->enemyAbility;
+        $this->exportData["enemy"]["usedAbility"] = $this->enemyAbility->arrayExport();
     }
 
 
@@ -112,7 +112,7 @@ class FightRound implements Observable, Executable, ArrayExportable
                     $ab = $this->playerAbility == null ? $participant->getAnAbility() : $this->player->getAbilities()[$this->playerAbility];
                 } else {
                     // $ab = $this->enemyAbility == null ? $participant->getAnAbility() : $this->enemy->getAbilities()[$this->enemyAbility];
-                    $ab = $participant->getAnAbility();
+                    $ab = $this->enemyAbility;
                 }
 
                 // Résoudre l'action

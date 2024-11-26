@@ -10,6 +10,9 @@ function showEventScreen() {
     ]
 
     clearCanvas();
+   // bg pour les event
+   setBackground(UI_BG.bg3);
+
     startEventScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleEventKeys);
@@ -52,8 +55,7 @@ function animateEventScreen() {
     drawCharacter(spriteSource[runState.player.className],
         pos.x, pos.y, eventPlayerState);
 
-    // bg pour les event
-    setBackground(UI_BG.bg3);
+ 
 
     // statbar du perso
     drawStatsBar(0, 1.8, runState.player);

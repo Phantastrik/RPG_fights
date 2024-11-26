@@ -17,6 +17,9 @@ function showFightScreen(runState) {
 
     clearCanvas();
 
+    // stge
+    setBackground(UI_BG.bg4);
+
     // Dessiner le personnage sélectionné
     startFightScreenAnimation();
 
@@ -36,7 +39,13 @@ function handleAbilitySelection(event) {
         selectedAbilityIndex = (selectedAbilityIndex + 1) % runState.player.abilities.length;
         startFightScreenAnimation();
     } else if (event.key === "Enter") {
-        endPhaseAnimation();
+        let selectedAbility = runState.player.abilities[selectedAbilityIndex];
+        // declenche uniquement si assez de pm
+        if (selectedAbility.pm_cost <= runState.player.modifiedStats.pm) {
+            endPhaseAnimation();
+        } else {
+            startFightScreenAnimation();
+        }
 
     }
 }
@@ -47,44 +56,54 @@ function animateFightScreen() {
     clearCanvas();
     // header
     drawStagesScreenHeader();
-    // player sprite
+    // -----------player 
+    // sprite
     pos = grid.pos(-1, 3);
     if (fightPlayerState === "attaques") {
         drawCharacter(spriteSource[runState.player.className], pos.x, pos.y, fightPlayerState, stateVariant);
     } else {
         drawCharacter(spriteSource[runState.player.className], pos.x, pos.y, fightPlayerState);
     }
+    // player ability
+    pos = grid.pos(2, 4);
+    // si pas assez de pm on la dessine en disabled
+    let selectedAbility = runState.player.abilities[selectedAbilityIndex];
 
-    // monster
-    if (runState.stages[runState.currentStage].type === "fight") {
-        setBackground(UI_BG.bg4);
-        // sprite
-        pos = grid.pos(20, 7);
-
-        if (monsterState === "attaques") {
-            drawMonster(monsterName, pos.x, pos.y, monsterState, monsterStateVariant);
-        } else {
-            drawMonster(monsterName, pos.x, pos.y, monsterState);
-        }
-        // stats
-        drawStatsBar(25, 12, runState.stages[runState.currentStage].enemy, true, false);
-        // player ability
-        pos = grid.pos(2, 4);
-        drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y)
-
-        if (runState.stages[runState.currentStage].enemy.activeEffects.length > 0) {
-            let i = 0;
-            runState.stages[runState.currentStage].enemy.activeEffects.forEach(effect => {
-                pos = grid.pos(20, 5 + i);
-                drawEffect(pos.x, pos.y, effect);
-                i += 0.8;
-            });
-
-        }
-
+    if (selectedAbility.pm_cost > runState.player.modifiedStats.pm) {
+        drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y, true)
     } else {
-        // bg pour les event
-        setBackground(UI_BG.bg3);
+        drawAbility(runState.player.abilities[selectedAbilityIndex], pos.x, pos.y, false)
+    }
+
+
+
+    // ----- monster
+    // choosed ability 
+    let enemyAbility = runState.stages[runState.currentStage].fightRound[
+        runState.stages[runState.currentStage].currentRound
+    ].enemy.usedAbility
+    // sprite
+    pos = grid.pos(20, 7);
+    if (monsterState === "attaques") {
+        drawMonster(monsterName, pos.x, pos.y, monsterState, monsterStateVariant);
+    } else {
+        drawMonster(monsterName, pos.x, pos.y, monsterState);
+    }
+    // Monster ability
+    pos = grid.pos(23, 6);
+    drawAbility(enemyAbility, pos.x, pos.y)
+
+
+    // stats
+    drawStatsBar(25, 12, runState.stages[runState.currentStage].enemy, true, false);
+
+    if (runState.stages[runState.currentStage].enemy.activeEffects.length > 0) {
+        let i = 0;
+        runState.stages[runState.currentStage].enemy.activeEffects.forEach(effect => {
+            pos = grid.pos(16, 5 + i);
+            drawEffect(pos.x, pos.y, effect);
+            i += 0.8;
+        });
     }
     // statbar du perso
     drawStatsBar(0, 1.8, runState.player);
@@ -115,12 +134,21 @@ function startFightScreenAnimation() {
 }
 
 function endPhaseAnimation() {
+    console.log(runState.stages[runState.currentStage].fightRound);
+    console.log(runState.stages[runState.currentStage].currentRound);
+
+    enemyAttackFlavor = runState.stages[runState.currentStage].fightRound[
+        runState.stages[runState.currentStage].currentRound
+    ].enemy.usedAbility.flavor;
+
+
+    playerAttackFlavor = runState.player.abilities[selectedAbilityIndex].flavor;
 
     playerFirst = runState.stages[runState.currentStage].enemy.vitesse <= runState.player.vitesse;
     if (playerFirst) {
         // le joueur attaque
         fightPlayerState = "attaques";
-        stateVariant = selectedAbilityIndex % spriteSource[runState.player.className].attaques.length;
+        stateVariant = getAttackType(playerAttackFlavor);
         monsterState = 'hurt';
         setTimeout(() => {
             monsterState = 'idle';
@@ -138,7 +166,7 @@ function endPhaseAnimation() {
 
             // le monstra attaque
             monsterState = "attaques";
-            monsterStateVariant = Math.floor(Math.random() * monster_spritesheet_data["gobelin"].attaques.length);
+            monsterStateVariant = getAttackType(enemyAttackFlavor);
             // fin des animations 
             setTimeout(endTurn,
                 monster_spritesheet_data[monsterName]["attaques"][monsterStateVariant].frameCount * animationSpeed);
@@ -151,13 +179,14 @@ function endPhaseAnimation() {
     } else {
         // le monstra attaque
         monsterState = "attaques";
-        monsterStateVariant = Math.floor(Math.random() * monster_spritesheet_data["gobelin"].attaques.length);
+        monsterStateVariant = getAttackType(enemyAttackFlavor);
         setTimeout(() => {
             monsterState = 'idle';
 
             // le player attaque
             fightPlayerState = "attaques";
-            stateVariant = selectedAbilityIndex % spriteSource[runState.player.className].attaques.length;
+            console.log(playerAttackFlavor);
+            stateVariant = getAttackType(playerAttackFlavor);
             // fin des animations 
             setTimeout(endTurn, spriteSource[runState.player.className]["attaques"][stateVariant].frameCount * animationSpeed);
 
@@ -176,4 +205,15 @@ function endTurn() {
     // cancelAnimationFrame(fightScreenAnimationId);
     nextRound(selectedAbilityIndex);
     showStageScreen(runState);
+}
+function getAttackType(flavor) {
+    $res = 'else';
+    if (flavor === "Attaque magique") {
+        $res = "magic";
+    } else if (flavor === "Attaque physique") {
+        $res = "physic"
+    } else if (flavor === 'spell') {
+        $res = "spell";
+    }
+    return $res;
 }

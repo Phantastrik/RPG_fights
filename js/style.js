@@ -16,6 +16,7 @@ const UI_COLORS = {
     contrast: '#b86c51',
     light: '#FFFFFF',
     hint : '#595959',
+    disabled : "#757575",
     transparent : 'rgba(0,0,0,0)',
     light_alpha : 'rgba(89, 89, 89,0.7)',
     text: {
@@ -140,12 +141,12 @@ let spriteSource = {
         walk: { x: 0, y: 0, frameCount: 7, },
         run: { x: 0, y: 256, frameCount: 6 },
         hurt: { x: 0, y: 1792, frameCount: 2 },
-        attaques: [
-            { x: 0, y: 512, frameCount: 6 },
-            { x: 0, y: 768, frameCount: 5 },
-            { x: 0, y: 1024, frameCount: 4 },
-            { x: 0, y: 1280, frameCount: 4 }
-        ],
+        attaques: {
+            physic : { x: 0, y: 512, frameCount: 6 },
+            magic : { x: 0, y: 768, frameCount: 5 },
+            spell : { x: 0, y: 1024, frameCount: 4 },
+            else : { x: 0, y: 1280, frameCount: 4 }
+        },
         die : {x:0,y:2304, frameCount:6},
         jump : {x:0, y:2048, frameCount : 6}
     },
@@ -163,11 +164,11 @@ let spriteSource = {
         walk: { x: 0, y: 256, frameCount: 9 },
         run: { x: 0, y: 512, frameCount: 8 },
         hurt: { x: 0, y: 2048, frameCount: 3 },
-        attaques: [
-            { x: 0, y: 768, frameCount: 4 },
-            { x: 0, y: 1024, frameCount: 5 },
-            { x: 0, y: 1280, frameCount: 4 },
-        ],
+        attaques: {
+           magic:  { x: 0, y: 768, frameCount: 4 },
+           physic :  { x: 0, y: 1024, frameCount: 5 },
+           spell : { x: 0, y: 1280, frameCount: 4 },
+        },
         die : {x:0,y:2304, frameCount:6},
         jump : {x:0, y:1792, frameCount : 9}
     },
@@ -185,11 +186,11 @@ let spriteSource = {
         walk: { x: 0, y: 256, frameCount: 7 },
         run: { x: 0, y: 512, frameCount: 8 },
         hurt: { x: 0, y: 2048, frameCount: 4 },
-        attaques: [
-            { x: 0, y: 768, frameCount: 7 },
-            { x: 0, y: 1024, frameCount: 9 },
-            { x: 0, y: 1280, frameCount: 16 }
-        ],
+        attaques: {
+           spell: { x: 0, y: 768, frameCount: 7 },
+           physic: { x: 0, y: 1024, frameCount: 9 },
+           magic : { x: 0, y: 1280, frameCount: 16 }
+        },
         die : {x:0,y:2304, frameCount:4},
         jump : {x:0, y:1792, frameCount : 8}
     }
@@ -235,7 +236,7 @@ const monster_spritesheet_data = {
         lastUpdateTime: 0,
         currentFrame: 0,
         img: null,
-        src: `../assets/monster/gobelin_sprite_reverse.png`,
+        src: `../assets/monster/gobelin_sprite.png`,
         frameWidth: 96,
         frameHeight: 96,
         displayWidth: 128,
@@ -249,11 +250,11 @@ const monster_spritesheet_data = {
         jump : {x:0,y:672,frameCount:8},
         hurt : {x:0,y:768,frameCount:2},
         die : {x:0,y:864,frameCount:4},
-        attaques: [
-            { x: 0, y: 288, frameCount: 4 },
-            { x: 0, y: 384, frameCount: 4 },
-            { x: 0, y: 480, frameCount: 4 }
-        ]
+        attaques: {
+            magic : { x: 0, y: 288, frameCount: 4 },
+            physic : { x: 0, y: 384, frameCount: 4 },
+            spell : { x: 0, y: 480, frameCount: 4 }
+        }
     },
     orc: {
         lastUpdateTime: 0,
@@ -272,12 +273,12 @@ const monster_spritesheet_data = {
         jump : {x:0,y:672,frameCount:5},
         hurt : {x:0,y:768,frameCount:2},
         die : {x:0,y:864,frameCount:4},
-        attaques: [
-            { x: 0, y: 288, frameCount: 5 },
-            { x: 0, y: 384, frameCount: 4 },
-            { x: 0, y: 480, frameCount: 4 },
-            { x: 0, y: 576, frameCount: 2 },
-        ]
+        attaques: {
+            physic : { x: 0, y: 288, frameCount: 5 },
+            magic : { x: 0, y: 384, frameCount: 4 },
+            spell : { x: 0, y: 480, frameCount: 4 },
+            else : { x: 0, y: 576, frameCount: 2 },
+        }
     },
     shaman: {
         lastUpdateTime: 0,
@@ -296,12 +297,12 @@ const monster_spritesheet_data = {
         jump : {x:0,y:672,frameCount:6},
         hurt : {x:0,y:768,frameCount:2},
         die : {x:0,y:864,frameCount:5},
-        attaques: [
-            { x: 0, y: 288, frameCount: 4 },
-            { x: 0, y: 384, frameCount: 2 },
-            { x: 0, y: 480, frameCount: 8 },
-            { x: 0, y: 576, frameCount: 6 },
-        ]
+        attaques: {
+            physic : { x: 0, y: 288, frameCount: 4 },
+            spell : { x: 0, y: 384, frameCount: 2 },
+            else : { x: 0, y: 480, frameCount: 8 },
+            magic : { x: 0, y: 576, frameCount: 6 },
+        }
     },
     lamia: {
         lastUpdateTime: 0,
@@ -310,8 +311,8 @@ const monster_spritesheet_data = {
         src: `../assets/monster/lamia_sprite.png`,
         frameWidth: 128,
         frameHeight: 128,
-        displayWidth: 128,
-        displayHeight: 128,
+        displayWidth: 150,
+        displayHeight: 150,
         xcrop: 0,
         ycrop: 0,
         idle: { x: 0, y: 0, frameCount: 7 },
@@ -321,12 +322,12 @@ const monster_spritesheet_data = {
         jump : {x:0,y:128,frameCount:5},
         hurt : {x:0,y:1024,frameCount:3},
         die : {x:0,y:1152,frameCount:3},
-        attaques: [
-            { x: 0, y: 512, frameCount: 16 },
-            { x: 0, y: 640, frameCount: 7 },
-            { x: 0, y: 768, frameCount: 10 },
-            { x: 0, y: 896, frameCount: 5 },
-        ]
+        attaques: {
+            physic : { x: 0, y: 512, frameCount: 16 },
+            spell : { x: 0, y: 640, frameCount: 7 },
+            magic : { x: 0, y: 768, frameCount: 10 },
+            else : { x: 0, y: 896, frameCount: 5 },
+        }
     },
     gorgon: {
         lastUpdateTime: 0,
@@ -335,8 +336,8 @@ const monster_spritesheet_data = {
         src: `../assets/monster/gorgon_sprite.png`,
         frameWidth: 128,
         frameHeight: 128,
-        displayWidth: 128,
-        displayHeight: 128,
+        displayWidth: 150,
+        displayHeight: 150,
         xcrop: 0,
         ycrop: 0,
         idle: { x: 0, y: 0, frameCount: 7 },
@@ -346,12 +347,12 @@ const monster_spritesheet_data = {
         jump : {x:0,y:128,frameCount:5},
         hurt : {x:0,y:1024,frameCount:3},
         die : {x:0,y:1152,frameCount:3},
-        attaques: [
-            { x: 0, y: 512, frameCount: 16 },
-            { x: 0, y: 640, frameCount: 7 },
-            { x: 0, y: 768, frameCount: 10 },
-            { x: 0, y: 896, frameCount: 5 },
-        ]
+        attaques: {
+            physic : { x: 0, y: 512, frameCount: 16 },
+            spell : { x: 0, y: 640, frameCount: 7 },
+            magic : { x: 0, y: 768, frameCount: 10 },
+            else : { x: 0, y: 896, frameCount: 5 },
+        }
     },
     spirit: {
         lastUpdateTime: 0,
@@ -371,11 +372,36 @@ const monster_spritesheet_data = {
         jump : {x:0,y:384,frameCount:5},
         hurt : {x:0,y:1024,frameCount:3},
         die : {x:0,y:1152,frameCount:5},
-        attaques: [
-            { x: 0, y: 512, frameCount: 13 },
-            { x: 0, y: 640, frameCount: 14 },
-            { x: 0, y: 768, frameCount: 11 },
-            { x: 0, y: 896, frameCount: 13 },
-        ]
+        attaques: {
+            else : { x: 0, y: 512, frameCount: 13 },
+            physic : { x: 0, y: 640, frameCount: 14 },
+            magic : { x: 0, y: 768, frameCount: 11 },
+            spell : { x: 0, y: 896, frameCount: 13 },
+        }
+    },
+    spore: {
+        lastUpdateTime: 0,
+        currentFrame: 0,
+        img: null,
+        src: `../assets/monster/spore_sprite.png`,
+        frameWidth: 128,
+        frameHeight: 128,
+        displayWidth: 128,
+        displayHeight: 128,
+        xcrop: 0,
+        ycrop: 0,
+        idle: { x: 0, y: 0, frameCount: 5 },
+        walk: { x: 0, y: 128, frameCount: 7 },
+        run: { x: 0, y: 254, frameCount: 7 },
+    
+        jump : {x:0,y:384,frameCount:5},
+        hurt : {x:0,y:1024,frameCount:3},
+        die : {x:0,y:1152,frameCount:5},
+        attaques: {
+            physic : { x: 0, y: 512, frameCount: 13 },
+            magic : { x: 0, y: 640, frameCount: 14 },
+            spell : { x: 0, y: 768, frameCount: 11 },
+            else : { x: 0, y: 896, frameCount: 13 },
+        }
     },
 };

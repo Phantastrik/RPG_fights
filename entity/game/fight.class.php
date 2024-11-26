@@ -15,7 +15,7 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     private bool $playerWon = false;
     private bool $enemyWon = false;
     private $observers = [];
-    private $notification = null;
+    private $fightRounds = [];
     private $exportData = [
         "type" => "fight",
         "fightRound" => array()
@@ -26,6 +26,7 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
         $this->player = $player;
         $this->enemy = $enemy;
         $this->roundNumber = 1;
+        $this->generateRound();
     }
 
     public static function createFromStageNumber(Personnage $player,$stageNumber){
@@ -66,16 +67,27 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
     }
     // 
     public function playRound($choosedAbility = null){
-        $round = new FightRound($this->player,$this->enemy);
+        $round = $this->fightRounds[$this->getCurrentRound()];
         if ($choosedAbility != null) {
             $round->setChoosedAbility($choosedAbility);
         }
         $round->execute();
-
         $this->updateStatus();
-      
-        array_push($this->exportData["fightRound"],$round->arrayExport() );
+
+        if(!$this->done){
+            $this->generateRound();
+        }
+        
         return $this;
+    }
+    public function generateRound(){
+        $round = new FightRound($this->player,$this->enemy);
+        array_push($this->fightRounds,$round);
+        return $this;
+        
+    }
+    public function getCurrentRound(){
+        return count($this->fightRounds)-1;
     }
     public function rewardWinner(){
         if($this->playerWon){
@@ -94,29 +106,7 @@ Class Fight extends Stage implements Observer, Executable, Observable, ArrayExpo
 
 
     // ---IMPLEMENTS Observer
-    public function update($data){
-        // on recupere la notif
-        $this->notification = $data;
-        
-        // un tour est terminé
-        /*
-        if($data["done"]){
-            // on verifie si un des combattants est mort;
-            $this->AWon = $this->enemy->isDead();
-            $this->BWon = $this->player->isDead();
-            $this->done = $this->AWon || $this->BWon;
-            if($this->AWon){
-                $this->notification["winner"] = $this->player;
-            }else{
-                if($this->BWon){
-                    $this->notification["winner"] = $this->enemy;
-                }
-            }
-            
-            $this->rewardWinner();
-            $this->roundNumber++;
-        }
-        */
+    public function update($data){ 
         // push la notif
         $this->notify();
         return $this;
@@ -175,12 +165,17 @@ HTML
     }
 
     public function arrayExport(){
+        $fightRounds = array();
+        foreach ($this->fightRounds as $fr) {
+            array_push($fightRounds,$fr->arrayExport());
+        }
         $res = parent::arrayExport();
         $res["type"] = "fight";
         $res["done"] = $this->done;
         $res["enemy"] = $this->enemy->arrayExport();
         $res["playerWon"] = $this->playerWon;
-        $res["fightRound"] = $this->exportData["fightRound"];
+        $res["fightRound"] = $fightRounds;
+        $res["currentRound"] = $this->getCurrentRound();
         return $res;
     }
 

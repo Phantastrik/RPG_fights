@@ -13,7 +13,7 @@ class SpellAbility extends Ability
                 self::$namelist[rand(0,count(self::$namelist)-1)] : 
                 $name
         );
-        $this->pm_cost      = 0;
+        $this->pm_cost      = $pmCost;
         $this->basic_damage = 0;
         $this->attaque_use  = 0;
         $this->defense_use  = 0;

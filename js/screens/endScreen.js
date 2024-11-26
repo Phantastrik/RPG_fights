@@ -1,5 +1,6 @@
 
 let endPlayerState = "die";
+let drawPlayer = true;
 
 function showEndScreen() {
     controls = [
@@ -11,6 +12,21 @@ function showEndScreen() {
     // bg pour la fin
 
 
+    setBackground(UI_BG.bg1);
+    // animation de fin 
+    fightPlayerState = "hurt";
+    setTimeout(() => {
+        fightPlayerState = 'die';
+
+        setTimeout(() => {
+            fightPlayerState = 'die';
+            cancelAnimationFrame(endScreenAnimationId);
+            drawPlayer = false;
+
+        }, spriteSource[runState.player.className].die.frameCount * animationSpeed);
+        startEndScreenAnimation();
+
+    }, spriteSource[runState.player.className].hurt.frameCount * animationSpeed);
     startEndScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleEndKeys);
@@ -36,11 +52,12 @@ function animateEndScreen() {
     // header
     drawStagesScreenHeader();
     // player sprite
-    pos = grid.pos(-1, 3);
-    drawCharacter(spriteSource[runState.player.className],
-        pos.x, pos.y, endPlayerState);
+    if (drawPlayer) {
+        pos = grid.pos(-1, 3);
+        drawCharacter(spriteSource[runState.player.className],
+            pos.x, pos.y, endPlayerState);
+    }
 
-    setBackground(UI_BG.bg1); 
 
     // statbar du perso
     drawStatsBar(0, 1.8, runState.player);

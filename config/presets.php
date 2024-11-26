@@ -182,8 +182,7 @@ class Presets
         self::$preset_effect_stun = new Effect("Stun", 3);
         self::$preset_effect_stun->setModifierKey("vitesse_modifier", -20);
         self::$preset_effect_dry = new Effect("dry", 1, true);
-        self::$preset_effect_dry->setModifierKey("pm_modifier", -20)
-            ->setModifierKey("pmMax_modifier", -20);
+        self::$preset_effect_dry->setModifierKey("pm_modifier", -20);
 
         // effects 
         self::$preset_EFFECT = array(
@@ -218,7 +217,7 @@ class Presets
         // Déclarer les objets PhysicAttackAbility avec les noms préfixés
         self::$ability_physic_tacle = new PhysicAttackAbility("Tacle");
         self::$ability_physic_tacle->setStats(array(
-            "pm_cost" => 3,
+            "pm_cost" => 0,
             "basic_damage" => 15,
             "attaque_use" => 1,
             "defense_use" => 0,
@@ -229,7 +228,7 @@ class Presets
 
         self::$ability_physic_stab = new PhysicAttackAbility("Stab");
         self::$ability_physic_stab->setStats(array(
-            "pm_cost" => 5,
+            "pm_cost" => 7,
             "basic_damage" => 20,
             "attaque_use" => 0.8,
             "defense_use" => 0,
@@ -240,7 +239,7 @@ class Presets
 
         self::$ability_physic_shieldBash = new PhysicAttackAbility("Shield Bash");
         self::$ability_physic_shieldBash->setStats(array(
-            "pm_cost" => 2,
+            "pm_cost" => 7,
             "basic_damage" => 10,
             "attaque_use" => 0.2,
             "defense_use" => 1,
@@ -264,7 +263,7 @@ class Presets
 
         self::$ability_magic_fizz = new MagicAttackAbility("Fizz");
         self::$ability_magic_fizz->setStats(array(
-            "pm_cost" => 3,
+            "pm_cost" => 0,
             "basic_damage" => 10,
             "attaque_use" => 0,
             "defense_use" => 0,
@@ -276,8 +275,8 @@ class Presets
         // - monster ability
         self::$ability_physic_poc = new PhysicAttackAbility("Poc");
         self::$ability_physic_poc->setStats(array(
-            "pm_cost" => 8,
-            "basic_damage" => 11,
+            "pm_cost" => 0,
+            "basic_damage" => 5,
             "attaque_use" => 1,
             "defense_use" => 0,
             "sagesse_use" => 0,
@@ -296,7 +295,7 @@ class Presets
         ));
         self::$ability_physic_claw = new PhysicAttackAbility("Claw");
         self::$ability_physic_claw->setStats(array(
-            "pm_cost" => 5,
+            "pm_cost" => 0,
             "basic_damage" => 5,
             "attaque_use" => 1,
             "defense_use" => 0.2,
@@ -306,7 +305,7 @@ class Presets
         ));
         self::$ability_physic_bonk = new PhysicAttackAbility("Bonk");
         self::$ability_physic_bonk->setStats(array(
-            "pm_cost" => 10,
+            "pm_cost" => 0,
             "basic_damage" => 10,
             "attaque_use" => 0.5,
             "defense_use" => 0.5,
@@ -326,7 +325,7 @@ class Presets
         ));
         self::$ability_magic_sparkle = new MagicAttackAbility("Sparkle");
         self::$ability_magic_sparkle->setStats(array(
-            "pm_cost" => 18,
+            "pm_cost" => 7,
             "basic_damage" => 15,
             "attaque_use" => 0,
             "defense_use" => 0,
@@ -360,19 +359,19 @@ class Presets
         self::$ability_spell_charge = new SpellAbility("Charge", self::$preset_effect_all, 15);
         self::$ability_spell_dry = new SpellAbility("Dry", self::$preset_effect_dry, 15);
 
-        self::$ability_spell_defend = new SpellAbility("defend", self::$preset_effect_defend, 1);
+        self::$ability_spell_defend = new SpellAbility("defend", self::$preset_effect_defend, 5);
         self::$ability_spell_defend->setEffectTargetPlayer(true);
         self::$ability_spell_defend->setEffectTargetEnemy(false);
-        self::$ability_spell_enrage = new SpellAbility("enrage", self::$preset_effect_rage, 1);
+        self::$ability_spell_enrage = new SpellAbility("enrage", self::$preset_effect_rage, 5);
         self::$ability_spell_enrage->setEffectTargetPlayer(true);
         self::$ability_spell_enrage->setEffectTargetEnemy(false);
-        self::$ability_spell_concentrate = new SpellAbility("concentrate", self::$preset_effect_concentration, 1);
+        self::$ability_spell_concentrate = new SpellAbility("concentrate", self::$preset_effect_concentration, 5);
         self::$ability_spell_concentrate->setEffectTargetPlayer(true);
         self::$ability_spell_concentrate->setEffectTargetEnemy(false);
-        self::$ability_spell_weaken = new SpellAbility("weaken", self::$preset_effect_weaken, 1);
+        self::$ability_spell_weaken = new SpellAbility("weaken", self::$preset_effect_weaken, 5);
         self::$ability_spell_weaken->setEffectTargetPlayer(false);
         self::$ability_spell_weaken->setEffectTargetEnemy(true);
-        self::$ability_spell_vulnerate = new SpellAbility("vulnerate", self::$preset_effect_vulnerate, 1);
+        self::$ability_spell_vulnerate = new SpellAbility("vulnerate", self::$preset_effect_vulnerate, 5);
         self::$ability_spell_vulnerate->setEffectTargetPlayer(false);
         self::$ability_spell_vulnerate->setEffectTargetEnemy(true);
 
@@ -446,6 +445,7 @@ class Presets
             ->setDefense(8)
             ->setSagesse(5)
             ->setvitesse(12)
+            ->addAbility(self::$ability_physic_bonk)
             ->addAbility(self::$ability_physic_chop)
             ->addAbility(self::$ability_spell_enrage);
         // gorgon

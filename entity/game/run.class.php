@@ -19,7 +19,11 @@ class Run implements Executable, Observable, ArrayExportable
         $this->seed = $seed ?? random_int(1, 1000000);  // Génère une seed si aucune n'est donnée
         $this->player = $player;
         mt_srand($this->seed);  // Initialiser le générateur avec la seed
-        $this->generateStages();
+        $this->generateNextStage();
+    }
+
+    public function generateNextStage(){
+        array_push($this->stages, Stage::generateStage($this->player, count($this->stages)+1));
     }
 
     public function generateStages()
@@ -71,6 +75,9 @@ class Run implements Executable, Observable, ArrayExportable
         } else {
             $this->stages[$currentStage]->execute();
         }
+        if($this->stages[$currentStage]->isDone()){
+            $this->generateNextStage();
+        }
 
         $this->notify();
         return $this;
@@ -84,7 +91,9 @@ class Run implements Executable, Observable, ArrayExportable
         } else {
             $this->stages[$currentStage]->execute();
         }
-
+        if($this->stages[$currentStage]->isDone()){
+            $this->generateNextStage();
+        }
         $this->notify();
         return $this;
     }

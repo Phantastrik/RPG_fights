@@ -13,13 +13,14 @@ function showStartScreen(playerPreset) {
         {key:'Enter', label:"Choose player"},
     ]
 
-    // Effacer le canvas
+    // player presets
     Object.keys(playerPreset).forEach(key => {
         characters.push(key);
     });
-    //  console.log(playerPreset[1]);
-    clearCanvas();
-    // Dessiner le personnage sélectionné
+    
+    // background de depart
+    setBackground(UI_BG.bg2);
+    // animation de l'ecran
     startStartScreenAnimation();
     // Ajouter le gestionnaire d'événements pour la sélection
     document.addEventListener("keydown", handleCharacterSelection);
@@ -48,7 +49,6 @@ function handleCharacterSelection(event) {
 function animateStartScreen() {
     // Effacer la zone de sélection
     clearCanvas();
-    setBackground(UI_BG.bg2);
     // player sprite
     pos = grid.pos(-1,3);
     drawCharacter(spriteSource[characters[selectedIndex]],pos.x,pos.y,"walk");
