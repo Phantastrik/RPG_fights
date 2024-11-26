@@ -122,7 +122,8 @@ const UI_ICONS = {
         time : {x:15,y:10},
         permanent : {x:5,y:3},
         fight : {x:9,y:5},
-        event : {x: 14,y:16}
+        event : {x: 14,y:16},
+        dead : {x:0,y:0}
     }
 }
 
@@ -243,6 +244,7 @@ const monster_spritesheet_data = {
         displayHeight: 128,
         xcrop: 0,
         ycrop: 0,
+       
         idle: { x: 0, y: 0, frameCount: 5 },
         walk: { x: 0, y: 96, frameCount: 7 },
         run: { x: 0, y: 192, frameCount: 6 },

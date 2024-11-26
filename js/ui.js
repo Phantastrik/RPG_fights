@@ -270,8 +270,8 @@ function drawEffect(x, y, effect, drawPermanent = false, selected = false) {
                     j++
                 }
 
-                i = (i + 1)%3;
-                
+                i = (i + 1) % 3;
+
 
             }
         }
@@ -391,7 +391,7 @@ const abilities_sizing = {
     w: 150,
     h: 40
 }
-function drawAbility(ability, x, y,disabled = false) {
+function drawAbility(ability, x, y, disabled = false) {
     const flavorConfig = {
         "Attaque physique": { color: UI_COLORS.abilities.physicAttack, textColor: UI_COLORS.text.light },
         "Attaque magique": { color: UI_COLORS.abilities.magicAttack, textColor: UI_COLORS.text.dark },
@@ -399,7 +399,7 @@ function drawAbility(ability, x, y,disabled = false) {
     };
     dim = grid.pos(1, 0);
     drawBox(x - abilities_sizing.w / 2, y - abilities_sizing.h / 2, abilities_sizing.w, abilities_sizing.h,
-        disabled ? UI_COLORS.disabled :  flavorConfig[ability.flavor].color);
+        disabled ? UI_COLORS.disabled : flavorConfig[ability.flavor].color);
     ctx.textAlign = "center";
     drawShadowedText(ability.name, x, y,
         UI_CONFIG.shadowPad,
@@ -438,33 +438,33 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
         niveau: {
             label: `${character.name} (Lvl. ${character.niveau})`, width: 4, color: UI_COLORS.stats.lvl.primary, ratio: null, minimal: true,
             modified_value: character.modifiedStats.niveau, value: character.niveau,
-            modifiable: false, icon: null, textPad : -20
+            modifiable: false, icon: null, textPad: -20
         },
         pv: {
             label: `${character.modifiedStats.pv}/${character.modifiedStats.pvMax}`, width: 4, color: UI_COLORS.stats.pv.secondary,
-            ratio: character.pv / character.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
-            modifiable: true, icon: UI_ICONS.elements.pv, textPad : 0
+            ratio: character.modifiedStats.pv / character.modifiedStats.pvMax, color_ratio: UI_COLORS.stats.pv.primary, minimal: true,
+            modifiable: true, icon: UI_ICONS.elements.pv, textPad: 0
         },
         pm: {
             label: `${character.modifiedStats.pm}/${character.modifiedStats.pmMax}`, width: 4, color: UI_COLORS.stats.pm.secondary,
-            ratio: character.pm / character.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
-            modifiable: true, icon: UI_ICONS.elements.pm, textPad : 0
+            ratio: character.modifiedStats.pm / character.modifiedStats.pmMax, color_ratio: UI_COLORS.stats.pm.primary, minimal: true,
+            modifiable: true, icon: UI_ICONS.elements.pm, textPad: 0
         },
         attaque: {
             label: `${character.modifiedStats.attaque}`, width: 2, color: UI_COLORS.stats.attaque.primary, ratio: null, minimal: false,
-            modifiable: true, icon: UI_ICONS.elements.attaque, textPad : 0
+            modifiable: true, icon: UI_ICONS.elements.attaque, textPad: 0
         },
         defense: {
             label: `${character.modifiedStats.defense}`, width: 2, color: UI_COLORS.stats.defense.primary, ratio: null, minim1al: false,
-            modifiable: true, icon: UI_ICONS.elements.defense, textPad : 0
+            modifiable: true, icon: UI_ICONS.elements.defense, textPad: 0
         },
         sagesse: {
             label: `${character.modifiedStats.sagesse}`, width: 2, color: UI_COLORS.stats.sagesse.primary, ratio: null, minimal: false,
-            modifiable: true, icon: UI_ICONS.elements.sagesse, textPad : 0
+            modifiable: true, icon: UI_ICONS.elements.sagesse, textPad: 0
         },
         vitesse: {
             label: `${character.modifiedStats.vitesse}`, width: 2, color: UI_COLORS.stats.vitesse.primary, ratio: null, minimal: false,
-            modifiable: true, icon: UI_ICONS.elements.vitesse, textPad : 0
+            modifiable: true, icon: UI_ICONS.elements.vitesse, textPad: 0
         },
     };
 
@@ -505,7 +505,7 @@ function drawStatsBar(x, y, character, reverse = false, minimal = false) {
             ctx.textAlign = "center";
             drawShadowedText(
                 stat.label,
-                pos.x + dim.x / 1.5+stat.textPad,
+                pos.x + dim.x / 1.5 + stat.textPad,
                 pos.y + dim.y / 1.5,
                 UI_CONFIG.shadowPad,
                 UI_COLORS.shadow,
@@ -528,14 +528,14 @@ function setBackground(bg) {
 }
 
 function drawControlsHint(x, y) {
-    dim = grid.pos(4, controls.length*0.5 + 1);
+    dim = grid.pos(4, controls.length * 0.5 + 1);
     drawBox(x, y, dim.x, dim.y, UI_COLORS.light_alpha, 2, UI_COLORS.transparent);
     //
     let i = 0.5;
     ctx.textAlign = "left";
     pad = grid.pos(0.2, i);
     drawShadowedText("Controls:", x + pad.x, y + pad.y, 2, UI_COLORS.shadow, UI_COLORS.light, UI_FONTS.getFont("small", "primary"));
-    i+= 0.7;
+    i += 0.7;
     controls.forEach(element => {
         // key
         pad = grid.pos(0.2, i);
@@ -545,4 +545,21 @@ function drawControlsHint(x, y) {
         drawShadowedText(`: ${element.label}`, x + pad.x, y + pad.y, 2, UI_COLORS.shadow, UI_COLORS.light, UI_FONTS.getFont("tiny", "secondary"));
         i += 0.4;
     });
+}
+
+function drawEndScreenHeader() {
+    // panneau fond 
+    pos = grid.pos(-1, -1);
+    drawPanel(pos.x, pos.y, 27, 3, "primary");
+    // icon 
+    pos = grid.pos(2, 0);
+    drawIcon(pos.x, pos.y, UI_ICONS.elements.dead, 1.5);
+
+    // title
+    let screenTitle = "This is the end " + runState.player.className;
+
+    pos = grid.pos(4, 1);
+    ctx.textAlign = "left";
+    drawShadowedText(screenTitle, pos.x, pos.y, 2, UI_COLORS.shadow, UI_COLORS.text.light, UI_FONTS.getFont("big", "primary"));
+
 }

@@ -265,6 +265,20 @@ class Personnage implements Levelable, Caster, ArrayExportable
         if($res["pm"]> $res["pmMax"]){
             $res["pm"] = $res["pmMax"];
         } 
+        if($res["pv"]< 0){
+            $res["pv"] = 0;
+        } 
+        if($res["pvMax"]< 1){
+            $res["pvMax"] = 1;
+        } 
+        
+        if($res["pm"]< 0){
+            $res["pm"] = 0;
+        } 
+        
+        if($res["pmMax"]< 1){
+            $res["pmMax"] = 1;
+        } 
         foreach($res as $key  => $value){
             if($value <0 ){
                 $res[$key] = 0;
